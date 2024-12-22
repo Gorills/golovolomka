@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {% endblock %}
+{% block description %} {% endblock %}
+{% block keywords %} {% endblock %}
+{% block canonical %} {% endblock %}
+{% block og:title %}{% endblock %}
+{% block og:description %} {% endblock %}
+{% block og:url %} {% endblock %}
+{% block twitter:title %}{% endblock %}
+{% block twitter:description %}{% endblock %}
+
+
+
+{% block body %}
+{% load static %}
+{% load thumbnail %}
+
+
+<div class="account">
+    <div class="container">
+        <div class="account__content">
+            
+            {% include 'account/profile_top.html' %}
+
+            <div class="account__data">
+
+
+                <div class="account__content-wrapper">
+                    
+                </div>
+                <p class="account__content-welcome">Добро пожаловать, {{ user.username }}.
+                    {% if not user.profile.account_verified %}
+                    (Email не подтверджен)
+                    {% endif %}
+                </p>    
+
+                
+                <form action="." method="post" class="account__form">
+                    <p class="account__title">Данные для автозаполнения:</p>
+                    {% csrf_token %}
+                    {{ profile_form.as_p }}
+                    <button class="btn btn--full">Сохранить</button>
+
+                </form>
+                
+            </div>
+            
+            
+            
+        </div>
+
+    </div>
+</div>
+{% endblock %}

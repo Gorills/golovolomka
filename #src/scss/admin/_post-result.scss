@@ -1,0 +1,113 @@
+.post-result {
+    padding: 30px;
+    border-radius: 30px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    // .post-result__inner
+
+    &__inner {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        img, video {
+            width: 100%;
+        }
+        form {
+            position: relative;
+            width: 100%;
+        }
+    }
+
+    // .post-result__remove
+
+    &__remove {
+        position: absolute;
+        top: 5px;
+        right: -25px;
+        svg {
+            width: 20px;
+        }
+    }
+     // .post-result__paste
+
+     &__paste {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    // .post-result__panel
+
+    &__panel {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        svg {
+            width: 20px;
+            min-height: 20px;
+            max-height: 20px;
+        }
+    }
+
+    // .post-resul__item
+    &__item {
+
+    }
+
+    // .post-result__text
+
+    &__text {
+    }
+
+    // .post-result__image
+
+    &__image {
+    }
+
+    // .post-result__video
+
+    &__video {
+    }
+    // .post-result__save
+    &__save {
+        position: absolute;
+        top: 7px;
+        right: 15px;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transition: all 1s ease;
+        svg {
+            width: 20px;
+            height: 20px;
+            opacity: 50%;
+           
+        }
+
+        &--active {
+            opacity: 100%;
+        }
+    }
+}
+
+.form-ajax, .form-ajax-file {
+    position: relative;
+}
+
+.form-hidden {
+    display: none;
+    position: relative;
+
+    // .form-hidden__remove
+    &__remove {
+        text-align: end;
+        position: absolute;
+        top: 5px;
+        right: -25px;
+        svg {
+            width: 20px;
+            
+        }
+    }
+}

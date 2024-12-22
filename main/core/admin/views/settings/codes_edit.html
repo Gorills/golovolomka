@@ -1,0 +1,37 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+
+<div class="page__title">Изменить код</div>
+
+<div class="breadcrumb">
+
+    <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="#">Главная</a></li>
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'codes_settings' %}">Коды счетчиков</a></li>
+        <li class="breadcrumb__item">Изменить код</li>
+    </ol>
+
+</div>
+
+<div class="page">
+    <div class="page__inner">
+
+      
+        <form action="." class="form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="page__row">
+            <button class="btn btn--primary">Сохранить</button>
+                <a href="{% url 'codes_settings' %}" class="btn btn--success">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

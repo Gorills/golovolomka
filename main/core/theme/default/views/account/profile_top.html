@@ -1,0 +1,19 @@
+
+
+{% if user.is_authenticated %}
+    <div class="account__top">
+        <div class="account__top-user">
+            {{ user.username }}
+        </div>
+
+        <div class="account__top-nav">
+            <a href="{% url 'account:account_profile' %}" class="account__top-link">Профиль</a>
+            <a class="account__top-link" href="{% url 'account_email' %}">Управление почтой</a>
+            <a class="account__top-link" href="{% url 'account_change_password' %}">Изменить пароль</a> 
+            <a href="{% url 'account:profile_orders' %}" class="account__top-link">Мои заказы</a>
+            
+        </div>
+
+    </div>
+
+{% endif %}

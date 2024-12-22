@@ -1,0 +1,59 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    margin-bottom: 20px;
+    font-size: 19px;
+    // .form__title
+
+    &__title {
+        margin-bottom: 20px;
+        font-weight: 900;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        svg {
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    // .form__success
+
+    &__success {
+        font-size: 12px;
+        margin-bottom: 20px;
+        margin-top: -15px;
+    }
+
+    // .form__static
+    &__static {
+        margin-bottom: 15px;
+    }
+
+    // .form__mini
+
+    &__mini {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    // .form__image
+
+    &__image {
+        width: 200px;
+        border: 1px solid #333;
+        margin-bottom: 15px;
+    }
+
+    // .form_row
+    &__row {
+        display: flex;
+        gap: 20px;
+    }
+}

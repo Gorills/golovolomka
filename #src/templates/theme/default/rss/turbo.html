@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:yandex="http://news.yandex.ru"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:turbo="http://turbo.yandex.ru"
+     version="2.0">
+    <channel>
+        <!-- Информация о сайте-источнике -->
+        <title>Новостная лента веб-студии ProfIT</title>
+        <link>https://agency-profit.ru</link>
+        <description>Новости и интересные события в мире IT, web-разработки и продвижения сайтов.</description>
+        <language>ru</language>
+        {% for new in news %}
+            <item turbo="true">
+                <!-- Информация о странице -->
+                <turbo:extendedHtml>true</turbo:extendedHtml>
+                <link>https://agency-profit.ru{{ new.get_absolute_url }}</link>
+                <turbo:source></turbo:source>
+                <turbo:topic></turbo:topic>
+                <pubDate>{{ new.created | date:"r" }}</pubDate>
+                <author>ProfIT</author>
+                <metrics>
+                    <yandex schema_identifier="{{ new.id }}">
+
+                        <breadcrumblist>
+                            <breadcrumb url="https://agency-profit.ru{% url 'home' %}" text="Главная"/>
+                            <breadcrumb url="https://agency-profit.ru{% url 'blog' %}" text="Блог"/>
+                          
+                            <breadcrumb url="https://agency-profit.ru{{ n.get_absolute_url }}" text="{{ n.title }}"/>
+                        </breadcrumblist>
+    
+                    </yandex>
+                </metrics>
+                <yandex:related></yandex:related>
+                <turbo:content>
+                    <![CDATA[
+                    <header>
+                        <h1>{{ new.name }}</h1>
+                        
+                        <menu>
+                            <a href="https://agency-profit.ru">Разработка сайтов</a>
+                            <a href="https://agency-profit.ru/seo/">СЕО продвижение</a>
+                            
+                            <a href="https://agency-profit.ru/portfolio-i-keysi/">Примеры</a>
+                            <a href="https://agency-profit.ru{% url 'blog' %}">Блог</a>
+                                     
+
+                        </menu>
+                    </header>
+
+                    <img src="https://agency-profit.ru{{ new.image.url }}">
+                        {% for block in new.blocks.all %}
+
+                        {% if block.type == 'text' %}
+                            {{ block.text | safe }}
+                        {% endif %}
+                        
+                        {% endfor %}
+                    ]]>
+                </turbo:content>
+            </item>
+        {% endfor %}
+        
+       
+    </channel>
+</rss>
