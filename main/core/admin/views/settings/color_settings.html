@@ -1,0 +1,33 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+
+<div class="page__title">Настройка цвета</div>
+
+<div class="breadcrumb">
+
+    <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="#">Главная</a></li>
+        <li class="breadcrumb__item">Настройка цвета</li>
+    </ol>
+
+</div>
+
+<div class="page">
+    <div class="page__inner">
+
+       
+        <form action="." class="form" method="post">
+            {% csrf_token %}
+           
+            {{ form }}
+            <button class="btn btn--primary">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

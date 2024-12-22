@@ -1,0 +1,507 @@
+{% load admin_static %}
+
+<div class="sidebar {% if request.session.sidebar == 'False' %}sidebar--min{% endif %}">
+
+    <br>
+    
+    <a href="{% url 'admin' %}" class="sidebar__title  {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="14.91" height="14.288" viewBox="0 0 14.91 14.288">
+            <g id="adjust_1_" data-name="adjust (1)" transform="translate(0 -10.667)">
+            <g id="Group_2337" data-name="Group 2337" transform="translate(0 20.607)">
+                <g id="Group_2336" data-name="Group 2336">
+                <path id="Path_936" data-name="Path 936" d="M14.288,353.553H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,355.106Z" transform="translate(0 -352)" fill="#40547b"/>
+                </g>
+            </g>
+            <g id="Group_2339" data-name="Group 2339" transform="translate(0 10.667)">
+                <g id="Group_2338" data-name="Group 2338">
+                <path id="Path_937" data-name="Path 937" d="M14.288,12.22H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,1,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,13.773Z" transform="translate(0 -10.667)" fill="#40547b"/>
+                </g>
+            </g>
+            <g id="Group_2341" data-name="Group 2341" transform="translate(0 15.637)">
+                <g id="Group_2340" data-name="Group 2340">
+                <path id="Path_938" data-name="Path 938" d="M14.288,182.887H6.422a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H2.276a2.16,2.16,0,0,0,4.146,0h7.867a.621.621,0,0,0,0-1.242Zm-9.94,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,4.349,184.44Z" transform="translate(0 -181.334)" fill="#40547b"/>
+                </g>
+            </g>
+            </g>
+        </svg>
+
+        <span>Панель</span>
+    </a>
+
+    <a href="{% url 'orders' %}" class="sidebar__title  {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="14.91" height="14.288" viewBox="0 0 14.91 14.288">
+          <g id="adjust_1_" data-name="adjust (1)" transform="translate(0 -10.667)">
+          <g id="Group_2337" data-name="Group 2337" transform="translate(0 20.607)">
+              <g id="Group_2336" data-name="Group 2336">
+              <path id="Path_936" data-name="Path 936" d="M14.288,353.553H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,355.106Z" transform="translate(0 -352)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2339" data-name="Group 2339" transform="translate(0 10.667)">
+              <g id="Group_2338" data-name="Group 2338">
+              <path id="Path_937" data-name="Path 937" d="M14.288,12.22H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,1,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,13.773Z" transform="translate(0 -10.667)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2341" data-name="Group 2341" transform="translate(0 15.637)">
+              <g id="Group_2340" data-name="Group 2340">
+              <path id="Path_938" data-name="Path 938" d="M14.288,182.887H6.422a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H2.276a2.16,2.16,0,0,0,4.146,0h7.867a.621.621,0,0,0,0-1.242Zm-9.94,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,4.349,184.44Z" transform="translate(0 -181.334)" fill="#40547b"/>
+              </g>
+          </g>
+          </g>
+      </svg>
+
+      <span>Заявки на игры</span>
+    </a>
+    <a href="{% url 'general_settings' %}" class="sidebar__title  {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="14.91" height="14.288" viewBox="0 0 14.91 14.288">
+          <g id="adjust_1_" data-name="adjust (1)" transform="translate(0 -10.667)">
+          <g id="Group_2337" data-name="Group 2337" transform="translate(0 20.607)">
+              <g id="Group_2336" data-name="Group 2336">
+              <path id="Path_936" data-name="Path 936" d="M14.288,353.553H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,355.106Z" transform="translate(0 -352)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2339" data-name="Group 2339" transform="translate(0 10.667)">
+              <g id="Group_2338" data-name="Group 2338">
+              <path id="Path_937" data-name="Path 937" d="M14.288,12.22H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,1,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,13.773Z" transform="translate(0 -10.667)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2341" data-name="Group 2341" transform="translate(0 15.637)">
+              <g id="Group_2340" data-name="Group 2340">
+              <path id="Path_938" data-name="Path 938" d="M14.288,182.887H6.422a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H2.276a2.16,2.16,0,0,0,4.146,0h7.867a.621.621,0,0,0,0-1.242Zm-9.94,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,4.349,184.44Z" transform="translate(0 -181.334)" fill="#40547b"/>
+              </g>
+          </g>
+          </g>
+      </svg>
+
+       <span>Настройки</span>
+    </a>
+    <a href="{% url 'codes_settings' %}" class="sidebar__title  {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="14.91" height="14.288" viewBox="0 0 14.91 14.288">
+          <g id="adjust_1_" data-name="adjust (1)" transform="translate(0 -10.667)">
+          <g id="Group_2337" data-name="Group 2337" transform="translate(0 20.607)">
+              <g id="Group_2336" data-name="Group 2336">
+              <path id="Path_936" data-name="Path 936" d="M14.288,353.553H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,355.106Z" transform="translate(0 -352)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2339" data-name="Group 2339" transform="translate(0 10.667)">
+              <g id="Group_2338" data-name="Group 2338">
+              <path id="Path_937" data-name="Path 937" d="M14.288,12.22H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,1,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,13.773Z" transform="translate(0 -10.667)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2341" data-name="Group 2341" transform="translate(0 15.637)">
+              <g id="Group_2340" data-name="Group 2340">
+              <path id="Path_938" data-name="Path 938" d="M14.288,182.887H6.422a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H2.276a2.16,2.16,0,0,0,4.146,0h7.867a.621.621,0,0,0,0-1.242Zm-9.94,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,4.349,184.44Z" transform="translate(0 -181.334)" fill="#40547b"/>
+              </g>
+          </g>
+          </g>
+      </svg>
+
+       <span>Встраиваемые коды</span>
+    </a>
+
+    <a href="{% url 'subdomains' %}" class="sidebar__title  {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="14.91" height="14.288" viewBox="0 0 14.91 14.288">
+          <g id="adjust_1_" data-name="adjust (1)" transform="translate(0 -10.667)">
+          <g id="Group_2337" data-name="Group 2337" transform="translate(0 20.607)">
+              <g id="Group_2336" data-name="Group 2336">
+              <path id="Path_936" data-name="Path 936" d="M14.288,353.553H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,355.106Z" transform="translate(0 -352)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2339" data-name="Group 2339" transform="translate(0 10.667)">
+              <g id="Group_2338" data-name="Group 2338">
+              <path id="Path_937" data-name="Path 937" d="M14.288,12.22H12.634a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,1,0,0,1.242H8.488a2.16,2.16,0,0,0,4.146,0h1.654a.621.621,0,0,0,0-1.242Zm-3.727,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,10.561,13.773Z" transform="translate(0 -10.667)" fill="#40547b"/>
+              </g>
+          </g>
+          <g id="Group_2341" data-name="Group 2341" transform="translate(0 15.637)">
+              <g id="Group_2340" data-name="Group 2340">
+              <path id="Path_938" data-name="Path 938" d="M14.288,182.887H6.422a2.16,2.16,0,0,0-4.146,0H.621a.621.621,0,0,0,0,1.242H2.276a2.16,2.16,0,0,0,4.146,0h7.867a.621.621,0,0,0,0-1.242Zm-9.94,1.553a.932.932,0,1,1,.932-.932A.933.933,0,0,1,4.349,184.44Z" transform="translate(0 -181.334)" fill="#40547b"/>
+              </g>
+          </g>
+          </g>
+      </svg>
+
+       <span>Города</span>
+    </a>
+    
+    
+    
+    
+   <div class="sidebar__wrapper">
+      <p class="sidebar__title {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16.226" height="16.226" viewBox="0 0 16.226 16.226">
+          <g id="divide" transform="translate(0.499 0.499)">
+            <path id="Path_799" data-name="Path 799" d="M117.8,130.54a.473.473,0,0,1-.472-.472V123.14a.472.472,0,0,1,.945,0v6.927A.472.472,0,0,1,117.8,130.54Zm0,0" transform="translate(-113.812 -118.99)" fill="#40547b"/>
+            <path id="Path_800" data-name="Path 800" d="M363.14,130.54a.472.472,0,0,1-.472-.472V123.14a.472.472,0,0,1,.945,0v6.927A.473.473,0,0,1,363.14,130.54Zm0,0" transform="translate(-351.905 -118.99)" fill="#40547b"/>
+            <path id="Path_801" data-name="Path 801" d="M240.472,15.115a.473.473,0,0,1-.472-.472V.472a.472.472,0,0,1,.945,0v14.17A.473.473,0,0,1,240.472,15.115Zm0,0" transform="translate(-232.858 0.057)" fill="#40547b"/>
+            <path id="Path_802" data-name="Path 802" d="M14.367,16.226H1.859A1.861,1.861,0,0,1,0,14.367V1.859A1.861,1.861,0,0,1,1.859,0H14.367a1.861,1.861,0,0,1,1.859,1.859V14.367A1.861,1.861,0,0,1,14.367,16.226ZM1.859,1.014a.846.846,0,0,0-.845.845V14.367a.846.846,0,0,0,.845.845H14.367a.846.846,0,0,0,.845-.845V1.859a.846.846,0,0,0-.845-.845Zm0,0" transform="translate(-0.499 -0.499)" fill="#40547b"/>
+            <path id="Path_803" data-name="Path 803" d="M14.642,363.613H.472a.472.472,0,0,1,0-.945h14.17a.472.472,0,0,1,0,.945Zm0,0" transform="translate(0.057 -351.905)" fill="#40547b"/>
+            <path id="Path_804" data-name="Path 804" d="M14.642,118.277H.472a.472.472,0,1,1,0-.945h14.17a.472.472,0,1,1,0,.945Zm0,0" transform="translate(0.057 -113.812)" fill="#40547b"/>
+          </g>
+        </svg>
+        
+        <span>Статика</span>
+
+        
+    
+      </p>
+      <div class="sidebar__drop {% if request.session.sidebar == 'False' %}sidebar__drop--max{% endif %}">
+       
+        <div class="sidebar__item">
+          <a href="{% url 'admin_pages' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Статичные страницы</span>
+
+              
+          </a>
+        </div>
+        
+        
+      </div>
+    </div> 
+    
+    <div class="sidebar__wrapper">
+      <p class="sidebar__title {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16.226" height="16.226" viewBox="0 0 16.226 16.226">
+          <g id="divide" transform="translate(0.499 0.499)">
+            <path id="Path_799" data-name="Path 799" d="M117.8,130.54a.473.473,0,0,1-.472-.472V123.14a.472.472,0,0,1,.945,0v6.927A.472.472,0,0,1,117.8,130.54Zm0,0" transform="translate(-113.812 -118.99)" fill="#40547b"/>
+            <path id="Path_800" data-name="Path 800" d="M363.14,130.54a.472.472,0,0,1-.472-.472V123.14a.472.472,0,0,1,.945,0v6.927A.473.473,0,0,1,363.14,130.54Zm0,0" transform="translate(-351.905 -118.99)" fill="#40547b"/>
+            <path id="Path_801" data-name="Path 801" d="M240.472,15.115a.473.473,0,0,1-.472-.472V.472a.472.472,0,0,1,.945,0v14.17A.473.473,0,0,1,240.472,15.115Zm0,0" transform="translate(-232.858 0.057)" fill="#40547b"/>
+            <path id="Path_802" data-name="Path 802" d="M14.367,16.226H1.859A1.861,1.861,0,0,1,0,14.367V1.859A1.861,1.861,0,0,1,1.859,0H14.367a1.861,1.861,0,0,1,1.859,1.859V14.367A1.861,1.861,0,0,1,14.367,16.226ZM1.859,1.014a.846.846,0,0,0-.845.845V14.367a.846.846,0,0,0,.845.845H14.367a.846.846,0,0,0,.845-.845V1.859a.846.846,0,0,0-.845-.845Zm0,0" transform="translate(-0.499 -0.499)" fill="#40547b"/>
+            <path id="Path_803" data-name="Path 803" d="M14.642,363.613H.472a.472.472,0,0,1,0-.945h14.17a.472.472,0,0,1,0,.945Zm0,0" transform="translate(0.057 -351.905)" fill="#40547b"/>
+            <path id="Path_804" data-name="Path 804" d="M14.642,118.277H.472a.472.472,0,1,1,0-.945h14.17a.472.472,0,1,1,0,.945Zm0,0" transform="translate(0.057 -113.812)" fill="#40547b"/>
+          </g>
+        </svg>
+        
+        <span>Блоки главной страницы</span>
+
+        
+    
+      </p>
+      <div class="sidebar__drop {% if request.session.sidebar == 'False' %}sidebar__drop--max{% endif %}">
+       
+        <div class="sidebar__item">
+          <a href="{% url 'admin_slider' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Слайдер</span>
+
+              
+          </a>
+        </div>
+
+        <div class="sidebar__item">
+          <a href="{% url 'games' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Игры</span>
+
+              
+          </a>
+        </div>
+
+        
+
+
+        <div class="sidebar__item">
+          <a href="{% url 'what' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Что такое головоломка</span>
+
+              
+          </a>
+        </div>
+
+        <div class="sidebar__item">
+          <a href="{% url 'wait' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Что тебя ждет</span>
+
+              
+          </a>
+        </div>
+
+        <div class="sidebar__item">
+          <a href="{% url 'faq' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>FAQ</span>
+
+              
+          </a>
+        </div>
+
+        <div class="sidebar__item">
+          <a href="{% url 'btn_block' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Блок с ссылками</span>
+
+              
+          </a>
+        </div>
+        <div class="sidebar__item">
+          <a href="{% url 'home_games' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+
+              <span>Домашние игры</span>
+
+              
+          </a>
+        </div>
+
+        
+        
+        
+      </div>
+    </div> 
+      
+
+    
+    <div class="sidebar__wrapper">
+      <p class="sidebar__title {% if request.session.sidebar == 'False' %}sidebar__title--max {% else %}sidebar__title--min{% endif %}">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="20.437" height="13.496" viewBox="0 0 20.437 13.496">
+          <g id="motion_1_" data-name="motion (1)" transform="translate(0 -89)">
+            <g id="Group_2373" data-name="Group 2373" transform="translate(0 89)">
+              <path id="Path_955" data-name="Path 955" d="M13.771,89A6.578,6.578,0,0,0,9.8,90.333H3.992a.808.808,0,0,0,0,1.616H8.264a6.757,6.757,0,0,0-1.111,2.99H2.395a.808.808,0,0,0,0,1.616H7.153a6.757,6.757,0,0,0,1.111,2.99H.8a.808.808,0,0,0,0,1.616H9.7a.792.792,0,0,0,.09-.005,6.6,6.6,0,0,0,6.748.732.812.812,0,0,0,.395-1.071.794.794,0,0,0-1.058-.4,4.976,4.976,0,0,1-2.1.461,5.112,5.112,0,1,1,4.621-3.019.812.812,0,0,0,.4,1.069.794.794,0,0,0,1.056-.4A6.765,6.765,0,0,0,13.771,89Z" transform="translate(0 -89)" fill="#40547b"/>
+            </g>
+          </g>
+        </svg>
+        <span>Дизайн</span>
+
+        
+      
+      </p>
+
+      <div class="sidebar__drop {% if request.session.sidebar == 'False' %}sidebar__drop--max{% endif %}">
+        
+        <div class="sidebar__item">
+          <a href="{% url 'color_settings' %}" class="sidebar__link">
+
+              
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.886" height="13.765" viewBox="0 0 15.886 13.765">
+                <g id="layers_1_" data-name="layers (1)" transform="translate(0 -34.184)">
+                  <g id="Group_2309" data-name="Group 2309" transform="translate(0 34.184)">
+                    <g id="Group_2308" data-name="Group 2308" transform="translate(0 0)">
+                      <path id="Path_915" data-name="Path 915" d="M15.516,37.374,8.2,34.234a.624.624,0,0,0-.492,0L.386,37.374a.624.624,0,0,0,0,1.147L7.706,41.64a.624.624,0,0,0,.489,0l7.319-3.119a.624.624,0,0,0,0-1.147ZM7.951,40.388,2.218,37.945l5.732-2.459,5.732,2.459Z" transform="translate(-0.008 -34.184)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2311" data-name="Group 2311" transform="translate(0 43.561)">
+                    <g id="Group_2310" data-name="Group 2310" transform="translate(0)">
+                      <path id="Path_916" data-name="Path 916" d="M15.835,336.782a.624.624,0,0,0-.819-.327l-7.073,3.034L.869,336.455A.624.624,0,1,0,.378,337.6l7.319,3.14a.624.624,0,0,0,.492,0l7.319-3.14A.624.624,0,0,0,15.835,336.782Z" transform="translate(0 -336.404)" fill="#40547b"/>
+                    </g>
+                  </g>
+                  <g id="Group_2313" data-name="Group 2313" transform="translate(0 40.442)">
+                    <g id="Group_2312" data-name="Group 2312" transform="translate(0 0)">
+                      <path id="Path_917" data-name="Path 917" d="M15.842,236.268a.624.624,0,0,0-.818-.329l-7.075,3.015L.875,235.939a.624.624,0,0,0-.489,1.148L7.7,240.205a.624.624,0,0,0,.489,0l7.319-3.119A.624.624,0,0,0,15.842,236.268Z" transform="translate(-0.007 -235.889)" fill="#40547b"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+
+              <span>Цвета</span>
+
+
+
+              
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+
+</div>

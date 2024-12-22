@@ -1,0 +1,140 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+
+<div class="page__title">Общие настройки</div>
+
+<div class="breadcrumb">
+
+    <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="#">Главная</a></li>
+        <li class="breadcrumb__item">Общие настройки</li>
+    </ol>
+
+</div>
+
+<div class="page">
+
+    <div class="page__wrap">
+
+        <form action="." class="form" method="post" enctype="multipart/form-data">
+        
+            {% csrf_token %}
+            <h3 class="form__title">Основные настройки</h3>
+
+            {{ form.as_p }}
+
+            {% comment %} {{ form.name.label_tag }}
+            {{ form.name }}
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email_for_order.label_tag }}
+            {{ form.email_for_order }}
+            {{ form.copy_year.label_tag }}
+            {{ form.copy_year }}
+            {{ form.copy.label_tag }}
+            {{ form.copy }}
+            {{ form.address.label_tag }}
+            {{ form.address }}
+            {{ form.meta_title.label_tag }}
+            {{ form.meta_title }}
+            {{ form.meta_description.label_tag }}
+            {{ form.meta_description }}
+            {{ form.meta_keywords.label_tag }}
+            {{ form.meta_keywords }}
+
+            {% if setup.social_image %} 
+            <label for="id_social_image">Заменить изображение для социальных сетей:</label>
+            <input type="file" name="social_image_rec" id="id_social_image">
+            <div class="form__success">
+                <p>На данный момент</p>
+                <a target="_blank" href="{{ setup.social_image.url }}">{{ setup.social_image.url }}</a> 
+            </div>
+            {% else %}
+            <label for="id_social_image">Изображение для социальных сетей::</label>
+            <input type="file" name="social_image" id="id_social_image">
+            {% endif %}
+
+            {% if setup.logo %} 
+            <label for="id_logo">Заменить логотип:</label>
+            <input type="file" name="logo_rec" id="id_logo">
+            <div class="form__success">
+                <p>На данный момент</p>
+                <a target="_blank" href="{{ setup.logo.url }}">{{ setup.logo.url }}</a> 
+            </div>
+            {% else %}
+            <label for="id_logo">Логотип:</label>
+            <input type="file" name="logo" id="id_logo">
+            {% endif %}
+            
+            
+            {% if setup.icon_ico %} 
+            <label for="id_icon_ico">Заменить иконка .ico:</label>
+            <input type="file" name="icon_ico_rec" id="id_icon_ico">
+            <div class="form__success">
+                <p>На данный момент</p>
+                <a target="_blank" href="{{ setup.icon_ico.url }}">{{ setup.icon_ico.url }}</a> 
+            </div>
+            {% else %}
+            <label for="id_icon_ico">Иконка .ico:</label>
+            <input type="file" name="icon_ico" id="id_icon_ico">
+            {% endif %}
+
+            
+            {% if setup.icon_png %} 
+            <label for="id_icon_png">Заменить иконка .png:</label>
+            <input type="file" name="icon_png_rec" id="id_icon_png">
+            <div class="form__success">
+                <p>На данный момент</p>
+                <a target="_blank" href="{{ setup.icon_png.url }}">{{ setup.icon_png.url }}</a> 
+            </div>
+            {% else %}
+            <label for="id_icon_png">Иконка .png:</label>
+            <input type="file" name="icon_png" id="id_icon_png">
+            {% endif %}
+
+            
+            {% if setup.icon_svg %} 
+            <label for="icon_svg">Заменить иконка .svg:</label>
+            <input type="file" name="icon_svg_rec" id="id_icon_svg">
+            <div class="form__success">
+                <p>На данный момент</p>
+                <a target="_blank" href="{{ setup.icon_svg.url }}">{{ setup.icon_svg.url }}</a> 
+            </div>
+            {% else %}
+            <label for="id_icon_svg">Иконка .svg:</label>
+            <input type="file" name="icon_svg" id="id_icon_svg">
+            {% endif %}
+
+
+            {{ form.theme_color.label_tag }}
+            {{ form.theme_color }}
+        
+            
+            <label class="label" for="">
+                <span>Разрешить индексацию</span>
+                <input name="active" type="checkbox" value="True" {% if setup.active == True %}checked{% endif %}>
+
+            </label>
+            <label class="label" for="">
+                <span>Режим разработки (вывод текстовой информации об ошибках)</span>
+                <input name="debugging_mode" type="checkbox" value="True" {% if setup.debugging_mode == True %}checked{% endif %}>
+
+            </label> {% endcomment %}
+
+            <button class="btn btn--primary">Сохранить</button>
+        </form>
+    </div>
+
+    
+
+
+</div>
+
+
+
+{% endblock %}

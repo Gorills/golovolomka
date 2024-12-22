@@ -1,0 +1,81 @@
+// Toggle menu
+.toggle-menu {
+   
+    z-index: 1000;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: linear-gradient(180deg, #FEEC8D 0%, #E6C419 100%);
+    width: 46px;
+    height: 46px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    
+    position: relative;
+    @media screen and (max-width: 768px) {
+        
+        margin-left: 20px;
+    }
+    
+}
+.toggle-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.menu-btn {
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.menu-btn span,
+.menu-btn span::before,
+.menu-btn span::after {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    left: 50%;
+    margin-left: -15px;
+    width: 30px;
+    height: 5px;
+    border-radius: 30px;
+    background-color: #202020;
+}
+
+
+
+
+.menu-btn span::after {
+    width: 20px;
+}
+.menu-btn span::before,
+.menu-btn span::after {
+    content: '';
+    display: block;
+    transition: 0.2s;
+}
+.menu-btn span::before{
+    transform: translateY(-11px);
+}
+.menu-btn span::after {
+    transform: translateY(10px);
+
+}
+.menu-btn_active span:before {
+    transform: rotate(-45deg);
+}
+.menu-btn_active span {
+    height: 0;
+}
+.menu-btn_active span:after {
+    transform: rotate(45deg);
+    width: 30px;
+}

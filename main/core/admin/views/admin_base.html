@@ -1,0 +1,44 @@
+{% load static %}
+{% load admin_static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% get_static 'css/style.css' %}">
+</head>
+<body>
+
+
+
+<div class="content">
+{% include 'components/admin_sidebar.html' %}
+
+<div class="content__inner {% if request.session.sidebar == 'False' %}content__inner--max {% endif %}">
+{% include 'components/admin_header.html' %}
+
+<div class="content__body">
+
+{% block body %}
+{% endblock  %}
+</div>
+</div>
+
+   
+
+
+</div>
+
+
+<script src="{% get_libs 'js/jquery.min.js' %}?v1.0.0"></script>
+<script async src="{% get_static 'js/app.js' %}?v{% now "H:i:s" %}"></script>
+    
+</body>
+</html>

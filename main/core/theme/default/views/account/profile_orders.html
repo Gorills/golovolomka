@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {% endblock %}
+{% block description %} {% endblock %}
+{% block keywords %} {% endblock %}
+{% block canonical %} {% endblock %}
+{% block og:title %}{% endblock %}
+{% block og:description %} {% endblock %}
+{% block og:url %} {% endblock %}
+{% block twitter:title %}{% endblock %}
+{% block twitter:description %}{% endblock %}
+
+
+
+{% block body %}
+{% load static %}
+{% load thumbnail %}
+
+<div class="account">
+    <div class="container">
+        <div class="account__content">
+            
+            {% include 'account/profile_top.html' %}
+
+            {% for order in user.user_order.all %}
+            <div class="account-order {% if order.status == 'Новый' %}account-order--new{% elif order.status == 'В работе' %}account-order--inwork{% elif order.status == 'Обработан' %}account-order--predone{% elif order.status == 'Выполнен' %}account-order--done{% elif order.status == 'Отказ' %}account-order--refused{% endif %}">
+                
+
+                <div class="account-order__data">
+                    <div class="account-order__top">
+                        <div class="account-order__id">
+                            <p>#{{ order.id }}</p>
+                            
+                            <span>от {{ order.created }}</span>
+                        </div>
+                        <div class="account-order__status">{{ order.status }}</div>
+                    </div>
+                   
+                    <p class="account-order__text">Данные заказа:  {% if order.city %}{{ order.city }}{% endif %} {% if order.postal_code %}{{ order.postal_code }}{% endif %} {% if order.address %}{{ order.address }}{% endif %}</p>
+               
+                    <p class="account-order__total">Сумма: {{ order.get_total_cost }}₽</p>
+
+                    
+                </div>
+                <div class="account-order__list">
+                    {% for item in order.items.all %}
+                        <div class="account-order__item">
+                            {% thumbnail item.option.parent.thumb "50x50" crop="center" as im %}
+                                <a href="{{ item.option.parent.get_absolute_url }}" class="account-order__wrap">
+                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="account-order__img">
+                                </a>
+                            {% endthumbnail %}
+                            
+                                <a href="{{ item.product.get_absolute_url }}" class="account-order__title"> {{ item.option.parent.name }}</a>
+                                <p class="account-order__quantity"><span>x </span> {{ item.quantity }} </p>
+                                
+                                <p class="account-order__price">{{ item.price }}₽</p>
+                        </div>
+
+
+                        
+
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

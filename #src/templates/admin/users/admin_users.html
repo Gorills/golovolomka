@@ -1,0 +1,63 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+<div class="page__title">Зарегистирирванные пользователи</div>
+
+<div class="breadcrumb">
+    <div class="breadcrumb__inner">
+
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'admin' %}">Главная</a></li>
+
+            <li class="breadcrumb__item">Зарегистирирванные пользователи</li>
+            {% if q %}
+            <li class="breadcrumb__item">Поиск: <b>{{q}}</b> <a id="refresh" href="#">(сбросить)</a></li>
+            {% endif %}
+        </ol>
+
+        
+    </div>
+</div>
+
+
+<div class="page search">
+    <div class="page__inner search__inner">
+
+        <ul class="responsive-table">
+            <li class="table-header">
+                
+                <a href="" class="col col-4 sort" data-sort="{% if sort == 'option_class' %}-option_class{% else %}option_class{% endif %}">
+                    Имя 
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"/></svg>
+                </a>
+              <div class="col ">Действие</div>
+            </li>
+            
+            
+            {% for user in users %}
+                
+                
+                <li class="table-row">
+                    <div class="col" data-label="">{{ user.username }}</div>
+                    <div class="col col-5" data-label="">
+                        
+                        <a href="{% url 'users_delete' user.id %}" class="remove">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"/></svg>
+                        </a>
+                    </div>
+                </li>
+               
+            {% endfor %}
+            
+
+          </ul>
+    
+    </div>
+</div>
+
+
+
+{% endblock %}

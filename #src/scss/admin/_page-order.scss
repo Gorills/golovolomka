@@ -1,0 +1,55 @@
+.page-order {
+    background-color: #fff;
+    border-radius: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 30px;
+    position: relative;
+
+    // .page-order__delete
+    &__delete {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    // .page-order__inner
+
+    &__inner {
+    }
+
+    // .page-order__info
+
+    &__info {
+        margin-bottom: 15px;
+    }
+
+    // .page-order__status
+
+    &__status {
+        margin-top: 20px;
+    }
+
+    // .page-order__status-item
+
+    &__status-item {
+    }
+    select {
+        margin-top: 10px;
+    }
+    // .page-order--new
+    &--new {
+        select {
+            border: 1px solid $success;
+            outline: none;
+
+            &:focus {
+                outline: none;
+                border: 1px solid $success;
+            }
+        }
+    }
+}
+
+    
+
+

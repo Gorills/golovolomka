@@ -1,0 +1,120 @@
+.slider {
+    position: relative;
+    width: 100%;
+    
+    background: #141414;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    // .slider__inner
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        filter: drop-shadow(0 0 40px rgba(244, 209, 30, 0.9));
+    }
+
+    // slider__item
+
+    &__item {
+        display: flex;
+        height: 317px;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+
+    // .slider__slide
+
+    &__slide {
+        
+        text-align: center;
+        max-width: 368px;
+        width: 100%;
+        max-height: 317px;
+        object-fit: contain;
+    }
+
+    // .slider__wrapper
+
+    &__wrapper {
+        width: 100%;
+        max-width: 368px;
+        margin: 0 auto;
+        margin-top: -30px;
+        position: relative;
+        z-index: 2;
+        padding: 40px 40px 40px 40px;
+        text-align: center;
+        border-radius: 20px; /* Скругленные углы */
+        background: rgba(217, 217, 217, 0.1); /* Полупрозрачный фон */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Тень */
+        backdrop-filter: blur(10px); /* Размытие заднего плана */
+        -webkit-backdrop-filter: blur(10px); /* Для Safari */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Полупрозрачная граница */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @media screen and (min-width: 992px) {
+            max-width: 514px;
+        }
+    }
+
+    // .slider__subtitle
+
+    &__subtitle {
+        text-transform: uppercase;
+        font-size: 13px;
+        color: #ffffff;
+        font-weight: 700;
+        margin-bottom: 20px;
+
+    }
+
+    // .slider__title
+
+    &__title {
+        color: #F4D11E;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 60px;
+        margin-bottom: 20px;
+        line-height: 1;
+        span {
+            font-size: 40px;
+            width: 100%;
+            display: block;
+        }
+    }
+
+    // .slider__text
+
+    &__text {
+        font-weight: 700;
+        font-size: 18px;
+        color: #ffffff;
+        margin-bottom: 20px;
+
+        span {
+            color: #F4D11E;
+        }
+    }
+
+    // .slider__btn
+
+    &__btn {
+    }
+
+    // .slider__bg
+
+    &__bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        top: 0;
+        left: 0;
+        opacity: .2;
+    }
+}

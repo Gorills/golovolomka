@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}{{ page.meta_title }}{% endblock %}
+{% block description %}{{ page.meta_description }}{% endblock %}
+{% block keywords %}{{ page.meta_keywords }}{% endblock %}
+{% block canonical %}{{ page.get_absolute_url }}{% endblock %}
+{% block og:title %}{{ page.meta_title }}{% endblock %}
+{% block og:description %}{{ page.meta_description }}{% endblock %}
+{% block og:url %}{{ page.get_absolute_url }}{% endblock %}
+{% block twitter:title %}{{ page.meta_title }}{% endblock %}
+{% block twitter:description %}{{ page.meta_description }}{% endblock %}
+
+{% block og:image %}{% if page.image %}{% thumbnail page.image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endif %}{% endblock %}
+{% block og:image:secure_url %}{% if page.image %}{% thumbnail page.image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endif %}{% endblock %}
+{% block twitter:image %}{% if page.image %}{% thumbnail page.image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endif %}{% endblock %}
+
+{% block body %}
+{% load static %}
+{% load theme_static %}
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs__inner">
+            <ul class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a class="breadcrumbs__link" href="{% url 'home' %}" title="Главная" itemprop="item">
+                        <span itemprop="name">Главная</span>
+                        <meta itemprop="position" content="0">
+                    </a>
+                </li>
+                
+                <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a class="breadcrumbs__link" href="{{ page.get_absolute_url }}" title="{{ page.name }}" itemprop="item">
+                        <span itemprop="name">{{ page.name }}</span>
+                        <meta itemprop="position" content="1">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% if page.text %}
+<div class="page">
+    <div class="container">
+        <div class="page__inner">
+            <h1 class="page__title gradient-text">{{ page.name }} </h1>
+
+            {{ page.text | safe }}
+
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+{% endblock %}

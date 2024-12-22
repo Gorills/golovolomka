@@ -1,0 +1,53 @@
+.product-tabs {
+    font-size: 0;
+  }
+
+  .product-tabs>input[type="radio"] {
+    display: none;
+  }
+
+  .product-tabs>div {
+    /* скрыть контент по умолчанию */
+    display: none;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  /* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
+  #product-tab-btn-1:checked~#product-content-1,
+  #product-tab-btn-2:checked~#product-content-2,
+  #product-tab-btn-3:checked~#product-content-3, 
+  #product-tab-btn-4:checked~#product-content-4, 
+  #product-tab-btn-5:checked~#product-content-5, 
+  #product-tab-btn-6:checked~#product-content-6, 
+  #product-tab-btn-7:checked~#product-content-7, 
+  #product-tab-btn-8:checked~#product-content-8 {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .product-tabs>label {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    padding: 2px 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+  }
+
+  .product-tabs>label:not(:first-of-type) {
+    border-left: none;
+  }
+
+  .product-tabs>input[type="radio"]:checked+label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+  }

@@ -1,0 +1,106 @@
+{% load recaptcha3 %}{% load theme_static %}{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- base -->
+    <title> {% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}{% endblock %}">
+    <link rel="canonical" href="{% block canonical %}{% endblock %}">
+    <meta name="theme-color" content="{{ setup.theme_color }}">
+    {% if setup.active == True %}<meta name="robots" content="index,follow">{% else %}<meta name="robots" content="noindex,nofollow">{% endif %}
+    <!-- base -->
+    <!-- og -->
+    <meta property="og:site_name" content="{{ setup.name }}"> 
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og:title %}{% endblock %}">
+    <meta property="og:description" content="{% block og:description %}{% endblock %}">
+    <meta property="og:url" content="{% block og:url %}{% endblock %}">
+    <meta property="og:image" content="{% block og:image %}{% endblock %}">
+    <meta property="og:image:secure_url" content="{% block og:image:secure_url %}{% endblock %}">
+    <meta property="og:image:width" content="537">
+    <meta property="og:image:height" content="240">
+    <!-- og -->
+    <!-- twitter -->
+    <meta name="twitter:image" content="{% block twitter:image %}{% endblock %}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% block twitter:title %}{% endblock %}" >
+    <meta name="twitter:description" content="{% block twitter:description %}{% endblock %}">
+    <!-- twitter -->
+    {% block other %}{% endblock %}
+    <!-- icons -->
+    <link rel="shortcut icon" href="{% if setup.icon_ico %}{{ setup.icon_ico.url }}{% endif %}" type="image/x-icon">
+    <link rel="icon" href="{% if setup.icon_svg %}{{ setup.icon_svg.url }}{% endif %}">
+    <link rel="apple-touch-icon" href="{% if setup.icon_png %}{{ setup.icon_png.url }}{% endif %}">
+    {% thumbnail setup.icon_png "57x57" format="PNG" as im %}<link rel="apple-touch-icon" sizes="57x57" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "72x72" format="PNG" as im %}<link rel="apple-touch-icon" sizes="72x72" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "76x76" format="PNG" as im %}<link rel="apple-touch-icon" sizes="76x76" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "114x114" format="PNG" as im %}<link rel="apple-touch-icon" sizes="114x114" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "120x120" format="PNG" as im %}<link rel="apple-touch-icon" sizes="120x120" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "144x144" format="PNG" as im %}<link rel="apple-touch-icon" sizes="144x144" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "152x152" format="PNG" as im %}<link rel="apple-touch-icon" sizes="152x152" href="{{ im.url }}">{% endthumbnail %}
+    {% thumbnail setup.icon_png "180x180" format="PNG" as im %}<link rel="apple-touch-icon" sizes="180x180" href="{{ im.url }}">{% endthumbnail %}
+    <!-- icons -->
+    
+    
+    <link rel="stylesheet" href="{% get_libs 'owl/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% get_libs 'owl/assets/owl.theme.default.min.css' %}">
+    <link href="{% get_static 'css/style.css' %}?v.1.0.4" rel="stylesheet">
+    <link rel="stylesheet" href="{% get_libs 'veno/venobox.css' %}">
+
+    {% for code in codes %}
+        {% if code.h_f == True %}
+            {{ code.code | safe }}
+        {% endif %}
+    {% endfor %}
+    
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+</head>
+
+<body>
+
+    {% include 'components/header.html' %}
+    
+
+    
+    <div class="content">
+
+        {% block body %}
+
+
+            {% block content %}
+            {% endblock %}
+            
+        {% endblock %}
+
+
+
+    </div>
+
+    {% block extra_body %}{% endblock %}
+
+
+    {% include 'components/footer.html' %}
+    {% include 'components/popup.html' %}
+    
+
+    <script src="{% get_libs 'js/jquery.min.js' %}"></script>
+
+    
+    <script src="{% get_libs 'owl/owl.carousel.min.js' %}"></script>
+    <script src="{% get_libs 'veno/venobox.min.js' %}"></script>
+
+    <script src="{% get_static 'js/app.js' %}?{% now 'H:i:s' %}"></script>
+    {% for code in codes %}
+        {% if code.h_f == False %}
+            {{ code.code | safe }}
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
+

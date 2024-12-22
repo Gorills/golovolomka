@@ -1,0 +1,94 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+<div class="page__title">Слайдер</div>
+
+<div class="breadcrumb">
+    <div class="breadcrumb__inner">
+
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'admin' %}">Главная</a></li>
+
+            <li class="breadcrumb__item">Слайдер</li>
+          
+        </ol>
+
+
+        <a href="{% url 'slider_add' %}" id="add" class="add">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/></svg>
+        </a>
+    </div>
+</div>
+
+
+
+
+<div class="page search">
+    
+    <div class="page__inner search__inner">
+        
+        <form action="" class="form" method="post" enctype="multipart/form-data">
+            <p class="form__title">Настройки слайдера</p>
+            {% csrf_token %}
+            {{ setup_form.as_p }}
+            <button class="btn btn--success">Сохранить</button>
+        </form>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1"></div>
+                <div class="col col-2">
+                  Название 
+                </div>
+                <a href="" class="col col-3">
+                  Заголовок 
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"/></svg>
+                </a>
+                <a href="" class="col col-4">
+                    Ссылка
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"/></svg>
+                </a>
+              <div class="col col-5">Действие</div>
+            </li>
+
+          
+            {% for slider in sliders %}
+            <li class="table-row">
+                <div class="col col-1" data-label="">
+                    <img src="{{ slider.image.url }}" alt="">
+                </div>
+                <div class="col col-2" data-label="">
+                    {{ slider.name }}
+                </div>
+                <div class="col col-3" data-label="">
+                    {% if slider.title %}
+                        {{ slider.title }}
+                    {% endif %}
+                </div>
+                <div class="col col-4" data-label="">
+                    {% if slider.link %}
+                    {{ slider.link }}
+                    {% endif %}
+                    
+                </div>
+
+                <div class="col col-5" data-label="">
+                    <a href="{% url 'slider_edit' slider.id %}" class="edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"/></svg>
+                    </a>
+                    <a href="{% url 'slider_delete' slider.id %}" class="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"/></svg>
+                    </a>
+                </div>
+            </li>
+                           
+            {% endfor %}           
+                            
+              
+          </ul>
+    
+    </div>
+</div>
+
+{% endblock %}
