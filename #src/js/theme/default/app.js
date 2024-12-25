@@ -107,7 +107,13 @@ $('.format__slider').owlCarousel({
   }
 });
 
-
+new VenoBox({
+  selector: '.format__slider-item',
+  numeration: true,
+  infinigall: true,
+  share: true,
+  spinner: 'rotating-plane'
+});
 
 $(document).on('click','.about__rules-top',function(){
 
@@ -215,20 +221,20 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
   e.preventDefault();
   $('.popup').removeClass('popup--active');
   $('body').removeClass('body');
-  window.location.href = "/";
+
+  // Проверяем наличие параметра reserve
+  if (urlParams.has('reserve')) {
+    window.location.href = "/";
+  }
+
+  
   
  
 })
 
 
 
-new VenoBox({
-  selector: '.format__slider-item',
-  numeration: true,
-  infinigall: true,
-  share: true,
-  spinner: 'rotating-plane'
-});
+
 
 
 
