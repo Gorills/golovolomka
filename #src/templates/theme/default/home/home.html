@@ -118,7 +118,7 @@
                                 
                             
                             </div>
-                            <div class="schedule__status">{% if game.reverve %}МЕСТА ЕСТЬ {% else %}РЕЗЕРВ{% endif %}</div>
+                            <div class="schedule__status">{% if not game.closed %}{% if game.reverve %}МЕСТА ЕСТЬ {% else %}РЕЗЕРВ{% endif %}{% else %}МЕСТ НЕТ{% endif %}</div>
                            
 
                         </div>
@@ -197,6 +197,7 @@
 
                         </div>
 
+                        {% if not game.closed %}
                         <a href="#" class="schedule__btn btn" data-name="{{ game.name }}" data-time="{{ game.date }} {{ game.time }}" data-id="{{ game.id }}">
                             <p>ЗАРЕГИСТРИРОВАТЬСЯ</p>
                         
@@ -210,6 +211,7 @@
                                 </defs>
                             </svg>
                         </a>
+                        {% endif %}
 
                         <img src="{{ game.bg.url  }}" alt="" class="schedule__item-bg">
 

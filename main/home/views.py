@@ -88,6 +88,10 @@ def game_callback(request):
             send_message(message)
             
             
+            if reserve == True:
+                return redirect('/?reserve=true')
+            else:
+                return redirect('/?reserve=false')
 
 
         else:
