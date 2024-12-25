@@ -125,7 +125,7 @@
 
                         <div class="schedule__wrapper">
                             <div class="schedule__desc">
-                                {% if geme.description %}
+                                {% if game.description %}
                                     {{ game.description }}
                                 {% else %}
                                     {{ game.category.description_short }}
@@ -213,7 +213,7 @@
                         </a>
                         {% endif %}
 
-                        <img src="{{ game.bg.url  }}" alt="" class="schedule__item-bg">
+                        <img src="{{ game.bg.url  }}" alt="{{ game.name }}" class="schedule__item-bg">
 
                     </div>
                 {% endfor %}
