@@ -222,6 +222,7 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
   $('.popup').removeClass('popup--active');
   $('body').removeClass('body');
 
+  var urlParams = new URLSearchParams(window.location.search);
   // Проверяем наличие параметра reserve
   if (urlParams.has('reserve')) {
     window.location.href = "/";
