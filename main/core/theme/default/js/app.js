@@ -201,7 +201,7 @@ $(document).on('click','.schedule__btn',function(e){
   
 
 
-  $('.popup').addClass('popup--active');
+  $('.callback').addClass('popup--active');
   
   $('#id_game_id').val(gameId);
 
@@ -215,6 +215,7 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
   e.preventDefault();
   $('.popup').removeClass('popup--active');
   $('body').removeClass('body');
+  window.location.href = "/";
   
  
 })
@@ -227,4 +228,28 @@ new VenoBox({
   infinigall: true,
   share: true,
   spinner: 'rotating-plane'
+});
+
+
+
+$(document).ready(function() {
+  // Получаем параметры URL
+  var urlParams = new URLSearchParams(window.location.search);
+
+  // Проверяем наличие параметра reserve
+  if (urlParams.has('reserve')) {
+      var reserveValue = urlParams.get('reserve');
+
+      if (reserveValue === 'true') {
+          // Показываем попап для reserve=true
+          $('.reserve').addClass('popup--active');
+
+
+      } else if (reserveValue === 'false') {
+          // Показываем попап для reserve=false
+          $('.thank').addClass('popup--active');
+      }
+  }
+
+  
 });

@@ -122,6 +122,7 @@ class Games(models.Model):
     comands = models.CharField(max_length=250, verbose_name='Чел в команде', default='2-12')
 
     number_of_seats = models.PositiveIntegerField(verbose_name='Количество мест', default=50)
+    numbers_of_reserves = models.PositiveIntegerField(verbose_name='Количество резервов', default=50)
 
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='Город', related_name='games')
     location = models.CharField(max_length=250, verbose_name='Адрес (если нет, то адрес будет взят из города)', null=True, blank=True)
@@ -152,6 +153,23 @@ class Games(models.Model):
             
         except:
             return True
+        
+
+    def closed(self):
+        # Получаем все заказы, связанные с текущей игрой
+        orders = GameOrder.objects.filter(game=self, reserve=True)
+
+        # Суммируем количество людей из всех заказов
+        command_number_count = orders.aggregate(Sum('command_number'))['command_number__sum']
+
+        try:
+            if command_number_count > self.numbers_of_reserves:
+                return True
+            else:
+                return False
+            
+        except:
+            return False
         
     
 
