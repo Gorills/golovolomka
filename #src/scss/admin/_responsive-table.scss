@@ -106,9 +106,13 @@
     }
     .col-1 {
       flex-basis: 1%;
+      white-space: normal;
+
     }
     .col-2 {
       flex-basis: 10%;
+      white-space: normal;
+
       svg {
         fill: $success;
       }
@@ -116,6 +120,7 @@
     }
     .col-3 {
       flex-basis: 40%;
+      white-space: normal;
     }
     .col-4 {
       flex-basis: 14%;
@@ -126,21 +131,29 @@
         flex-basis: 6%;
         display: flex;
         gap: 5px;
+        white-space: normal;
+
     }
     .col-6 {
       flex-basis: 55%;
       display: flex;
       gap: 5px;
+      white-space: normal;
+
     }
     .col-7 {
       flex-basis: 30%;
       display: flex;
       gap: 5px;
+      white-space: normal;
+
     }
     .col-8 {
       flex-basis: 25%;
       display: flex;
       gap: 5px;
+      white-space: normal;
+
     }
     
     @media all and (max-width: 767px) {

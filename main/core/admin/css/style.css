@@ -943,10 +943,12 @@ label span {
 
 .responsive-table .col-1 {
   flex-basis: 1%;
+  white-space: normal;
 }
 
 .responsive-table .col-2 {
   flex-basis: 10%;
+  white-space: normal;
 }
 
 .responsive-table .col-2 svg {
@@ -955,6 +957,7 @@ label span {
 
 .responsive-table .col-3 {
   flex-basis: 40%;
+  white-space: normal;
 }
 
 .responsive-table .col-4 {
@@ -966,24 +969,28 @@ label span {
   flex-basis: 6%;
   display: flex;
   gap: 5px;
+  white-space: normal;
 }
 
 .responsive-table .col-6 {
   flex-basis: 55%;
   display: flex;
   gap: 5px;
+  white-space: normal;
 }
 
 .responsive-table .col-7 {
   flex-basis: 30%;
   display: flex;
   gap: 5px;
+  white-space: normal;
 }
 
 .responsive-table .col-8 {
   flex-basis: 25%;
   display: flex;
   gap: 5px;
+  white-space: normal;
 }
 
 .popup-add {
