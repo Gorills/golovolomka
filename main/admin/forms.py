@@ -44,6 +44,9 @@ class GamesForm(forms.ModelForm):
         model = Games
         fields = "__all__"
 
+        widgets = {
+            "date_date": forms.DateInput(attrs={'type': 'date'})
+        }
 
 class WhatSetupForm(forms.ModelForm):
     text = forms.CharField(label='Описание', required=False, widget=CKEditorUploadingWidget())
