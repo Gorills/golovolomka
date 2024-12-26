@@ -84,7 +84,19 @@ def game_callback(request):
             )
             
 
-            message = f'Новая заявка на игру {game} \n Команда: {command} \n Имя: {name} \n Телефон: {phone} \n Комментарий: {comment}'
+            message = f'''
+Новая заявка на игру ***{game}***
+Команда: {command}
+Имя: {name}
+Телефон: {phone}
+Количество человек: {command_number}
+Комментарий: {comment}
+Промокод: {promo}
+Как вы узнали о нас: {how}
+
+'''
+            
+
             send_message(message)
             
             

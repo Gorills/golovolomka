@@ -681,7 +681,7 @@ a {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
-  height: 483px;
+  min-height: 483px;
   margin: 0 auto;
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -795,7 +795,7 @@ a {
 .schedule__wrapper {
   position: relative;
   z-index: 3;
-  padding: 20px 10px;
+  padding: 20px 10px 40px;
 }
 
 .schedule__desc {
