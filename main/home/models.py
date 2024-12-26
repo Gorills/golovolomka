@@ -115,7 +115,8 @@ from django.db.models import Sum
 class Games(models.Model):
     category = models.ForeignKey(GameCategory, on_delete=models.CASCADE, verbose_name='Категория')
     name = models.CharField(max_length=250, verbose_name='Название')
-    date = models.CharField(max_length=250, verbose_name='Дата')
+    date = models.CharField(max_length=250, verbose_name='Дата текстом (для вывода в карточке)')
+    date_date = models.DateField(verbose_name='Дата для сортировки', null=True, blank=True)
     time = models.CharField(max_length=250, verbose_name='Время')
     price = models.PositiveIntegerField(verbose_name='Цена', default=600)
     duration = models.CharField(max_length=250, verbose_name='Длительность', default='150 минут')
@@ -130,6 +131,7 @@ class Games(models.Model):
     description = models.TextField(verbose_name='Описание (если нет, то описание будет взято из короткого описания категории)', null=True, blank=True)
 
     bg = models.ImageField(upload_to='games/bg', verbose_name='Изображение')
+
 
 
 

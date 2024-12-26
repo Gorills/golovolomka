@@ -175,6 +175,7 @@ input[type=file],
 input[type=text],
 input[type=email],
 input[type=number],
+input[type=date],
 textarea,
 select {
   display: block;
@@ -202,6 +203,7 @@ input[type=file]:focus,
 input[type=text]:focus,
 input[type=email]:focus,
 input[type=number]:focus,
+input[type=date]:focus,
 textarea:focus,
 select:focus {
   outline: 1px solid #884FFB;

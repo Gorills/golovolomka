@@ -35,7 +35,7 @@ except:
 def schedule(request):
     
     games_setup = GamesSetup.objects.all().first()
-    games = Games.objects.all()
+    games = Games.objects.all().order_by('date_date')
 
     context = {
         'games_setup': games_setup,
@@ -184,7 +184,7 @@ def home(request):
     sliders = Slider.objects.all()
 
     games_setup = GamesSetup.objects.all().first()
-    games = Games.objects.all()
+    games = Games.objects.all().order_by('date_date')
 
     
 
