@@ -660,7 +660,12 @@ a {
   margin-bottom: 40px;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-gap: 60px;
+  grid-gap: 20px;
+  justify-content: center;
+}
+
+.schedule__row-wrap .schedule__item {
+  margin-bottom: 60px;
 }
 
 .schedule__title {
@@ -1899,7 +1904,7 @@ a {
   }
 
   .schedule__row-wrap {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .about__video-wrap {
@@ -1926,10 +1931,6 @@ a {
 }
 
 @media screen and (min-width: 768px) {
-  .schedule__row-wrap {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   .about__video-wrap {
     height: 400px;
   }
@@ -1976,6 +1977,10 @@ a {
     max-width: 514px;
   }
 
+  .schedule__row-wrap {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .schedule__status {
     font-size: 12px;
   }
@@ -2020,6 +2025,12 @@ a {
 
   .home-games__wrap {
     height: auto;
+  }
+}
+
+@media screen and (min-width: 1370px) {
+  .schedule__row-wrap {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

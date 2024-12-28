@@ -189,7 +189,7 @@ $(window).scroll(function() {
 });
 
 
-$(document).on('click','#messenger',function(e){
+$(document).on('click','#messenger-btn',function(e){
 
   e.preventDefault();
   $(".messenger-links").toggleClass('messenger-links--active');
