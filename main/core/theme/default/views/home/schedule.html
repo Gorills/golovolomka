@@ -65,22 +65,23 @@
                 {% for game in games %}
 
                     <div class="schedule__item">
-                        <div class="schedule__date">
-                            <p>{{ game.date }}</p>
-
-                            <svg viewBox="0 0 132 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M120.28 2.53092L19.8917 0.160851C15.7815 0.063813 12.0307 2.49234 10.4373 6.28235L0.971775 28.7961C-1.83496 35.4719 3.16446 42.8249 10.4046 42.6695L122.13 40.2728C127.98 40.1473 132.474 35.0465 131.86 29.2265L129.989 11.4796C129.462 6.48043 125.305 2.64957 120.28 2.53092Z" fill="url(#paint0_linear_42_7)"/>
-                                <defs>
-                                <linearGradient id="paint0_linear_42_7" x1="58.2751" y1="0.419392" x2="58.2751" y2="40.2616" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#FFED92"/>
-                                <stop offset="1" stop-color="#E5C416"/>
-                                </linearGradient>
-                                </defs>
-                            </svg>
                         
-                        </div>
 
                         <div class="schedule__top">
+                            <div class="schedule__date">
+                                <p>{{ game.date }}</p>
+    
+                                <svg viewBox="0 0 132 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M120.28 2.53092L19.8917 0.160851C15.7815 0.063813 12.0307 2.49234 10.4373 6.28235L0.971775 28.7961C-1.83496 35.4719 3.16446 42.8249 10.4046 42.6695L122.13 40.2728C127.98 40.1473 132.474 35.0465 131.86 29.2265L129.989 11.4796C129.462 6.48043 125.305 2.64957 120.28 2.53092Z" fill="url(#paint0_linear_42_7)"/>
+                                    <defs>
+                                    <linearGradient id="paint0_linear_42_7" x1="58.2751" y1="0.419392" x2="58.2751" y2="40.2616" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#FFED92"/>
+                                    <stop offset="1" stop-color="#E5C416"/>
+                                    </linearGradient>
+                                    </defs>
+                                </svg>
+                            
+                            </div>
                             <p class="schedule__item-title">{{ game.name }}</p>
                             <div class="schedule__loc">
 

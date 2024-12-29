@@ -43,15 +43,52 @@
             grid-template-columns: repeat(2, 1fr);
         }
         @media screen and (min-width: 992px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media screen and (min-width: 1370px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
+            grid-template-columns: repeat(1, 1fr);
+            
 
-        .schedule__item {
-            margin-bottom: 60px;
+            .schedule__item {
+                width: 100%;
+                display: flex;
+                margin-bottom: 60px;
+                max-height: 259px!important;
+                min-height: 259px!important;
+                position: relative;
+            }
+
+            .schedule__top {
+                min-width: 300px;
+                justify-content: flex-start;
+            }
+
+            .schedule__wrapper {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .schedule__row {
+                display: flex;
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                max-width: fit-content;
+            }
+
+            .schedule__row-item {
+                margin-left: 20px;
+            }
+
+            .schedule__date {
+                left: 50%;
+            }
+
+            .schedule__btn {
+                left: -95px;
+                bottom: 37px;
+            }
         }
+       
+
+        
     }
 
     // .schedule__title
