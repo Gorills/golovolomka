@@ -2023,6 +2023,10 @@ a {
     bottom: 37px;
   }
 
+  .schedule__row-wrap .schedule__desc {
+    font-size: 20px;
+  }
+
   .schedule__status {
     font-size: 12px;
   }
