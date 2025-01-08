@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
-{% block title %}{{ page.meta_title }}{% endblock %}
-{% block description %}{{ page.meta_description }}{% endblock %}
-{% block keywords %}{{ page.meta_keywords }}{% endblock %}
-{% block canonical %}{{ page.get_absolute_url }}{% endblock %}
-{% block og:title %}{{ page.meta_title }}{% endblock %}
-{% block og:description %}{{ page.meta_description }}{% endblock %}
-{% block og:url %}{{ page.get_absolute_url }}{% endblock %}
-{% block twitter:title %}{{ page.meta_title }}{% endblock %}
-{% block twitter:description %}{{ page.meta_description }}{% endblock %}
+{% block title %}Расписание игр{% endblock %}
+{% block description %}Расписание игр{% endblock %}
+{% block keywords %}{% endblock %}
+{% block canonical %}/schedule/{% endblock %}
+{% block og:title %}Расписание игр{% endblock %}
+{% block og:description %}Расписание игр{% endblock %}
+{% block og:url %}/schedule/{% endblock %}
+{% block twitter:title %}Расписание игр{% endblock %}
+{% block twitter:description %}Расписание игр{% endblock %}
 
 {% block og:image %}{% if page.image %}{% thumbnail page.image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endif %}{% endblock %}
 {% block og:image:secure_url %}{% if page.image %}{% thumbnail page.image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endif %}{% endblock %}
