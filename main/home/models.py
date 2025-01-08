@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from admin.singleton_model import SingletonModel
-
+from datetime import datetime, time
+import pytz
+from django.conf import settings
 
 
 class City(models.Model):
@@ -133,6 +135,35 @@ class Games(models.Model):
     bg = models.ImageField(upload_to='games/bg', verbose_name='Изображение')
 
 
+    def active(self):
+        if not self.date_date or not self.time:
+            return False
+
+        # Определяем часовой пояс города (или используем часовой пояс проекта по умолчанию)
+        city_timezone = getattr(self.city, 'timezone', settings.TIME_ZONE)  # Если у города есть поле timezone
+        try:
+            timezone = pytz.timezone(city_timezone)
+        except pytz.UnknownTimeZoneError:
+            return False
+
+        # Парсим время из строки
+        try:
+            game_time = datetime.strptime(self.time, "%H:%M").time()
+        except ValueError:
+            # Если формат времени неправильный
+            return False
+
+        # Создаем объект datetime из date_date и game_time
+        game_datetime = datetime.combine(self.date_date, game_time)
+
+        # Приводим game_datetime к часовому поясу города
+        game_datetime = timezone.localize(game_datetime)
+
+        # Получаем текущую дату и время в том же часовом поясе
+        now = datetime.now(pytz.utc).astimezone(timezone)
+
+        # Сравниваем
+        return game_datetime >= now
 
 
     def __str__(self):
