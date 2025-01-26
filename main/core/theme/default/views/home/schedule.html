@@ -207,6 +207,72 @@
         </div>
     </div>
     <img src="{{ games_setup.bg.url }}" alt="" class="schedule__bg">
+    <div class="popup callback">
+        <div class="popup__overflow"></div>
+        <a href="#" class="popup__close">
+            
+
+            <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+            <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1.5"/>
+            <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </a>
+        <div class="popup__inner">
+
+            
+
+
+            <div class="popup__title gradient-text">Регистрация на игру головоломка</div>
+
+            <form action="{% url "game_callback" %}" class="popup__form" method="post">
+            
+                
+
+                {% csrf_token %}
+                {{ game_order_form.captcha }}
+                <input type="hidden" name="game_id" value="{{ game.id }}" class="popup__input" placeholder="Игра" hidden="hidden" id="id_game_id">
+                {{ game_order_form.command }}
+                {{ game_order_form.name }}
+                {{ game_order_form.phone }}
+                {{ game_order_form.comment }}
+                {{ game_order_form.promo }}
+                {{ game_order_form.how }}
+                <label for="id_command_number">Количество человек:</label>
+
+                {{ game_order_form.command_number }}
+
+                
+            
+
+                
+
+
+                <div class="popup__btn-wrap">
+                
+                    <button class="popup__btn btn">
+                        <p>Отправить</p>    
+                        <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_15_137)"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_15_137" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFED92"/>
+                            <stop offset="1" stop-color="#E5C416"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+                    </button>
+                </div>
+                <p class="popup__sogl">Нажимая на кнопку вы даете согласие c 
+
+                    <a href="/soglashenie/">пользовательским соглашением</a> и соглашаетесь с 
+                    <a href="/privacy/">политикой конфиденциальности</a>
+                </p>
+            </form>
+
+        </div>
+
+    </div>
 </div>
 
 

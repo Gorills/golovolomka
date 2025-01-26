@@ -108,33 +108,27 @@
         <br>
 
         <ul class="responsive-table">
-            <li class="table-header">
-               
-                <div class="col col-2">
-                  Название 
-                </div>
-                <a href="" class="col col-3">
-                  Дата / время
-                </a>
-
-                <a href="" class="col col-3">
-                    Город
-                </a>
-               
-              <div class="col col-5">Действие</div>
-            </li>
-
+            
           
             {% for slider in games %}
             <li class="table-row">
                 
-                <div class="col col-2" data-label="">
+                <div class="col col-3" data-label="">
                     {{ slider.name }}
                 </div>
                 <div class="col col-3" data-label="">
                     {% if slider.date %}
                         {{ slider.date }}
                     {% endif %}
+                </div>
+                <div class="col col-3" data-label="">
+                    {% if slider.game_count %}
+                    {{ slider.game_count }}
+                    {% else %}
+                    0
+                    {% endif %}
+                     чел.
+              
                 </div>
 
                 <div class="col col-3" data-label="">

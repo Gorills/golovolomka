@@ -1234,6 +1234,7 @@ a {
   justify-content: center;
   height: fit-content;
   min-height: 52px;
+  padding: 0 10px;
   cursor: pointer;
 }
 

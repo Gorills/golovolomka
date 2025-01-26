@@ -36,7 +36,10 @@
         {% for game in games %}
 
 
-            <h2>{{ game.name }}, {{ game.city}}, {% if game.reverve %}МЕСТА ЕСТЬ {% else %}РЕЗЕРВ{% endif %}</h2>
+            <h2>{{ game.name }}, {{ game.city}}, {% if game.reverve %}МЕСТА ЕСТЬ {% else %}РЕЗЕРВ{% endif %} 
+                <br>
+                
+                Зарегистрировано: {{ game.game_count }} | В резерве: {{ game.reserve_count }} </h2>
             <br>
             <div class="col col-5" data-label="" style="display:flex;">
                 <a href="{% url 'game_edit' game.id %}" class="edit" style="margin-right: 15px;">

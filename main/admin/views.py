@@ -537,7 +537,7 @@ def games(request):
 
 
     categorys = GameCategory.objects.all()
-    games = Games.objects.all()
+    games = Games.objects.all().order_by('date_date')
 
     # Контекст для рендера страницы
     context = {

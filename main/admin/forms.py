@@ -39,14 +39,35 @@ class GamesPhotoForm(forms.ModelForm):
 
 
 
-class GamesForm(forms.ModelForm):  
+class GamesForm(forms.ModelForm):
     class Meta:
         model = Games
         fields = "__all__"
 
         widgets = {
-            "date_date": forms.DateInput(attrs={'type': 'date'})
+            "date_date": forms.DateInput(
+                attrs={'type': 'date'},
+                format='%Y-%m-%d'  # Явное указание формата
+            )
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            # Приводим дату к строковому формату для отображения в input
+            try:
+                self.instance.date_date = self.instance.date_date.strftime('%Y-%m-%d')
+            except AttributeError:
+                pass
+            
+
+    def clean_date_date(self):
+        date_value = self.cleaned_data.get('date_date')
+        if date_value:
+            return date_value.strftime('%Y-%m-%d')
+        return None
+    
+
 
 class WhatSetupForm(forms.ModelForm):
     text = forms.CharField(label='Описание', required=False, widget=CKEditorUploadingWidget())
