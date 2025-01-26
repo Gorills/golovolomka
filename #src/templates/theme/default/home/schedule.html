@@ -207,7 +207,8 @@
         </div>
     </div>
     <img src="{{ games_setup.bg.url }}" alt="" class="schedule__bg">
-    <div class="popup callback">
+    {% for game in games %}
+    <div class="popup callback" id="game-{{ game.id }}">
         <div class="popup__overflow"></div>
         <a href="#" class="popup__close">
             
@@ -273,6 +274,10 @@
         </div>
 
     </div>
+    
+    
+    
+    {% endfor %}
 </div>
 
 
