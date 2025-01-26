@@ -207,10 +207,12 @@ $(document).on('click','.schedule__btn',function(e){
   
 
 
-  $(this).closest('.schedule').find('.callback').addClass('popup--active');
+  $('#game-'+gameId).addClass('popup--active');
 
   
   $('.header').hide();
+
+  $('#id_game_id').val(gameId);
 
   $('body').addClass('body');
 
