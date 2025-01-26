@@ -204,6 +204,25 @@ class Games(models.Model):
         except:
             return False
         
+
+    def game_count(self):
+        # Получаем все заказы, связанные с текущей игрой
+        orders = GameOrder.objects.filter(game=self)
+
+        # Суммируем количество людей из всех заказов
+        command_number_count = orders.aggregate(Sum('command_number'))['command_number__sum']
+
+        return command_number_count
+        
+
+    def reserve_count(self):
+        # Получаем все заказы, связанные с текущей игрой
+        orders = GameOrder.objects.filter(game=self, reserve=True)
+
+        # Суммируем количество людей из всех заказов
+        command_number_count = orders.aggregate(Sum('command_number'))['command_number__sum']
+
+        return command_number_count
     
 
     class Meta:

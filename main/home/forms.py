@@ -13,7 +13,8 @@ class GameOrderForm(forms.ModelForm):
         widget=forms.HiddenInput(attrs={
             'class': 'popup__input',
             'placeholder': 'Игра',
-            'hidden': 'hidden'
+            'hidden': 'hidden',
+            'id': ''
         })
         
     )  
@@ -22,7 +23,8 @@ class GameOrderForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'class': 'popup__input',
             'placeholder': 'Имя',
-            'required': 'required'
+            'required': 'required',
+            'id': ''
         })
     )
     phone = forms.CharField(
@@ -30,7 +32,8 @@ class GameOrderForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'class': 'popup__input',
             'placeholder': '+7 (999) 999 99-99',
-            'required': 'required'
+            'required': 'required',
+            'id': ''
         })
     )
     command = forms.CharField(
@@ -38,7 +41,8 @@ class GameOrderForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'class': 'popup__input',
             'placeholder': 'Название команды',
-            'required': 'required'
+            'required': 'required',
+            'id': ''
         })
     )
     comment = forms.CharField(
@@ -46,7 +50,8 @@ class GameOrderForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'popup__input',
-            'placeholder': 'Комментарий'
+            'placeholder': 'Комментарий',
+            'id': ''
         })
     )
     promo = forms.CharField(
@@ -54,7 +59,8 @@ class GameOrderForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'popup__input',
-            'placeholder': 'Промокод'
+            'placeholder': 'Промокод',
+            'id': ''
         })
     )
     how = forms.ChoiceField(
@@ -73,6 +79,7 @@ class GameOrderForm(forms.ModelForm):
         widget=forms.Select(attrs={
             'class': 'popup__input',
             'name': 'how',
+            'id': ''
             
         })
     )
@@ -83,7 +90,8 @@ class GameOrderForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={
             'class': 'popup__input',
             'value': '2',
-            'required': 'required'
+            'required': 'required',
+            'id': ''
         })
     )
 

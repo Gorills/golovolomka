@@ -207,9 +207,10 @@ $(document).on('click','.schedule__btn',function(e){
   
 
 
-  $('.callback').addClass('popup--active');
+  $(this).closest('.schedule').find('.callback').addClass('popup--active');
+
   
-  $('#id_game_id').val(gameId);
+  $('.header').hide();
 
   $('body').addClass('body');
 
@@ -221,6 +222,7 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
   e.preventDefault();
   $('.popup').removeClass('popup--active');
   $('body').removeClass('body');
+  $('.header').show();
 
   var urlParams = new URLSearchParams(window.location.search);
   // Проверяем наличие параметра reserve
