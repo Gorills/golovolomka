@@ -277,5 +277,14 @@ $(document).ready(function() {
       }
   }
 
+  if (urlParams.has('error')) {
+    var errorValue = urlParams.get('error');
+
+    if (errorValue === 'true') {
+        // Показываем попап для reserve=true
+        $('.error').addClass('popup--active');
+    }
+}
+
   
 });

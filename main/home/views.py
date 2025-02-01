@@ -49,67 +49,114 @@ def schedule(request):
 
 
 from .telegram import send_message
+from django.db import transaction
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 def game_callback(request):
-    if request.method == 'POST':
-        form = GameOrderForm(request.POST)  
-        if form.is_valid():
-            game_id = form.cleaned_data.get('game_id')
-            command = form.cleaned_data.get('command')
-            name = form.cleaned_data.get('name')
-            phone = form.cleaned_data.get('phone')
-            comment = form.cleaned_data.get('comment')
-            promo = form.cleaned_data.get('promo')
-            how = form.cleaned_data.get('how')
-            command_number = form.cleaned_data.get('command_number')
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
 
-            game = Games.objects.get(id=game_id)
-            if game.reverve() == False:
-                reserve=True
+    form = GameOrderForm(request.POST)
+    # Сохраним исходные данные для логирования
+    form_data = request.POST.dict()
+
+    try:
+        with transaction.atomic():
+            if form.is_valid():
+                # Извлекаем проверенные данные
+                game_id = form.cleaned_data.get('game_id')
+                command = form.cleaned_data.get('command')
+                name = form.cleaned_data.get('name')
+                phone = form.cleaned_data.get('phone')
+                comment = form.cleaned_data.get('comment')
+                promo = form.cleaned_data.get('promo')
+                how = form.cleaned_data.get('how')
+                command_number = form.cleaned_data.get('command_number')
+
+                # Обработка получения объекта игры
+                try:
+                    game = Games.objects.get(id=game_id)
+                except ObjectDoesNotExist:
+                    error_message = (
+                        f"Игра с id {game_id} не найдена.\n"
+                        f"Полученные данные: {form_data}"
+                    )
+                    try:
+                        send_message(error_message)
+                    except Exception as send_err:
+                        # Здесь можно добавить логирование ошибки отправки сообщения
+                        pass
+                    return redirect('/?error=true')
+
+                # Предполагаем, что метод называется reserve(), исправляем опечатку, если она была
+                try:
+                    # Если метод возвращает bool, то можно использовать:
+                    reserve = not game.reserve()
+                except AttributeError:
+                    # Если метода reserve() нет, установить значение по умолчанию или обработать иначе
+                    reserve = False
+
+                # Создание заказа
+                GameOrder.objects.create(
+                    game=game,
+                    name=name,
+                    phone=phone,
+                    command=command,
+                    comment=comment,
+                    promo=promo,
+                    how=how,
+                    command_number=command_number,
+                    reserve=reserve
+                )
+
+                # Формируем сообщение для Telegram
+                message = (
+                    f"Новая заявка на игру ***{game}***\n"
+                    f"Команда: {command}\n"
+                    f"Имя: {name}\n"
+                    f"Телефон: {phone}\n"
+                    f"Количество человек: {command_number}\n"
+                    f"Комментарий: {comment}\n"
+                    f"Промокод: {promo}\n"
+                    f"Как вы узнали о нас: {how}"
+                )
+                try:
+                    send_message(message)
+                except Exception as e:
+                    # Логирование ошибки отправки сообщения, если необходимо
+                    pass
+
+                return redirect(f'/?reserve={"true" if reserve else "false"}')
+
             else:
-                reserve=False
+                # В случае невалидной формы используем исходные данные и ошибки валидации
+                errors = form.errors.as_json()
+                message = (
+                    f"Новая заявка с ошибкой!\n"
+                    f"Полученные данные: {form_data}\n"
+                    f"Ошибки: {errors}"
+                )
+                try:
+                    send_message(message)
+                except Exception as e:
+                    # Логирование ошибки отправки сообщения, если необходимо
+                    pass
+                return redirect('/?error=true')
 
-
-            GameOrder.objects.create(
-                game=game,
-                name=name,
-                phone=phone,
-                command=command,
-                comment=comment,
-                promo=promo,
-                how=how,
-                command_number=command_number,
-                reserve=reserve
-                
-            )
-            
-
-            message = f'''
-Новая заявка на игру ***{game}***
-Команда: {command}
-Имя: {name}
-Телефон: {phone}
-Количество человек: {command_number}
-Комментарий: {comment}
-Промокод: {promo}
-Как вы узнали о нас: {how}
-
-'''
-            
-
-            send_message(message)
-            
-            
-            if reserve == True:
-                return redirect('/?reserve=true')
-            else:
-                return redirect('/?reserve=false')
-
-
-        else:
-            print('not valid')
-
-    return redirect('home')
+    except Exception as e:
+        # Ловим любые непредвиденные ошибки, отправляем информацию в Telegram
+        error_message = (
+            f"Ошибка при обработке заявки.\n"
+            f"Полученные данные: {form_data}\n"
+            f"Ошибка: {str(e)}"
+        )
+        try:
+            send_message(error_message)
+        except Exception:
+            pass
+        return redirect('/?error=true')
 
 
 
