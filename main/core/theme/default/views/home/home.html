@@ -70,8 +70,10 @@
 
         </div>
     </div>
-
-    <img src="{% get_static 'images/slider_bg_mobile.jpeg' %}" alt="" class="slider__bg">
+ 
+    {% thumbnail sliders_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="slider__bg bg">
+    {% endthumbnail %}
 </div>
 
 
@@ -218,7 +220,9 @@
                         
                         {% endif %}
 
-                        <img src="{{ game.bg.url  }}" alt="{{ game.name }}" class="schedule__item-bg">
+                        {% thumbnail game.bg "290x505" format="WEBP" crop="center" as im %}
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ game.name }}" class="schedule__item-bg">
+                        {% endthumbnail %}
                         
 
                     </div>
@@ -230,7 +234,10 @@
 
         </div>
     </div>
-    <img src="{{ games_setup.bg.url }}" alt="" class="schedule__bg">
+    {% thumbnail games_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="schedule__bg bg">
+    {% endthumbnail %}
+
 
 
     {% for game in games %}
@@ -455,7 +462,10 @@
         </div>
     </div>
 
-    <img src="{{ what_setup.bg.url }}" alt="" class="about__bg bg">
+    
+    {% thumbnail what_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="about__bg bg">
+    {% endthumbnail %}
 </div>
 
 
@@ -484,7 +494,11 @@
 
         </div>
     </div>
-    <img src="{{ wait_setup.bg.url }}" alt="" class="what__bg bg">
+
+    {% thumbnail wait_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="what__bg bg">
+    {% endthumbnail %}
+    
 </div>
 
 
@@ -535,7 +549,11 @@
                 {% for photo in games_photo %}
                     
                     <a href="{{ photo.image.url }}" data-gall="gallery01"  class="format__slider-item">
-                        <img src="{{ photo.image.url }}" alt="" class="format__img">
+
+                        {% thumbnail photo.image "330x262" format="WEBP" crop="center" as im %}
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="format__img">
+                        {% endthumbnail %}
+                    
                     </a>
               
                 {% endfor %}
@@ -546,8 +564,10 @@
 
         </div>
     </div>
-
-    <img src="{{ games_category_setup.bg.url }}" alt="" class="format__bg bg">
+    {% thumbnail games_category_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="format__bg bg">
+    {% endthumbnail %}
+   
 </div>
 
 
@@ -575,7 +595,10 @@
             </div>
         </div>
     </div>
-    <img src="{% get_static 'images/faq-bg.png' %}" alt="" class="faq__bg bg">
+    {% thumbnail faq_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="faq__bg bg">
+    {% endthumbnail %}
+    
 </div>
 
 
@@ -605,16 +628,20 @@
     
 
                 </div>
-
-                <img src="{{ btn.bg.url }}" alt="" class="btn-block__item-bg">
+                {% thumbnail btn.bg "404x218" format="WEBP" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="btn-block__item-bg">
+                {% endthumbnail %}
+                
             </a>
             {% endfor %}
             
 
         </div>
     </div>
+    {% thumbnail btn_block_setup.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="btn-block__item-bg bg">
+    {% endthumbnail %}
 
-    <img src="{{ btn_block_setup.bg.url }}" alt="" class="btn-block__item-bg bg">
 
 </div>
 
@@ -628,7 +655,10 @@
                 <h2 class="home-games__title">{{ home_games.title }}</h2>
 
                 <div class="home-games__img-wrap">
-                    <img src="{{ home_games.image.url }}" alt="" class="home-games__img">
+                    {% thumbnail home_games.image "360x192" format="WEBP" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="home-games__img">
+                    {% endthumbnail %}
+                    
                 </div>
             </div>
 
@@ -663,8 +693,10 @@
 
         </div>
     </div>
-
-    <img src="{{ home_games.bg.url }}" alt="" class="home-games__bg bg">
+    {% thumbnail home_games.bg "1916x678" format="WEBP" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" class="home-games__bg bg">
+    {% endthumbnail %}
+ 
 </div>
 
 
