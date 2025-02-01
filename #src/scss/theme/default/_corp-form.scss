@@ -1,0 +1,84 @@
+.corp-form {
+    padding: 40px 0;
+    // .corp-form__inner
+
+    &__inner {
+        position: relative;
+        z-index: 3;
+    }
+
+    // .corp-form__title
+
+    &__title {
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    // .corp-form__form
+
+    &__form {
+    }
+
+    // .corp-form__input
+
+    select {
+        option {
+            color: #000;
+        }
+        
+    }
+
+    &__input {
+        box-sizing: border-box;
+        background: none;
+        display: block;
+        width: 100%;
+        padding: 10px 10px;
+        border-radius: 20px;
+        border: 1px solid #F4D11E;
+        color-scheme: dark;
+        
+        margin-bottom: 10px;
+        outline: none;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 800;
+        color: #E6C419;
+
+        &::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+
+        &::placeholder {
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 800;
+            color: #E6C419;
+        }
+
+        &:focus, &:active {
+            border: 1px solid #E6C419;
+        }
+    }
+
+    // .corp-form__btn-wrap
+
+    &__btn-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    // .corp-form__btn
+
+    &__btn {
+    }
+
+    // .corp-form__bg
+
+    &__bg {
+    }
+}
+

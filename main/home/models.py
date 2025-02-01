@@ -413,3 +413,106 @@ class Page(models.Model):
 
 
 
+
+class StartCorpSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    text = models.TextField(verbose_name='Текст', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):  
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока КОРПОРАТИВНЫЙ КВИЗ'
+
+
+
+class WhatCorpSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+    
+
+    video = models.FileField(upload_to='what', verbose_name='Видео', null=True, blank=True)
+    embedded_video = models.TextField(null=True, blank=True, verbose_name='Встроенное видео (код для вставки)')
+
+
+
+    def __str__(self):  
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока ЧТО ТАКОЕ КОРПОРАТИВНЫЙ КВИЗ??'
+        verbose_name_plural = 'Настройки блока ЧТО ТАКОЕ КОРПОРАТИВНЫЙ КВИЗ??'
+
+
+
+class WhatCorpItemSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class WhatCorpItem(models.Model):
+    image = models.FileField(upload_to='what', verbose_name='Изображение')
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Блоки Почему нас выбирают?'
+        verbose_name_plural = 'Блоки Почему нас выбирают?'
+
+
+
+class WhyWeCorpSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):  
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока Почему мы?'
+        verbose_name_plural = 'Настройки блока Почему мы?'
+
+
+
+class WhyWeCorpItem(models.Model):
+    image = models.ImageField(upload_to='what', verbose_name='Изображение')
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self):
+        return self.text
+    
+
+    class Meta:
+        verbose_name = 'Блок Почему мы?'
+        verbose_name_plural = 'Блок Почему мы?'
+
+
+
+class DoverCorpSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+    subtitle = models.CharField(max_length=250, verbose_name='Подзаголовок', null=True, blank=True)
+    count = models.CharField(max_length=250, verbose_name='Количество', null=True, blank=True)
+    text = models.TextField(verbose_name='Текст', null=True, blank=True)
+
+    def __str__(self):  
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока Головоломке доверяют'
+        verbose_name_plural = 'Настройки блока Головоломке доверяют'
+
+
+
+class DoverCorpSlider(models.Model):
+    image = models.ImageField(upload_to='what', verbose_name='Изображение')
+    
+    class Meta:
+        verbose_name = 'Слайдер Головоломке доверяют'
+        verbose_name_plural = 'Слайдер Головоломке доверяют'

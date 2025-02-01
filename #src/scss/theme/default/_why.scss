@@ -1,60 +1,42 @@
-.what {
-    
-    padding: 40px 0 60px;
-    // .what__inner
+.why {
+    padding: 40px 0;
+    // .why__inner
 
     &__inner {
         position: relative;
-        z-index: 3;
+        z-index: 2;
+
+        
     }
 
-    // .what__title
+    // .why__title
 
     &__title {
         text-transform: uppercase;
         text-align: center;
-        margin-bottom: 80px;
+        margin-bottom: 40px;
+        font-size: 40px;
     }
 
-    // .what__row
+    // .why__row
 
     &__row {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
-        justify-content: end;
-        align-items: start;
-
+        margin-bottom: 40px;
         @media screen and (min-width: 768px) {
             grid-template-columns: repeat(3, 1fr);
-
-            max-width: 768px;
-            margin: 0 auto;
+            
         }
     }
 
-
-    // .what__item-wrap
-
-    &__item-wrap {
-        display: flex;
-        justify-content: flex-end;
-        position: relative;
-        margin-bottom: 30px;
-
-        @media screen and (min-width: 576px) {
-            max-width: 180px;
-        }
-
-        
-    }
-
-    // .what__item
+    // .why__item
 
     &__item {
-        width: 143px;
+        text-align: center;
         height: 144px;
-        padding: 20px;
+        padding: 10px;
         border-radius: 30px;
         box-shadow: 0px 4px 85px rgba(0, 0, 0, 0.2);
         position: relative;
@@ -62,6 +44,7 @@
         z-index: 1;
         display: flex;
         align-items: center;
+        flex-direction: column;
 
         @media screen and (min-width: 768px) {
             
@@ -87,48 +70,20 @@
         }
     }
 
-    // .what__count
+    // .why__item-icon
 
-    &__count {
-        position: absolute;
-        z-index: -1;
-        font-size: 80px;
-        font-weight: 800;
-        top: -50px;
-        left: 20px;
-    }
-
-    // .what__text
-
-    &__text {
+    &__item-icon {
+        margin-bottom: 10px;
         position: relative;
-        z-index: 2;
+        z-index: 1;
+    }
+
+    // .why__item-text
+
+    &__item-text {
+        position: relative;
+        z-index: 1;
         color: #fff;
-        font-size: 11px;
-        text-align: center;
-
-        @media screen and (min-width: 768px) {
-            font-size: 14px;
-        }
-    }
-
-    // .what__img
-
-    &__img {
-
-        position: absolute;
-        bottom: -60px;
-        right: 0;
-        z-index: 3;
-
-        @media screen and (min-width: 768px) {
-            right: 20%;
-        }
-    }
-
-    // .what__bg
-
-    &__bg {
-        
+        font-size: 14px;
     }
 }

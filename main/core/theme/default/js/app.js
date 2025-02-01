@@ -107,6 +107,21 @@ $('.format__slider').owlCarousel({
   }
 });
 
+
+$('.corp-about__slider').owlCarousel({
+  items: 3,
+  loop: true,
+  margin: 20,
+  autoplay: true,
+  autoplayTimeout: 5000,
+  autoplayHoverPause: true,
+  nav: false,
+  
+  dots: false,
+  responsiveClass: true,
+  
+});
+
 new VenoBox({
   selector: '.format__slider-item',
   numeration: true,

@@ -1,0 +1,308 @@
+
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load tz %}
+{% block title %}Корпоративные игры{% endblock %}
+{% block description %}{{ setup.meta_description }}{% endblock %}
+{% block keywords %}{{ setup.meta_keywords }}{% endblock %}
+{% block canonical %}{% endblock %}
+{% block og:title %}Корпоративные игры{% endblock %}
+{% block og:description %}{{ setup.meta_description }}{% endblock %}
+{% block og:url %}{% endblock %}
+{% block twitter:title %}Корпоративные игры{% endblock %}
+{% block twitter:description %}{{ setup.meta_description }}{% endblock %}
+{% block og:image %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+{% block og:image:secure_url %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+{% block twitter:image %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+
+
+
+
+{% block body %}
+{% load static %}
+{% load thumbnail %}
+{% load theme_static %}
+
+
+
+
+<div class="start block">
+    <div class="container">
+        <div class="start__inner">
+            <h1 class="start__title gradient-text">{{ start.title }}</h1>
+
+            <div class="start__text">
+               {{ start.text | safe }}
+            </div>
+
+            <div class="start__btn-wrap">
+                
+                <a href="" class="start__btn btn">
+                    <p>ОСТАВИТЬ ЗАЯВКУ</p>    
+                    <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_15_137)"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_15_137" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFED92"/>
+                        <stop offset="1" stop-color="#E5C416"/>
+                        </linearGradient>
+                        </defs>
+                    </svg>
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+
+    <img src="{{ start.bg.url }}" alt="" class="start__bg bg">
+</div>
+
+
+
+
+<div class="about about--fullscreen block" id="about">
+    <div class="container">
+        <div class="about__inner inner">
+            <h2 class="about__title gradient-text fz-40">{{ what_setup.title }}</h2>
+
+            
+            <div class="about__row">
+                <div class="about__video-wrap">
+                    {% if what_setup.embedded_video %}
+                        {{ what_setup.embedded_video | safe }}
+                    {% elif what_setup.video %}
+                        <video src="{{ what_setup.video.url }}" class="about__video"></video>
+                    {% else %}
+                    {% endif %}
+                   
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <img src="{{ what_setup.bg.url }}" alt="" class="about__bg bg">
+</div>
+
+
+<div class="why block">
+    <div class="container">
+        <div class="why__inner">
+            <h2 class="why__title gradient-text fz-40">{{ what_corp_items_setup.title }}
+            </h2>
+
+            <div class="why__row">
+
+                {% for item in what_corp_items %}
+
+                <div class="why__item">
+                    <div class="why__item-icon">
+                        <img src="{{ item.image.url }}" alt="">
+                    </div>
+                    <p class="why__item-text">
+                        {{ item.text }}
+                    </p>
+
+                </div>
+                
+                {% endfor %}
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <img src="{{ what_corp_items_setup.bg.url }}" alt="" class="why__bg bg">
+</div>
+
+
+
+<div class="why-we block">
+    <div class="container">
+        <div class="why-we__inner">
+            <h2 class="why-we__title gradient-text fz-40">
+                {{ wht_we_corp_setup.title }}
+            </h2>
+
+            {% for item in wht_we_corp_items %}
+
+            <div class="why-we__row">
+                <div class="why-we__item">
+                    <img src="{{ item.image.url }}" alt="" class="why-we__img">
+                    <p class="why-we__text">{{ item.text }}</p>
+                </div>
+                
+                
+            </div>
+            {% endfor %}
+            
+            <div class="why-we__callback">
+
+                <p class="why-we__callback-title">Хотите обсудить
+                    Ваш корпоратив?
+                </p>
+
+                <a href="#corp" class="why-we__callback-btn btn">
+                    <p style="color: #fff !important;">ОБСУДИТЬ КОРПОРАТИВ</p>
+                    <svg width="256" height="39" viewBox="0 0 256 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M243.061 2.34403L17.7673 0.0704103C13.5757 0.0281096 9.80258 2.60453 8.31619 6.52395L1.21211 25.2564C-1.28969 31.8533 3.64268 38.8968 10.6974 38.8014L245.867 35.6244C252.156 35.5395 256.806 29.7391 255.521 23.5823L252.749 10.3005C251.789 5.70198 247.758 2.39143 243.061 2.34403Z" fill="url(#paint0_linear_314_570)"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_314_570" x1="127" y1="0.371429" x2="127" y2="35.6571" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#1F1F1F"/>
+                        <stop offset="1"/>
+                        </linearGradient>
+                        </defs>
+                    </svg>
+
+                </a>
+
+                <p class="why-we__callback-text">Ответим на все интересующие Вас вопросы</p>
+
+            </div>
+
+
+        </div>
+    </div>
+    <img src="{{ wht_we_corp_setup.bg.url }}" alt="" class="why-we__bg bg">
+</div>
+
+
+
+<div class="corp-about block">
+    <div class="container">
+        <div class="corp-about__inner">
+
+            <div class="corp-about__wrap">
+
+                <div class="corp-about__text">
+
+                    {{ dover_corp_setup.text | safe }}
+                </div>
+
+                <div class="corp-about__item">
+                    <p class="corp-about__title gradient-text">{{ dover_corp_setup.subtitle }}</p>
+                    <p class="corp-about__count gradient-text">{{ dover_corp_setup.count }}</p>
+                </div>
+
+            </div>
+
+
+            <h2 class="corp-about__title gradient-text fz-40">{{ dover_corp_setup.title }} </h2>
+
+            <div class="corp-about__slider owl-carousel owl-theme">
+                {% for slide in dover_corp_slider %}
+                <div>
+                    <img src="{{ slide.image.url }}" alt="" class="corp-about__slide">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <img src="{{ dover_corp_setup.bg.url }}" alt="" class="corp-about__bg bg">
+</div>
+
+
+
+
+<div class="faq block" id="faq">
+    <div class="container">
+        <div class="faq__inner inner">
+            <h2 class="faq__title gradient-text fz-40">{{ faq_setup.title }}</h2>
+
+            <div class="faq__row">
+
+                {% for f in faq %}
+                <div class="faq__item {% if forloop.counter == 1 %}faq__item--active{% endif %}">
+                    <div class="faq__top">
+                        <div class="faq__top-title">{{ f.question }}</div>
+
+                        <div class="faq__row-item"></div>
+
+                    </div>
+                    <div class="faq__body">
+                        {{ f.answer }}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <img src="{% get_static 'images/faq-bg.png' %}" alt="" class="faq__bg bg">
+</div>
+
+
+
+<div class="corp-form block" id="corp">
+    <div class="container">
+        <div class="corp-form__inner">
+            <h2 class="corp-form__title gradient-text">Давайте сделаем
+                корпоратив вместе!</h2>
+
+            <form action="{% url "corp" %}" class="corp-form__form" method="POST">
+                {% csrf_token %}
+
+                {{ form }}
+
+                <div class="corp-form__btn-wrap">
+                
+                    <button class="corp-form__btn btn">
+                        <p>Отправить</p>    
+                        <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_15_137)"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_15_137" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFED92"/>
+                            <stop offset="1" stop-color="#E5C416"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+                    </button>
+                </div>
+
+
+
+            </form>
+
+        </div>
+    </div>
+    <img src="{% get_static 'images/faq-bg.png' %}" alt="" class="corp-form__bg bg">
+
+</div>
+
+
+
+
+<div class="format block">
+    <div class="container">
+        <div class="format__inner inner">
+            
+
+            <h2 class="format__title gradient-text" id="photo">ФОТО С ИГР</h2>
+
+
+            <div class="format__slider owl-carousel owl-theme">
+                {% for photo in games_photo %}
+                    
+                    <a href="{{ photo.image.url }}" data-gall="gallery01"  class="format__slider-item">
+                        <img src="{{ photo.image.url }}" alt="" class="format__img">
+                    </a>
+              
+                {% endfor %}
+            
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <img src="{{ games_category_setup.bg.url }}" alt="" class="format__bg bg">
+</div>
+
+
+
+
+{% endblock %}
