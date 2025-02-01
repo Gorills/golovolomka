@@ -5,9 +5,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 
-from admin.forms import BtnBlockItemForm, BtnBlockSetupForm, CityForm, CustomCodeForm, ColorsForm, FAQForm, FAQSetupForm, GameCategoryForm, GameOrderForm, GamesCategorySetupForm, GamesForm, GamesPhotoForm, GamesSetupForm, HomeGamesSetupForm, SetupForm, ThemeSettingsForm, SliderSetupForm, SliderForm, PageForm, WaitItemForm, WaitSetupForm, WhatItemForm, WhatSetupForm
+from admin.forms import BtnBlockItemForm, BtnBlockSetupForm, CityForm, CustomCodeForm, ColorsForm, DoverCorpSetupForm, DoverCorpSliderForm, FAQForm, FAQSetupForm, GameCategoryForm, GameOrderForm, GamesCategorySetupForm, GamesForm, GamesPhotoForm, GamesSetupForm, HomeGamesSetupForm, SetupForm, StartCorpSetupForm, ThemeSettingsForm, SliderSetupForm, SliderForm, PageForm, WaitItemForm, WaitSetupForm, WhatCorpItemForm, WhatCorpItemSetupForm, WhatCorpSetupForm, WhatItemForm, WhatSetupForm, WhyWeCorpItemForm, WhyWeCorpSetupForm
 
-from home.models import GameOrder, FAQ, BtnBlockItem, BtnBlockSetup, City, FAQSetup, GameCategory, Games, GamesCategorySetup, GamesPhoto, GamesSetup, HomeGamesSetup, Page, Slider, SliderSetup, WaitItem, WaitSetup, WhatItem, WhatSetup
+from home.models import DoverCorpSetup, DoverCorpSlider, GameOrder, FAQ, BtnBlockItem, BtnBlockSetup, City, FAQSetup, GameCategory, Games, GamesCategorySetup, GamesPhoto, GamesSetup, HomeGamesSetup, Page, Slider, SliderSetup, StartCorpSetup, WaitItem, WaitSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatItem, WhatSetup, WhyWeCorpItem, WhyWeCorpSetup
 
 
 
@@ -1020,3 +1020,294 @@ def home_games(request):
     }
 
     return render(request, 'home_games/home_games.html', context)
+
+
+
+
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_corp(request):
+
+    try:
+        start_corp_setup = StartCorpSetup.objects.all().first()
+    except:
+        start_corp_setup = StartCorpSetup()
+        start_corp_setup.save()
+
+    form = StartCorpSetupForm(instance=start_corp_setup)
+
+    if request.method == 'POST':    
+        form = StartCorpSetupForm(request.POST, request.FILES, instance=start_corp_setup)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_corp')
+        else:
+            return render(request, 'corp/admin_corp.html', {'form': form})
+    
+
+    context = {
+        'form': form
+
+    }
+
+
+    return render(request, 'corp/admin_corp.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_what_corp(request):
+
+    try:
+        what_corp_setup = WhatCorpSetup.objects.all().first()
+    except:
+        what_corp_setup = WhatCorpSetup()
+        what_corp_setup.save()
+
+
+    form = WhatCorpSetupForm(instance=what_corp_setup)
+
+    if request.method == 'POST':    
+        form = WhatCorpSetupForm(request.POST, request.FILES, instance=what_corp_setup)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_what_corp')
+        else:
+            return render(request, 'corp/admin_what_corp.html', {'form': form})
+        
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'corp/admin_what_corp.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_what_corp_items(request):
+
+    try:
+        what_corp_items_setup = WhatCorpItemSetup.objects.all().first()
+    except:
+        what_corp_items_setup = WhatCorpItemSetup()
+        what_corp_items_setup.save()
+
+    form = WhatCorpItemSetupForm(instance=what_corp_items_setup)
+
+    if request.method == 'POST':    
+        form = WhatCorpItemSetupForm(request.POST, request.FILES, instance=what_corp_items_setup)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_what_corp_items')
+        else:
+            return render(request, 'corp/admin_what_corp_items.html', {'form': form})
+        
+
+
+    context = {
+        'form': form,
+        'items': WhatCorpItem.objects.all()
+    }
+
+    return render(request, 'corp/admin_what_corp_items.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_what_corp_items_add(request):
+
+    if request.method == 'POST':
+        form = WhatCorpItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_what_corp_items_add')
+        else:
+            return render(request, 'corp/admin_what_corp_items_add.html', {'form': form})
+
+    form = WhatCorpItemForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'corp/admin_what_corp_items_add.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_what_corp_items_edit(request, pk):
+    what_corp_item = WhatCorpItem.objects.get(id=pk)
+    if request.method == 'POST':
+        form = WhatCorpItemForm(request.POST, request.FILES, instance=what_corp_item)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_what_corp_items')
+        else:
+            return render(request, 'corp/admin_what_corp_items_add.html', {'form': form})
+            
+    form = WhatCorpItemForm(instance=what_corp_item)
+    context = {
+        'form': form
+
+    }
+
+    return render(request, 'corp/admin_what_corp_items_add.html', context)
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_what_corp_items_delete(request, pk):
+    what_corp_item = WhatCorpItem.objects.get(id=pk)
+    what_corp_item.delete()
+    return redirect('admin_what_corp_items')
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_why_we_corp(request):
+
+    try:
+        why_we_corp_setup = WhyWeCorpSetup.objects.all().first()
+    except:
+        why_we_corp_setup = WhyWeCorpSetup()
+        why_we_corp_setup.save()
+
+    form = WhyWeCorpSetupForm(instance=why_we_corp_setup)
+
+    if request.method == 'POST':    
+        form = WhyWeCorpSetupForm(request.POST, request.FILES, instance=why_we_corp_setup)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_why_we_corp')
+        else:
+            return render(request, 'corp/admin_why_we_corp.html', {'form': form})
+        
+
+
+    context = {
+        'form': form,
+        'items': WhyWeCorpItem.objects.all()
+    }
+
+    return render(request, 'corp/admin_why_we_corp.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_why_we_corp_add(request):
+
+    if request.method == 'POST':
+        form = WhyWeCorpItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_why_we_corp')
+        else:
+            return render(request, 'corp/admin_why_we_corp_add.html', {'form': form})
+
+    form = WhyWeCorpItemForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'corp/admin_why_we_corp_add.html', context)
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_why_we_corp_edit(request, pk):
+    why_we_corp_item = WhyWeCorpItem.objects.get(id=pk)
+    if request.method == 'POST':
+        form = WhyWeCorpItemForm(request.POST, request.FILES, instance=why_we_corp_item)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_why_we_corp')
+        else:
+            return render(request, 'corp/admin_why_we_corp_add.html', {'form': form})
+            
+    form = WhyWeCorpItemForm(instance=why_we_corp_item)
+    context = {
+        'form': form
+
+    }
+
+    return render(request, 'corp/admin_why_we_corp_add.html', context)
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_why_we_corp_delete(request, pk):
+    why_we_corp_item = WhyWeCorpItem.objects.get(id=pk)
+    why_we_corp_item.delete()
+    return redirect('admin_why_we_corp')
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dover_corp(request):
+
+    try:
+        dover_corp_setup = DoverCorpSetup.objects.all().first()
+    except:
+        dover_corp_setup = DoverCorpSetup()
+        dover_corp_setup.save()
+
+    form = DoverCorpSetupForm(instance=dover_corp_setup)
+
+    if request.method == 'POST':    
+        form = DoverCorpSetupForm(request.POST, request.FILES, instance=dover_corp_setup)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_dover_corp')
+        else:
+            return render(request, 'corp/admin_dover_corp.html', {'form': form})
+
+
+    context = {
+        'form': form,
+        'items': DoverCorpSlider.objects.all()
+    }
+
+    return render(request, 'corp/admin_dover_corp.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dover_corp_add(request):
+
+    if request.method == 'POST':
+        form = DoverCorpSliderForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_dover_corp')
+        else:
+            return render(request, 'corp/admin_dover_corp_add.html', {'form': form})
+
+    form = DoverCorpSliderForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'corp/admin_dover_corp_add.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dover_corp_edit(request, pk): 
+    dover_corp_slider = DoverCorpSlider.objects.get(id=pk)
+    if request.method == 'POST':
+        form = DoverCorpSliderForm(request.POST, request.FILES, instance=dover_corp_slider)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_dover_corp')
+        else:
+            return render(request, 'corp/admin_dover_corp_add.html', {'form': form})
+            
+    form = DoverCorpSliderForm(instance=dover_corp_slider)
+    context = {
+        'form': form
+
+    }
+
+    return render(request, 'corp/admin_dover_corp_add.html', context)   
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dover_corp_delete(request, pk):
+    dover_corp_slider = DoverCorpSlider.objects.get(id=pk)
+    dover_corp_slider.delete()
+    return redirect('admin_dover_corp')

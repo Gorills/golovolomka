@@ -3,10 +3,10 @@ from django.views.decorators.http import require_GET, require_POST
 from django.http import HttpResponse
 
 
-from .models import GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup
+from .models import DoverCorpSetup, DoverCorpSlider, GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, StartCorpSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup, WhyWeCorpItem, WhyWeCorpSetup
 from setup.models import ThemeSettings, BaseSettings, EmailSettings
 
-from .forms import GameOrderForm
+from .forms import CorpForm, GameOrderForm
 
 try:
     theme_address = ThemeSettings.objects.get().name
@@ -175,6 +175,88 @@ def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
 
 import datetime
+
+
+
+def corp(request):
+
+    if request.method == 'POST':
+        form = CorpForm(request.POST)
+        
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            phone = form.cleaned_data.get('phone')
+            data = form.cleaned_data.get('data')
+            city = form.cleaned_data.get('city')
+            numbers = form.cleaned_data.get('numbers')
+            how_call = form.cleaned_data.get('how_call')
+            how = form.cleaned_data.get('how')
+            place = form.cleaned_data.get('place')
+
+            
+            message = f'''
+Новая заявка на корпоратив
+Имя: {name}
+Email: {email}
+Телефон: {phone}
+Дата: {data}
+Город: {city}
+Количество человек: {numbers}
+Как вы узнали о нас: {how_call}
+Как вы узнали о нас: {how}
+Место проведения: {place}
+'''
+
+            # print(message)
+            send_message(message)
+
+
+            return redirect('/?reserve=false')
+
+    
+
+    what_setup = WhatCorpSetup.objects.all().first()
+
+    what_corp_items_setup = WhatCorpItemSetup.objects.all().first()
+    what_corp_items = WhatCorpItem.objects.all()
+
+    wht_we_corp_setup = WhyWeCorpSetup.objects.all().first()
+    wht_we_corp_items = WhyWeCorpItem.objects.all()
+
+    dover_corp_setup = DoverCorpSetup.objects.all().first()
+    dover_corp_slider = DoverCorpSlider.objects.all()
+
+    faq_setup = FAQSetup.objects.all().first()
+    faq = FAQ.objects.all()
+    games_photo = GamesPhoto.objects.all()
+    games_category_setup = GamesCategorySetup.objects.all().first()
+    form = CorpForm()
+
+
+    context = {
+        'start': StartCorpSetup.objects.all().first(),
+        'what_setup': what_setup,
+        'what_corp_items_setup': what_corp_items_setup,
+        'what_corp_items': what_corp_items,
+
+        'wht_we_corp_setup': wht_we_corp_setup,
+        'wht_we_corp_items': wht_we_corp_items,
+
+        'dover_corp_setup': dover_corp_setup,
+        'dover_corp_slider': dover_corp_slider,
+
+
+
+        'faq_setup': faq_setup,
+        'faq': faq,
+        'games_photo': games_photo,
+        'games_category_setup': games_category_setup,
+        'form': form
+    }
+
+
+    return render(request, 'home/corp.html', context)
 
 def home(request):
 

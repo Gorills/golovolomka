@@ -85,8 +85,25 @@ urlpatterns = [
     path('users/delete/<int:pk>/', views.users_delete, name='users_delete'),
 
 
-    
 
+    # CORP
+    path('start/corp/', views.admin_corp, name='admin_corp'),
+    path('whatcorpi/corp/', views.admin_what_corp, name='admin_what_corp'),
+    path('whatcorpa/corp/items/', views.admin_what_corp_items, name='admin_what_corp_items'),
+    path('whatcorpe/corp/items/add/', views.admin_what_corp_items_add, name='admin_what_corp_items_add'),
+    path('whatcorp/corp/items/edit/<int:pk>/', views.admin_what_corp_items_edit, name='admin_what_corp_items_edit'),
+    path('whatcorp/corp/items/delete/<int:pk>/', views.admin_what_corp_items_delete, name='admin_what_corp_items_delete'),
+
+    path('why_we/corp/', views.admin_why_we_corp, name='admin_why_we_corp'),
+    path('why_we/corp/add/', views.admin_why_we_corp_add, name='admin_why_we_corp_add'),
+    path('why_we/corp/edit/<int:pk>/', views.admin_why_we_corp_edit, name='admin_why_we_corp_edit'),
+    path('why_we/corp/delete/<int:pk>/', views.admin_why_we_corp_delete, name='admin_why_we_corp_delete'),
+
+    path('dover/corp/', views.admin_dover_corp, name='admin_dover_corp'),
+    path('dover/corp/add/', views.admin_dover_corp_add, name='admin_dover_corp_add'),
+    path('dover/corp/edit/<int:pk>/', views.admin_dover_corp_edit, name='admin_dover_corp_edit'),
+    path('dover/corp/delete/<int:pk>/', views.admin_dover_corp_delete, name='admin_dover_corp_delete'),
+     
 
 ]
 

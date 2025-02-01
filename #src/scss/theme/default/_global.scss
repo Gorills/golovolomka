@@ -105,7 +105,8 @@ a   {
 
 .btn {
     text-transform: uppercase;
-    
+    background: none;
+    border: none;
     color: #1E1E1E;
     font-weight: 700;
     position: relative;
@@ -143,7 +144,14 @@ a   {
     -webkit-text-fill-color: transparent; /* Прозрачный текст */
     background-clip: text; /* Для других браузеров */
     text-fill-color: transparent; /* Прозрачный текст для других браузеров */
+
     
+    
+}
+
+.fz-40 {
+    font-size: 40px!important;
+    max-width: 100%!important;
 }
 
 

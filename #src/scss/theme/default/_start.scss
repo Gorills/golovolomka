@@ -1,0 +1,49 @@
+.start {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    // .start__inner
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    // .start__title
+
+    &__title {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    // .start__text
+
+    &__text {
+        margin-top: 20px;
+        text-align: center;
+
+    }
+
+    // .start__btn-wrap
+
+    &__btn-wrap {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    // .start__btn
+
+    &__btn {
+    }
+
+    // .start__bg
+
+    &__bg {
+    }
+}
+

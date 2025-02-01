@@ -3,9 +3,57 @@ from django import forms
 from setup.models import BaseSettings, Colors, ThemeSettings, CustomCode
 
 
-from home.models import GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup
+from home.models import DoverCorpSetup, DoverCorpSlider, GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, StartCorpSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup, WhyWeCorpItem, WhyWeCorpSetup
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+class DoverCorpSliderForm(forms.ModelForm):
+    class Meta:
+        model = DoverCorpSlider
+        fields = "__all__"
+
+class DoverCorpSetupForm(forms.ModelForm):
+    text = forms.CharField(label='Описание', required=False, widget=CKEditorUploadingWidget())
+    class Meta:
+        model = DoverCorpSetup
+        fields = "__all__"
+
+
+class WhyWeCorpItemForm(forms.ModelForm):
+    class Meta:
+        model = WhyWeCorpItem
+        fields = "__all__"
+
+class WhyWeCorpSetupForm(forms.ModelForm):
+    class Meta:
+        model = WhyWeCorpSetup
+        fields = "__all__"
+
+class WhatCorpItemForm(forms.ModelForm):
+    class Meta:
+        model = WhatCorpItem
+        fields = "__all__"
+
+class WhatCorpItemSetupForm(forms.ModelForm):
+    class Meta:
+        model = WhatCorpItemSetup
+        fields = "__all__"
+
+
+
+class WhatCorpSetupForm(forms.ModelForm):
+    class Meta:
+        model = WhatCorpSetup
+        fields = "__all__"
+
+
+class StartCorpSetupForm(forms.ModelForm):
+    text = forms.CharField(label='Описание', required=False, widget=CKEditorUploadingWidget())
+    class Meta:
+        model = StartCorpSetup
+        fields = "__all__"
+
 
 
 
