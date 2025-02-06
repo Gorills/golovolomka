@@ -173,7 +173,7 @@ def game_callback(request):
                     pass
                 
 
-                reserve_bool = True if reserve else False
+                reserve_bool = "true" if reserve else "false"
                 return JsonResponse({'success': True, 'url': f"/?reserve={reserve_bool}"})
 
             else:
