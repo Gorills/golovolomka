@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 
 import os, sys
 
-site_user_root_dir = '/home/s/shopds7k/golovolomka/public_html'
+site_user_root_dir = '/home/m/maksudaq/golovolomka.maksudaq.beget.tech/public_html'
 sys.path.insert(0, site_user_root_dir + '/main')
 sys.path.insert(1, site_user_root_dir + '/venv/lib/python3.11/site-packages/')
 
