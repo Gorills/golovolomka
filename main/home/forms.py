@@ -1,7 +1,6 @@
 from django import forms
 # from snowpenguin.django.recaptcha3.fields import ReCaptchaField
-from django_recaptcha.fields import ReCaptchaField
-from django_recaptcha.widgets import ReCaptchaV2Checkbox
+
 from home.models import GameOrder
 
 
