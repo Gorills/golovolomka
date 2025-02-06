@@ -171,8 +171,10 @@ def game_callback(request):
                 except Exception as e:
                     # Логирование ошибки отправки сообщения, если необходимо
                     pass
+                
 
-                return JsonResponse({'success': True, 'url': f"/?reserve={"true" if reserve else "false"}"})
+                reserve_bool = True if reserve else False
+                return JsonResponse({'success': True, 'url': f"/?reserve={reserve_bool}"})
 
             else:
 
