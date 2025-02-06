@@ -71,28 +71,7 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
-def verify_yandex_captcha(token, user_ip):
-    """Проверяет YaCaptcha через API Яндекса"""
-    try:
-        response = requests.get(
-            "https://smartcaptcha.yandexcloud.net/validate",
-            params={
-                "secret": SMARTCAPTCHA_SERVER_KEY,
-                "token": token,
-                "ip": user_ip,  # Передаем IP пользователя
-            },
-            timeout=1  # Таймаут 1 секунда
-        )
-        server_output = response.content.decode()
-        if response.status_code != 200:
-            print(f"Ошибка проверки CAPTCHA: код={response.status_code}; ответ={server_output}")
-            return False  # Если ошибка запроса, считаем капчу не пройденной
-        
-        return json.loads(server_output).get("status") == "ok"
-    
-    except requests.RequestException as e:
-        print(f"Ошибка сети при проверке CAPTCHA: {e}")
-        return False  # Если произошла ошибка запроса, не пропускаем пользователя
+
 
 def game_callback(request):
     if request.method != 'POST':
@@ -100,98 +79,96 @@ def game_callback(request):
 
     form = GameOrderForm(request.POST)
     form_data = request.POST.dict()
-    captcha_token = request.POST.get("smart-token")
-    user_ip = get_client_ip(request)  # Получаем IP пользователя
-
-    # Проверяем капчу перед обработкой формы
-    if not captcha_token or not verify_yandex_captcha(captcha_token, user_ip):
-        return JsonResponse({'error': 'Вы не прошли проверку CAPTCHA'}, status=400)
-
+    
     try:
-        with transaction.atomic():
-            if form.is_valid():
-                
+        
+        if form.is_valid():
+            
 
-                game_id = form.cleaned_data.get('game_id')
-                command = form.cleaned_data.get('command')
-                name = form.cleaned_data.get('name')
-                phone = form.cleaned_data.get('phone')
-                comment = form.cleaned_data.get('comment')
-                promo = form.cleaned_data.get('promo')
-                how = form.cleaned_data.get('how')
-                command_number = form.cleaned_data.get('command_number')
+            game_id = form.cleaned_data.get('game_id')
+            command = form.cleaned_data.get('command')
+            name = form.cleaned_data.get('name')
+            phone = form.cleaned_data.get('phone')
+            comment = form.cleaned_data.get('comment')
+            promo = form.cleaned_data.get('promo')
+            how = form.cleaned_data.get('how')
+            command_number = form.cleaned_data.get('command_number')
 
-                
-                try:
-                    game = Games.objects.get(id=game_id)
-                except ObjectDoesNotExist:
-                    error_message = (
-                        f"Игра с id {game_id} не найдена.\n"
-                        f"Полученные данные: {form_data}"
-                    )
-                    try:
-                        send_message(error_message)
-                    except Exception as send_err:
-                        # Здесь можно добавить логирование ошибки отправки сообщения
-                        pass
-                    return JsonResponse({'error': 'Игра не найдена'}, status=404)
-
-                # Предполагаем, что метод называется reserve(), исправляем опечатку, если она была
-                try:
-                    # Если метод возвращает bool, то можно использовать:
-                    reserve = not game.reserve()
-                except AttributeError:
-                    # Если метода reserve() нет, установить значение по умолчанию или обработать иначе
-                    reserve = False
-
-                GameOrder.objects.create(
-                    game=game,
-                    name=form.cleaned_data.get('name'),
-                    phone=form.cleaned_data.get('phone'),
-                    command=form.cleaned_data.get('command'),
-                    comment=form.cleaned_data.get('comment'),
-                    promo=form.cleaned_data.get('promo'),
-                    how=form.cleaned_data.get('how'),
-                    command_number=form.cleaned_data.get('command_number'),
-                )
-
-                # Формируем сообщение для Telegram
-                message = (
-                    f"Новая заявка на игру ***{game}***\n"
-                    f"Команда: {command}\n"
-                    f"Имя: {name}\n"
-                    f"Телефон: {phone}\n"
-                    f"Количество человек: {command_number}\n"
-                    f"Комментарий: {comment}\n"
-                    f"Промокод: {promo}\n"
-                    f"Как вы узнали о нас: {how}"
+            
+            try:
+                game = Games.objects.get(id=game_id)
+            except ObjectDoesNotExist:
+                error_message = (
+                    f"Игра с id {game_id} не найдена.\n"
+                    f"Полученные данные: {form_data}"
                 )
                 try:
-                    send_message(message)
-                except Exception as e:
-                    # Логирование ошибки отправки сообщения, если необходимо
+                    send_message(error_message)
+                except Exception as send_err:
+                    # Здесь можно добавить логирование ошибки отправки сообщения
                     pass
+                return JsonResponse({'error': 'Игра не найдена'}, status=404)
+
+            # Предполагаем, что метод называется reserve(), исправляем опечатку, если она была
+            try:
+                # Если метод возвращает bool, то можно использовать:
+                reserve = not game.reserve()
+            except AttributeError:
+                # Если метода reserve() нет, установить значение по умолчанию или обработать иначе
+                reserve = False
+
+            GameOrder.objects.create(
+                game=game,
+                name=form.cleaned_data.get('name'),
+                phone=form.cleaned_data.get('phone'),
+                command=form.cleaned_data.get('command'),
+                comment=form.cleaned_data.get('comment'),
+                promo=form.cleaned_data.get('promo'),
+                how=form.cleaned_data.get('how'),
+                command_number=form.cleaned_data.get('command_number'),
+            )
+
+            # Формируем сообщение для Telegram
+            message = (
+                f"Новая заявка на игру ***{game}***\n"
+                f"Команда: {command}\n"
+                f"Имя: {name}\n"
+                f"Телефон: {phone}\n"
+                f"Количество человек: {command_number}\n"
+                f"Комментарий: {comment}\n"
+                f"Промокод: {promo}\n"
+                f"Как вы узнали о нас: {how}"
+            )
+            try:
+                send_message(message)
+            except Exception as e:
+                # Логирование ошибки отправки сообщения, если необходимо
+                pass
+            
+
+            reserve_bool = "true" if reserve else "false"
+            return redirect(f"/?reserve={reserve_bool}")
+        
+            
+
+        else:
+
+            # В случае невалидной формы используем исходные данные и ошибки валидации
+            errors = form.errors.as_json()
+            message = (
+                f"Новая заявка с ошибкой!\n"
+                f"Полученные данные: {form_data}\n"
+                f"Ошибки: {errors}"
+            )
+            try:
+                send_message(message)
+            except Exception as e:
+                # Логирование ошибки отправки сообщения, если необходимо
+                pass
+
+            return redirect(f"/?error=true")
                 
-
-                reserve_bool = "true" if reserve else "false"
-                return JsonResponse({'success': True, 'url': f"/?reserve={reserve_bool}"})
-
-            else:
-
-                # В случае невалидной формы используем исходные данные и ошибки валидации
-                errors = form.errors.as_json()
-                message = (
-                    f"Новая заявка с ошибкой!\n"
-                    f"Полученные данные: {form_data}\n"
-                    f"Ошибки: {errors}"
-                )
-                try:
-                    send_message(message)
-                except Exception as e:
-                    # Логирование ошибки отправки сообщения, если необходимо
-                    pass
                 
-                return JsonResponse({'error': 'Некорректные данные', 'url': "/?error=true", 'errors': form.errors}, status=400)
 
     except Exception as e:
         # Ловим любые непредвиденные ошибки, отправляем информацию в Telegram
@@ -205,7 +182,7 @@ def game_callback(request):
         except Exception:
             pass
 
-        return JsonResponse({'error': f'Ошибка сервера: {str(e)}', 'url': "/?error=true"}, status=500)
+        return redirect(f"/?error=true")
 
 
 
