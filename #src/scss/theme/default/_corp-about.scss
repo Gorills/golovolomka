@@ -53,6 +53,7 @@
         font-weight: 800;
         text-transform: uppercase;
         text-align: center;
+        margin-bottom: 20px;
     }
 
     // .corp-about__count
@@ -70,6 +71,8 @@
     // .corp-about__slide
 
     &__slide {
+        border-radius: 20px;
+        overflow: hidden;
     }
 
     // .corp-about__bg

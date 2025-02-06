@@ -126,17 +126,18 @@
                 {{ wht_we_corp_setup.title }}
             </h2>
 
-            {% for item in wht_we_corp_items %}
+            
 
             <div class="why-we__row">
+                {% for item in wht_we_corp_items %}
                 <div class="why-we__item">
                     <img src="{{ item.image.url }}" alt="" class="why-we__img">
                     <p class="why-we__text">{{ item.text }}</p>
                 </div>
+                {% endfor %}
                 
                 
             </div>
-            {% endfor %}
             
             <div class="why-we__callback">
 

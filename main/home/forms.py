@@ -1,12 +1,14 @@
 from django import forms
-from snowpenguin.django.recaptcha3.fields import ReCaptchaField
-
+# from snowpenguin.django.recaptcha3.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 from home.models import GameOrder
 
 
 
 class CorpForm(forms.Form):
-    captcha = ReCaptchaField()
+    
+
     name = forms.CharField(
         label='',
         widget=forms.TextInput(attrs={
@@ -107,6 +109,9 @@ class CorpForm(forms.Form):
         required=False,  
         choices=[
             ('', 'Место проведения'),
+            ('', 'Уже известно'),
+            ('', 'Еще неизвестно'),
+            ('', 'Можете посоветовать?'),
            
             
         ],
@@ -122,7 +127,8 @@ class CorpForm(forms.Form):
 
 
 class GameOrderForm(forms.ModelForm):
-    captcha = ReCaptchaField()
+    
+
 
     game_id = forms.CharField(
         label='',
@@ -202,7 +208,7 @@ class GameOrderForm(forms.ModelForm):
     )
     command_number = forms.IntegerField(
         label='Количество человек',
-        min_value=2,
+        min_value=1,
         max_value=12,
         widget=forms.NumberInput(attrs={
             'class': 'popup__input',

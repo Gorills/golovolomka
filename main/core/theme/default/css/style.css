@@ -791,7 +791,7 @@ a {
 }
 
 .schedule__status {
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
   color: #202020;
   background: linear-gradient(180deg, #FEEC8D 0%, #E6C419 100%);
@@ -2167,11 +2167,17 @@ a {
   font-weight: 800;
   text-transform: uppercase;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .corp-about__count {
   font-weight: 800;
   font-size: 75px;
+}
+
+.corp-about__slide {
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 360px) {
@@ -2322,7 +2328,7 @@ a {
   }
 
   .schedule__status {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .about--fullscreen .about__video-wrap {
