@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 
@@ -103,6 +103,20 @@ urlpatterns = [
     path('dover/corp/add/', views.admin_dover_corp_add, name='admin_dover_corp_add'),
     path('dover/corp/edit/<int:pk>/', views.admin_dover_corp_edit, name='admin_dover_corp_edit'),
     path('dover/corp/delete/<int:pk>/', views.admin_dover_corp_delete, name='admin_dover_corp_delete'),
+
+    path('franch/<str:model_name>/edit/<int:item_id>/', views.admin_franch_edit, name='admin_franch_edit'),
+    path('franch/<str:model_name>/delete/<int:item_id>/', views.admin_franch_delete, name='admin_franch_delete'),
+    # FRANCH
+    # Без дополнительных моделей
+    re_path(r'^franch/(?P<model_name>[^/]+)/$', views.admin_franch, name='admin_franch'),
+
+    # С одной дополнительной моделью (items1_model_name)
+    re_path(r'^franch/(?P<model_name>[^/]+)/(?P<items1_model_name>[^/]+)/$', views.admin_franch, name='admin_franch_with_items'),
+
+    # С двумя дополнительными моделями (items1_model_name и items2_model_name)
+    re_path(r'^franch/(?P<model_name>[^/]+)/(?P<items1_model_name>[^/]+)/(?P<items2_model_name>[^/]+)/$', views.admin_franch, name='admin_franch_with_two_items'),
+    
+    
      
 
 ]

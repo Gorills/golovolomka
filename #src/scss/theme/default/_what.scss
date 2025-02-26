@@ -112,6 +112,16 @@
         }
     }
 
+    // .what__item-title {
+
+    &__item-title {
+        position: relative;
+        z-index: 2;
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
     // .what__img
 
     &__img {

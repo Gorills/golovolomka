@@ -516,3 +516,240 @@ class DoverCorpSlider(models.Model):
     class Meta:
         verbose_name = 'Слайдер Головоломке доверяют'
         verbose_name_plural = 'Слайдер Головоломке доверяют'
+
+
+
+
+# FRANCH
+
+
+
+
+class StartFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    subtitle = models.CharField(max_length=250, verbose_name='Подзаголовок', null=True, blank=True)
+    text = models.TextField(verbose_name='Текст', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):  
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока КОРПОРАТИВНЫЙ КВИЗ'
+
+
+
+class WhatFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    text = models.TextField(verbose_name='Текст', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+    
+
+    video = models.FileField(upload_to='what', verbose_name='Видео', null=True, blank=True)
+    embedded_video = models.TextField(null=True, blank=True, verbose_name='Встроенное видео (код для вставки)')
+
+
+
+    def __str__(self):  
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Что такое головоломка?'
+        verbose_name_plural = 'Что такое головоломка?'
+
+
+
+
+class WhatFranchBtn(models.Model):
+    image = models.ImageField(upload_to='what', verbose_name='Изображение')
+    text = models.TextField(verbose_name='Текст')
+    btn = models.CharField(max_length=250, verbose_name='Кнопка')
+
+    def __str__(self):
+        return self.text
+    
+    class Meta:
+        verbose_name = 'Блоки ЧТО ТАКОЕ КОРПОРАТИВНЫЙ КВИЗ??'
+        verbose_name_plural = 'Блоки ЧТО ТАКОЕ КОРПОРАТИВНЫЙ КВИЗ??'
+
+
+
+class AboutFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    title_2 = models.CharField(max_length=250, verbose_name='Заголовок 2', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока НЕМНОГО О НАС….'
+        verbose_name_plural = 'Настройки блока НЕМНОГО О НАС….'
+
+
+class WhatFranchItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Блоки НЕМНОГО О НАС…'
+        verbose_name_plural = 'Блоки НЕМНОГО О НАС…'
+
+
+
+
+class WhatOtlItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+    
+
+    def __str__(self):
+        return self.title
+    
+
+    class Meta:
+        verbose_name = 'Блоки Отличаемся от многих'
+        verbose_name_plural = 'Блоки Отличаемся от многих'
+    
+
+class FotmatFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока Формат головоломки'
+        verbose_name_plural = 'Настройки блока Формат головоломки'
+    
+
+class FormatFranchItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+    img = models.ImageField(upload_to='what', verbose_name='Изображение')
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Блоки Формат головоломки'
+        verbose_name_plural = 'Блоки Формат головоломки'
+    
+
+
+class FiveFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+    text = models.TextField(verbose_name='Текст', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Настройки блока Пять преимуществ'
+        verbose_name_plural = 'Настройки блока Пять преимуществ'
+
+class FiveFranchItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Блоки Пять преимуществ'
+        verbose_name_plural = 'Блоки Пять преимуществ'
+
+
+class WhatYouGetSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True) 
+    subtitle = models.CharField(max_length=250, verbose_name='Подзаголовок', null=True, blank=True)
+
+
+    def __str__(self):  
+        return self.title
+    
+
+
+class WhatYouGetItem(models.Model):
+    image = models.FileField(upload_to='what', verbose_name='Изображение')
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self):
+        return self.text
+    
+
+
+class YourPaySetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+
+class YourPayItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    
+
+    def __str__(self):
+        return self.title
+    
+
+
+
+
+class NumbersFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+
+class NumbetsTableItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    value = models.CharField(max_length=250, verbose_name='Значение')
+
+    def __str__(self):
+        return self.title
+    
+
+class NumbersFranchItem(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+    
+
+    def __str__(self):
+        return self.title
+    
+
+
+class DirectorWordsSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    image = models.ImageField(upload_to='what', verbose_name='Изображение', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+    text = models.TextField(verbose_name='Текст', null=True, blank=True)
+    file = models.FileField(upload_to='what', verbose_name='Файл', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+
+
+class CallbackFranchSetup(SingletonModel):
+    title = models.CharField(max_length=250, verbose_name='Заголовок', null=True, blank=True)
+    bg = models.ImageField(upload_to='what', verbose_name='Фоновое изображение', null=True, blank=True)
+
+    subtitle_1 = models.CharField(max_length=250, verbose_name='Подзаголовок 1', null=True, blank=True)
+    text_1 = models.TextField(verbose_name='Текст 1', null=True, blank=True)
+    subtitle_2 = models.CharField(max_length=250, verbose_name='Подзаголовок 2', null=True, blank=True)
+    text_2 = models.TextField(verbose_name='Текст 2', null=True, blank=True)
+
+    def __str__(self):
+        return self.title

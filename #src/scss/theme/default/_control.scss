@@ -1,0 +1,109 @@
+.control {
+    padding: 40px 0;
+    // .control__inner
+
+    &__inner {
+        border-radius: 20px;
+        padding: 20px;
+        background: rgba(217, 217, 217, 0.1);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+
+    // .control__title
+
+    &__title {
+        font-size: 25px;
+        margin-bottom: 40px;
+    }
+
+    // .control__subtitle
+
+    &__subtitle {
+        text-transform: uppercase;
+        font-size: 25px;
+        margin-bottom: 15px;
+    }
+
+    // .control__text
+
+    &__text {
+        color: #fff;
+        margin-bottom: 40px;
+        font-size: 15px;
+    }
+
+    // .control__form-title
+
+    &__form-title {
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    // .control__form
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: #f4d01ed7;
+
+        @media screen and (min-width: 576px) {
+            max-width: 50%;
+            margin: 0 auto;
+            
+        }
+    
+    }
+
+    // .control__input
+
+    &__input {
+        width: 100%;
+        height: 38px;
+        border-radius: 20px;
+        border: none;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 700;
+        text-transform: uppercase;
+        resize: none;
+
+        &::placeholder {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #222;
+        }
+
+    }
+
+    // .control__btn-wrap
+
+    &__btn-wrap {
+    }
+
+    // .control__btn
+
+    &__btn {
+
+        width: 100%;
+        height: 38px;
+        text-align: center;
+        background-color: #222;
+        border-radius: 20px;
+        border: none;
+        color: #F4D11E;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 17px;
+    }
+}
+

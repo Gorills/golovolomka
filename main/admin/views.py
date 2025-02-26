@@ -1311,3 +1311,156 @@ def admin_dover_corp_delete(request, pk):
     dover_corp_slider = DoverCorpSlider.objects.get(id=pk)
     dover_corp_slider.delete()
     return redirect('admin_dover_corp')
+
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse
+from django.forms import modelform_factory
+from django.contrib import messages
+from django.http import HttpResponseNotAllowed
+from django.apps import apps
+from django import forms
+from django.db import models
+from ckeditor.widgets import CKEditorWidget  # ✅ Импортируем CKEditor
+
+def custom_formfield_callback(field):
+    """ Используем CKEditor только для полей `text` """
+    if field.name == "text":  # ✅ Только для полей с именем `text`
+        return field.formfield(widget=CKEditorWidget())
+    return field.formfield()
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_franch(request, model_name, items1_model_name=None, items2_model_name=None):
+    """ Универсальное представление для работы с франшизными моделями + 2 необязательных списка объектов """
+
+    # Получаем основную модель
+    model = apps.get_model('home', model_name)
+    if not model:
+        return render(request, 'franch/admin_error.html', {"error": "Основная модель не найдена"})
+
+    # ✅ Проверяем, что items1_model_name и items2_model_name не равны 'None' (строка) или None (объект)
+    items1_model = None
+    items1 = None
+    if items1_model_name and items1_model_name.lower() != "none":
+        try:
+            items1_model = apps.get_model('home', items1_model_name)
+            items1 = items1_model.objects.all()
+        except LookupError:
+            items1 = None
+
+    items2_model = None
+    items2 = None
+    if items2_model_name and items2_model_name.lower() != "none":
+        try:
+            items2_model = apps.get_model('home', items2_model_name)
+            items2 = items2_model.objects.all()
+        except LookupError:
+            items2 = None
+
+    # Загружаем Singleton, если модель поддерживает `get_solo`
+    instance = model.get_solo() if hasattr(model, 'get_solo') else None
+
+    # Запоминаем текущие файлы перед обработкой формы
+    old_files = {field.name: getattr(instance, field.name) for field in model._meta.fields if isinstance(field, models.FileField)} if instance else {}
+
+    # ✅ Применяем CKEditor только для `text`
+    FormClass = modelform_factory(model, exclude=[], formfield_callback=custom_formfield_callback)
+
+    if request.method == 'POST':
+        form = FormClass(request.POST, request.FILES, instance=instance)
+
+        if form.is_valid():
+            updated_instance = form.save(commit=False)
+
+            # ✅ Если установлен чекбокс очистки файла, удаляем файл
+            for field_name, old_file in old_files.items():
+                if request.POST.get(f"{field_name}-clear"):  # Django использует `-clear` для чекбокса очистки
+                    setattr(updated_instance, field_name, None)  # Удаляем файл
+
+                elif not request.FILES.get(field_name):  # Если новый файл не загружен, оставляем старый
+                    setattr(updated_instance, field_name, old_file)
+
+            updated_instance.save()
+            messages.success(request, f'Настройки {model._meta.verbose_name} обновлены!')
+
+            # ✅ Исправленный редирект
+            if items1_model_name and items2_model_name and items1_model_name.lower() != "none" and items2_model_name.lower() != "none":
+                return redirect(reverse('admin_franch_with_two_items', args=[model_name, items1_model_name, items2_model_name]))
+            elif items1_model_name and items1_model_name.lower() != "none":
+                return redirect(reverse('admin_franch_with_items', args=[model_name, items1_model_name]))
+            else:
+                return redirect(reverse('admin_franch', args=[model_name]))
+    else:
+        form = FormClass(instance=instance)
+
+    return render(request, 'franch/admin_franch.html', {
+        'form': form,
+        'items1': items1,
+        'items2': items2,
+        'items1_model_name': items1_model_name if items1_model_name and items1_model_name.lower() != "none" else None,
+        'items2_model_name': items2_model_name if items2_model_name and items2_model_name.lower() != "none" else None,
+        'model_name': model_name,
+        'verbose_name': model._meta.verbose_name,
+        'verbose_name_plural': model._meta.verbose_name_plural
+    })
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_franch_delete(request, model_name, item_id):
+    """ Удаление записи """
+    model = apps.get_model('home', model_name)
+    instance = get_object_or_404(model, id=item_id)
+    instance.delete()
+    messages.success(request, f'Запись {instance} удалена!')
+
+    # ✅ Получаем URL, с которого пришли
+    previous_url = request.META.get('HTTP_REFERER')
+
+    if previous_url:
+        # ✅ Извлекаем первую модель из пути URL
+        path_parts = previous_url.strip('/').split('/')
+        if len(path_parts) > 1 and path_parts[0] == "franch":
+            primary_model_name = path_parts[1]  # Первая модель в пути
+            return redirect(reverse('admin_franch', args=[primary_model_name]))
+
+    # Если `HTTP_REFERER` нет или путь неверный → редиректим на `admin_franch`
+    return redirect(reverse('admin_franch', args=[model_name]))
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_franch_edit(request, model_name, item_id):
+    """ Редактирование записи """
+    model = apps.get_model('home', model_name)
+    instance = get_object_or_404(model, id=item_id)
+
+    FormClass = modelform_factory(model, exclude=[])
+
+    if request.method == 'POST':
+        form = FormClass(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Запись {instance} обновлена!')
+
+            # ✅ Получаем URL, с которого пришли
+            previous_url = request.META.get('HTTP_REFERER')
+
+            if previous_url:
+                # ✅ Извлекаем первую модель из пути URL
+                path_parts = previous_url.strip('/').split('/')
+                if len(path_parts) > 1 and path_parts[0] == "franch":
+                    primary_model_name = path_parts[1]  # Первая модель в пути
+                    return redirect(reverse('admin_franch', args=[primary_model_name]))
+
+            # Если `HTTP_REFERER` нет или путь неверный → редиректим на `admin_franch`
+            return redirect(reverse('admin_franch', args=[model_name]))
+    else:
+        form = FormClass(instance=instance)
+
+    return render(request, 'franch/admin_franch.html', {
+        'form': form,
+        'model_name': model_name,
+        'verbose_name': model._meta.verbose_name
+    })

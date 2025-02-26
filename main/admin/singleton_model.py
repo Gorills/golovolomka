@@ -11,8 +11,7 @@ class SingletonModel(models.Model):
         super(SingletonModel, self).save(*args, **kwargs)
  
     @classmethod
-    def load(cls):
-        try:
-            return cls.objects.get()
-        except cls.DoesNotExist:
-            return cls()
+    def get_solo(cls):
+        """ Возвращает единственный объект или создает новый """
+        obj, created = cls.objects.get_or_create()
+        return obj

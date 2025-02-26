@@ -17,6 +17,7 @@ sitemaps = {
 urlpatterns = [
     path('', views.home, name='home'),
     path('corp/', views.corp, name='corp'),
+    path('franchise/', views.franchise, name='franchise'),
 
     path('game_callback/', views.game_callback, name='game_callback'),
     path('schedule/', views.schedule, name='schedule'),

@@ -1,0 +1,522 @@
+
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load tz %}
+{% block title %}Корпоративные игры{% endblock %}
+{% block description %}{{ setup.meta_description }}{% endblock %}
+{% block keywords %}{{ setup.meta_keywords }}{% endblock %}
+{% block canonical %}{% endblock %}
+{% block og:title %}Корпоративные игры{% endblock %}
+{% block og:description %}{{ setup.meta_description }}{% endblock %}
+{% block og:url %}{% endblock %}
+{% block twitter:title %}Корпоративные игры{% endblock %}
+{% block twitter:description %}{{ setup.meta_description }}{% endblock %}
+{% block og:image %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+{% block og:image:secure_url %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+{% block twitter:image %}{% thumbnail setup.social_image "537x240" format="PNG" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+
+
+
+
+{% block body %}
+{% load static %}
+{% load thumbnail %}
+{% load theme_static %}
+
+
+
+<div class="start block start--franchise">
+    <div class="container">
+        <div class="start__inner">
+            <h1 class="start__title gradient-text">{{ start_serup.title }}</h1>
+
+            <div class="start__text">
+                {{ start_serup.subtitle }}
+            </div>
+
+            <div class="start__btn-wrap">
+                
+                <a href="#" class="start__btn btn">
+                    <p>Посмотреть</p>    
+                    <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_15_137)"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_15_137" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFED92"/>
+                        <stop offset="1" stop-color="#E5C416"/>
+                        </linearGradient>
+                        </defs>
+                    </svg>
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+
+    <img src="{{ start_serup.bg.url }}" alt="" class="start__bg bg">
+</div>
+
+<div class="second-block block">
+
+    <div class="container">
+        <div class="slider__wrapper">
+            
+        
+            <div class="slider__text">
+                {{ start_serup.text | safe }}
+            </div>
+
+            <a href="#callback" class="slider__btn btn">
+
+                <p>ОСТАВИТЬ ЗАЯВКУ</p>
+                
+
+                
+                <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_15_137)"/>
+                    <defs>
+                    <linearGradient id="paint0_linear_15_137" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FFED92"/>
+                    <stop offset="1" stop-color="#E5C416"/>
+                    </linearGradient>
+                    </defs>
+                </svg>
+
+                
+
+            </a>
+
+        </div>
+    </div>
+
+    <img src="{{ start_serup.bg.url }}" alt="" class="second-block bg">
+</div>
+
+
+
+<div class="about block" id="about">
+    <div class="container">
+        <div class="about__inner inner">
+            <h2 class="about__title gradient-text">{{ what_setup.title }} </h2>
+            
+            
+            <div class="about__row">
+                <div class="about__text-fr">
+                    {{ what_setup.text | safe }}
+    
+    
+                </div>
+                <div class="about__video-wrap">
+                    {% if what_setup.embedded_video %}
+                        {{ what_setup.embedded_video | safe }}
+                    {% elif what_setup.video %}
+                        <video src="{{ what_setup.video.url }}" class="about__video"></video>
+                    {% else %}
+                    {% endif %}
+
+
+                   
+                </div>
+
+
+                
+
+
+            </div>
+
+
+            <div class="about__fr-wrap">
+
+                {% for btn in what_btn %}
+                
+                <a href="{{ btn.link }}" class="btn-block__item">
+                    <h3 class="btn-block__text">
+                        {{ btn.text | safe }}
+
+                    </h3>
+    
+                   
+                    <div class="btn-block__btn btn">
+                        <p>{{ btn.btn }}</p>
+    
+                        <svg width="192" height="53" viewBox="0 0 192 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M179.112 3.13445L17.2974 0.152744C12.4898 0.0641576 8.29989 3.4096 7.32207 8.11746L0.563297 40.6586C-0.746692 46.9658 4.16116 52.848 10.601 52.6892L182.07 48.4595C187.942 48.3147 192.425 43.1632 191.758 37.3269L188.863 11.9971C188.294 7.01631 184.124 3.22681 179.112 3.13445Z" fill="url(#paint0_linear_107_957)"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_107_957" x1="95.5" y1="0.504762" x2="95.5" y2="48.4571" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFED92"/>
+                            <stop offset="1" stop-color="#E5C416"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+        
+    
+                    </div>
+                    
+                    <img src="{{ btn.image.url }}" alt="" class="btn-block__item-bg">
+
+                    
+                </a>
+                {% endfor %}
+              
+
+
+            </div>
+
+        </div>
+    </div>
+
+    
+    
+    <img src="{{ what_setup.bg.url }}" alt="" class="about__bg bg">
+
+</div>
+
+
+<div class="forus block">
+    <div class="container">
+        <div class="forus__inner inner">
+            <h3 class="forus__title gradient-text">{{ about_setup.title }}</h3>
+
+            <div class="forus__row">
+
+                {% for item in  what_items %}
+                <div class="forus__item">
+                    <div class="forus__item-title gradient-text">{{ item.title }} </div>
+                    <div class="forus__text">{{ item.text | safe }} </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+
+            <h3 class="forus__title gradient-text">{{ about_setup.title_2 }}</h3>
+
+            <div class="forus__warap">
+
+                {% for item in what_otl %}
+                <div class="forus__linear-item">
+                    <div class="forus__linear-itle gradient-text">{{ item.title }}</div>
+                    <div class="forus__linear-text">{{ item.text | safe  }}</div>
+                </div>
+                
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+    </div>
+    <img src="{{ about_setup.bg.url }}" alt="" class="forus__bg bg">
+
+</div>
+
+
+
+<div class="game-format block">
+    <div class="container">
+        <div class="game-format__inner inner">
+            <h2 class="game-format__title gradient-text">{{ fotmat_setup.title }}</h2>
+
+
+            <div class="game-format__row">
+
+                {% for item in fotmat_items %}
+                <div class="btn-block__item">
+                    <h3 class="btn-block__text">
+                      <span class="gradient-text">{{ item.title }} <span>
+
+                    </h3>
+    
+                   <div class="btn-block__desc">{{ item.text | safe }}</div>
+                  
+                    
+                    <img src="{{ item.img.url }}" alt="" class="btn-block__item-bg">
+
+                    
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+    </div>
+    <img src="{{ fotmat_setup.bg.url }}" alt="" class="game-format__bg bg">
+
+</div>
+
+
+<div class="why-fr block">
+    <div class="container">
+        <div class="why-fr__inner inner">
+
+            <h2 class="why-fr__title gradient-text">{{ five_setup.title }} </h2>
+
+
+            <div class="why-fr__row">
+
+                
+                {% for item in five_items %}
+                <div class="what__item-wrap">
+                    <div class="what__count gradient-text">{{ forloop.counter }}</div>
+
+                    <div class="what__item">
+                        <p class="what__item-title gradient-text">{{ item.title }}</p>
+
+                        <div class="what__text">{{ item.text | safe }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="why-fr__doyou">
+                <div class="why-fr__doyou-title">{{ five_setup.text | safe }}</div>
+        
+                <div class="why-fr__doyou-wrap">
+        
+                    
+                    <a href="#" class="why-fr__doyou-btn">
+                        <p>ХОЧУ!</p>
+                        <svg width="123" height="33" viewBox="0 0 123 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M111.959 1.89718L13.3335 0.145967C8.55675 0.0611495 4.38716 3.36707 3.38051 8.03736L0.673972 20.5942C-0.689057 26.9179 4.21997 32.8522 10.6871 32.6984L113.013 30.2662C118.906 30.1261 123.4 24.9449 122.705 19.0911L121.712 10.7177C121.123 5.75288 116.958 1.98594 111.959 1.89718Z" fill="url(#paint0_linear_337_125)"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_337_125" x1="61" y1="0.314286" x2="61" y2="30.1714" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#1F1F1F"/>
+                            <stop offset="1"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+                    </a>
+        
+        
+                </div>
+            </div>
+        </div>
+
+        
+
+
+    </div>
+
+
+    <img src="{% get_static "images/why_bg.png" %}" alt="" class="why-fr__bg bg">
+
+
+    
+
+</div>
+
+
+
+<div class="whatweget block">
+    <div class="container">
+        <div class="whatweget__inner inner">
+            <h2 class="whatweget__title gradient-text">{{ what_you_get_setup.title }}</h2>
+            <p class="whatweget__subtitle">{{ what_you_get_setup.subtitle }}</p>
+
+            <div class="whatweget__row">
+                {% for item in what_you_get_items %}
+                <div class="whatweget__item">
+                    <img src="{{ item.image.url }}" alt="">
+                    <div class="whatweget__text">{{ item.text | safe}}</div>
+                </div>
+                
+                {% endfor %}
+
+            </div>
+            
+        </div>
+    </div>
+
+    <img src="{{ what_you_get_setup.bg.url }}" alt="" class="whatweget__bg bg">
+
+</div>
+
+
+
+<div class="earn block">
+    <div class="container">
+        <div class="earn__inner inner">
+            <h3 class="earn__title gradient-text">{{ your_pay_setup.title }}</h3>
+
+            
+            <div class="earn__row">
+
+                {% for item in your_pay_items %}
+                <div class="earn__item">
+                    <div class="earn__count">1</div>
+                    <div class="earn__text">{{ item.title }} </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+                
+
+
+        </div>
+    </div>
+
+    <img src="{{ your_pay_setup.bg.url }}" alt="" class="earn__bg bg">
+
+</div>
+
+
+
+<div class="fornumbers block">
+    <div class="container">
+        <div class="fornumbers__inner inner">
+            <h2 class="fornumbers__title gradient-text">{{ numbers_setup.title }}</h3>
+
+
+            <div class="fornumbers__row">
+
+                {% for item in numbers_items %}
+                <div class="fornumbers__item">
+                    <div class="fornumbers__text">{{ item.title }}</div>
+                    <div class="fornumbers__text">{{ item.value }}</div>
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+
+            <div class="fornumbers__grid">
+
+                {% for item in numbers_items_2 %}
+                <div class="fornumbers__grid-item">
+
+                    <div class="fornumbers__grid-top">
+
+                        <p>{{ item.title }}</p>
+                        <svg width="131" height="53" viewBox="0 0 131 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M118.523 3.05072L15.3825 0.243108C10.2958 0.104642 5.91621 3.80811 5.20774 8.84714L0.661895 41.1797C-0.204629 47.3429 4.70898 52.792 10.9287 52.5653L120.59 48.5692C126.269 48.3623 130.635 43.4704 130.196 37.8044L128.221 12.2756C127.826 7.17156 123.64 3.19002 118.523 3.05072Z" fill="url(#paint0_linear_337_178)"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_337_178" x1="65" y1="0.504762" x2="65" y2="48.4571" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFED92"/>
+                            <stop offset="1" stop-color="#E5C416"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+    
+                    </div>
+
+                    <div class="fornumbers__grid-bottom ">
+                    
+                        <div class="gradient-text">{{ item.text | safe }}</div>
+                    
+                    </div>
+
+                </div>
+                {% endfor %}
+                
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <img src="{{ numbers_setup.gg.url }}" alt="" class="fornumbers__bg bg">
+
+</div>
+
+
+<div class="osnwords block">
+    <div class="container">
+        <div class="osnwords__inner inner">
+            <div class="osnwords__top">
+                <img src="{{director_setup.image.url}}" alt="" class="osnwords__img">
+                <h3 class="osnwords__title gradient-text">{{director_setup.title}}</h3>
+
+            </div>
+
+            <div class="osnwords__text">
+               {{ director_setup.text | safe }}
+            </div>
+
+            <div class="osnwords__wrap">
+                <a href="{{ director_setup.file.url }}" target="_blank" class="osnwords__btn btn">
+                    <p>Скачать презентацию</p>
+
+                    <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_337_361)"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_337_361" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFED92"/>
+                        <stop offset="1" stop-color="#E5C416"/>
+                        </linearGradient>
+                        </defs>
+                    </svg>
+                        
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <img src="{{ director_setup.bg.url }}" alt="" class="osnwords__bg bg">
+
+</div>
+
+
+
+<div class="control block">
+    <div class="container">
+        <div class="control__inner inner">
+            <h2 class="control__title gradient-text">{{ callback_setup.title }}</h2>
+
+            <h3 class="control__subtitle gradient-text">{{ callback_setup.subtitle_1 }}</h3>
+            <p class="control__text">
+                {{ callback_setup.text_1 }}
+            </p>
+
+            <h3 class="control__subtitle gradient-text">{{ callback_setup.subtitle_2 }}</h3>
+            <p class="control__text">
+                {{ callback_setup.text_2 }}
+            </p>
+
+
+            <h2 class="control__form-title gradient-text">Стать франчайзи</h2>
+
+
+            <form action="{% url "corp" %}" class="control__form" method="POST" id="callback">
+                {% csrf_token %}
+
+                {{ form }}
+
+                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
+                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
+                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
+                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
+
+                <div class="control__btn-wrap">
+                
+                    <button class="control__btn">
+                        <p>Отправить</p>    
+                       
+                    </button>
+                </div>
+
+
+
+            </form>
+
+
+        </div>
+    </div>
+    <img src="{{ callback_setup.bg.url }}" alt="" class="control__bg bg">
+
+</div>
+
+
+
+{% endblock %}

@@ -330,6 +330,38 @@ Email: {email}
 
     return render(request, 'home/corp.html', context)
 
+
+
+from .models import StartFranchSetup, WhatFranchSetup, WhatFranchBtn, AboutFranchSetup, WhatFranchItem, WhatOtlItem, FotmatFranchSetup, FormatFranchItem, FiveFranchSetup, FiveFranchItem, WhatYouGetSetup, WhatYouGetItem, YourPaySetup, YourPayItem, NumbersFranchSetup, NumbetsTableItem, NumbersFranchItem, DirectorWordsSetup, CallbackFranchSetup
+
+def franchise(request):
+    
+    context = {
+        'start_serup': StartFranchSetup.objects.all().first(),
+        'what_setup': WhatFranchSetup.objects.all().first(),
+        'what_btn': WhatFranchBtn.objects.all(),
+        'about_setup': AboutFranchSetup.objects.all().first(),
+        'what_items': WhatFranchItem.objects.all(),
+        'what_otl': WhatOtlItem.objects.all(),
+        'fotmat_setup': FotmatFranchSetup.objects.all().first(),
+        'fotmat_items': FormatFranchItem.objects.all(),
+        'five_setup': FiveFranchSetup.objects.all().first(),
+        'five_items': FiveFranchItem.objects.all(),
+        'what_you_get_setup': WhatYouGetSetup.objects.all().first(),
+        'what_you_get_items': WhatYouGetItem.objects.all(),
+        'your_pay_setup': YourPaySetup.objects.all().first(),
+        'your_pay_items': YourPayItem.objects.all(),
+        'numbers_setup': NumbersFranchSetup.objects.all().first(),
+        'numbers_items': NumbetsTableItem.objects.all(),
+        'numbers_items_2': NumbersFranchItem.objects.all(),
+        'director_setup': DirectorWordsSetup.objects.all().first(),
+        'callback_setup': CallbackFranchSetup.objects.all().first(),
+    }
+
+    
+    return render(request, 'home/franchise.html', context)
+
+
 def home(request):
 
 

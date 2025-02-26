@@ -3,6 +3,21 @@
     height: 100vh;
     display: flex;
     align-items: center;
+
+
+    &--franchise {
+        height: fit-content;
+        min-height: 500px;
+        .start__title {
+            font-size: 25px;
+        }
+        .start__text {
+            font-size: 17px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+    }
+
     // .start__inner
 
     &__inner {
