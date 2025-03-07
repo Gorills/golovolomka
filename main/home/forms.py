@@ -4,6 +4,67 @@ from django import forms
 from home.models import GameOrder
 
 
+class FranchForm(forms.Form):
+    name = forms.CharField(
+        label='',
+        widget=forms.TextInput(attrs={
+            'class': 'control__input',
+            'placeholder': 'ИМЯ',
+            'required': 'required',
+            'id': ''
+        })
+    )
+    phone = forms.CharField(
+        label='',
+        widget=forms.TextInput(attrs={
+            'class': 'control__input',
+            'placeholder': 'ТЕЛЕФОН',
+            'required': 'required',
+            'id': ''
+        })
+    )
+    city = forms.CharField(
+        label='',
+        widget=forms.TextInput(attrs={
+            'class': 'control__input',
+            'placeholder': 'ГОРОД',
+            'required': 'required',
+            'id': ''
+        })
+    )
+    how = forms.ChoiceField(
+        label='',
+        required=False,  
+        choices=[
+            ('', 'Как вы узнали о нас?'),
+            ('Уже был(а) на играх', 'Уже был(а) на играх'),
+            ('Instagram', 'Instagram'),
+            ('Telegram', 'Telegram'),
+            ('VK', 'VK'),
+            ('Рекомендация знакомых', 'Рекомендация знакомых'),
+            ('Поисковик в интернете', 'Поисковик в интернете'),
+            ('СМИ', 'СМИ'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'control__input',
+            'name': 'how',
+            'id': ''
+            
+        })
+    )
+    comment = forms.CharField(
+        label='',
+        widget=forms.Textarea(attrs={
+            'class': 'control__input control__input--textarea',
+            'placeholder': 'Комментарий',
+            'required': 'required',
+            'id': ''
+        })
+    )   
+
+
+
+
 
 class CorpForm(forms.Form):
     

@@ -1177,6 +1177,7 @@ a {
 .about__fr-wrap .btn-block__text span {
   font-size: 29px;
   font-weight: 700;
+  color: #F4D11E;
 }
 
 .what {
@@ -1394,6 +1395,10 @@ a {
   background: linear-gradient(265deg, #F4D11E 0%, #000000 73%);
   backdrop-filter: blur(18px);
   opacity: 0.2;
+}
+
+.format__img {
+  object-fit: cover;
 }
 
 .format .owl-stage-outer {
@@ -2739,7 +2744,7 @@ a {
 }
 
 .osnwords__title {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -2812,6 +2817,7 @@ a {
   font-weight: 700;
   text-transform: uppercase;
   resize: none;
+  font-family: "Gilroy", sans-serif;
 }
 
 .control__input::placeholder {
@@ -2820,6 +2826,20 @@ a {
   font-weight: 700;
   text-transform: uppercase;
   color: #222;
+  font-family: "Gilroy", sans-serif;
+}
+
+.control__input option {
+  font-family: "Gilroy", sans-serif;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #222;
+}
+
+.control__input--textarea {
+  height: 100px;
 }
 
 .control__btn {

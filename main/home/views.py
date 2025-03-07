@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from .models import DoverCorpSetup, DoverCorpSlider, GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, StartCorpSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup, WhyWeCorpItem, WhyWeCorpSetup
 from setup.models import ThemeSettings, BaseSettings, EmailSettings
 
-from .forms import CorpForm, GameOrderForm
+from .forms import CorpForm, FranchForm, GameOrderForm
 
 try:
     theme_address = ThemeSettings.objects.get().name
@@ -335,7 +335,35 @@ Email: {email}
 from .models import StartFranchSetup, WhatFranchSetup, WhatFranchBtn, AboutFranchSetup, WhatFranchItem, WhatOtlItem, FotmatFranchSetup, FormatFranchItem, FiveFranchSetup, FiveFranchItem, WhatYouGetSetup, WhatYouGetItem, YourPaySetup, YourPayItem, NumbersFranchSetup, NumbetsTableItem, NumbersFranchItem, DirectorWordsSetup, CallbackFranchSetup
 
 def franchise(request):
-    
+    if request.method == 'POST':
+        form = FranchForm(request.POST)
+        
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            phone = form.cleaned_data.get('phone')
+            city = form.cleaned_data.get('city')
+            
+            how = form.cleaned_data.get('how')
+            comment = form.cleaned_data.get('comment')
+
+            
+            message = f'''
+Новая заявка на франшизу
+Имя: {name}
+Телефон: {phone}
+Город: {city}
+Как вы узнали о нас: {how}
+Комментарий: {comment}
+'''
+
+            # print(message)
+            send_message(message)
+
+
+            return redirect('/?reserve=false')
+        
+
+    form = FranchForm()
     context = {
         'start_serup': StartFranchSetup.objects.all().first(),
         'what_setup': WhatFranchSetup.objects.all().first(),
@@ -356,6 +384,7 @@ def franchise(request):
         'numbers_items_2': NumbersFranchItem.objects.all(),
         'director_setup': DirectorWordsSetup.objects.all().first(),
         'callback_setup': CallbackFranchSetup.objects.all().first(),
+        'form': form
     }
 
     

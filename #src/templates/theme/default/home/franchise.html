@@ -130,7 +130,7 @@
 
                 {% for btn in what_btn %}
                 
-                <a href="{{ btn.link }}" class="btn-block__item">
+                <a target="_blank" href="{% if btn.link and not btn.file %}{{ btn.link }}{% elif btn.file and not btn.link %}{{ btn.file.url }}{% endif %}" class="btn-block__item">
                     <h3 class="btn-block__text">
                         {{ btn.text | safe }}
 
@@ -488,15 +488,12 @@
             <h2 class="control__form-title gradient-text">Стать франчайзи</h2>
 
 
-            <form action="{% url "corp" %}" class="control__form" method="POST" id="callback">
+            <form action="{% url "franchise" %}" class="control__form" method="POST" id="callback">
                 {% csrf_token %}
 
                 {{ form }}
 
-                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
-                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
-                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
-                <input type="text" class="control__input" placeholder="ВАШЕ ИМЯ">
+                
 
                 <div class="control__btn-wrap">
                 

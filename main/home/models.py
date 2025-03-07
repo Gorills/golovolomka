@@ -563,14 +563,16 @@ class WhatFranchSetup(SingletonModel):
 class WhatFranchBtn(models.Model):
     image = models.ImageField(upload_to='what', verbose_name='Изображение')
     text = models.TextField(verbose_name='Текст')
+    link = models.CharField(max_length=250, verbose_name='Ссылка', null=True, blank=True)
+    file = models.FileField(upload_to='what', verbose_name='Файл', null=True, blank=True)
     btn = models.CharField(max_length=250, verbose_name='Кнопка')
 
     def __str__(self):
         return self.text
     
     class Meta:
-        verbose_name = 'Блоки ЧТО ТАКОЕ КОРПОРАТИВНЫЙ КВИЗ??'
-        verbose_name_plural = 'Блоки ЧТО ТАКОЕ КОРПОРАТИВНЫЙ КВИЗ??'
+        verbose_name = 'Блок Что такое головоломка ??'
+        verbose_name_plural = 'Блоки Что такое головоломка??'
 
 
 

@@ -74,6 +74,7 @@
         font-weight: 700;
         text-transform: uppercase;
         resize: none;
+        font-family: 'Gilroy', sans-serif;
 
         &::placeholder {
             text-align: center;
@@ -81,9 +82,26 @@
             font-weight: 700;
             text-transform: uppercase;
             color: #222;
+            font-family: 'Gilroy', sans-serif;
+
+        }
+
+        option {
+            font-family: 'Gilroy', sans-serif;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #222;
+        }
+
+        &--textarea {
+            height: 100px;
         }
 
     }
+
+
 
     // .control__btn-wrap
 
