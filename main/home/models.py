@@ -140,6 +140,8 @@ class Games(models.Model):
 
     bg = models.ImageField(upload_to='games/bg', verbose_name='Изображение')
 
+    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='Город', related_name='games', null=True, blank=True)
+
 
     def active(self):
         if not self.date_date or not self.time:

@@ -403,6 +403,7 @@ def franchise(request):
 
 def home(request):
 
+    city = get_subdomain(request)
 
     
     sliders_setup = SliderSetup.objects.all().first()
@@ -411,7 +412,8 @@ def home(request):
     games_setup = GamesSetup.objects.all().first()
     games = Games.objects.all().order_by('date_date')
 
-    
+    if city:
+        games = games.filter(city=city)
 
 
     games_category_setup = GamesCategorySetup.objects.all().first()
