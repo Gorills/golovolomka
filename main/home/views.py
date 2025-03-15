@@ -38,6 +38,10 @@ def schedule(request):
     games_setup = GamesSetup.objects.all().first()
     games = Games.objects.all().order_by('date_date')
 
+    city = get_subdomain(request)
+    if city:
+        games = games.filter(city=city)
+
     context = {
         'games_setup': games_setup,
         'games': games,
