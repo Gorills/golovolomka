@@ -288,3 +288,23 @@ $(document).ready(function() {
 
   
 });
+
+
+
+$(document).on('click','.header__city',function(e){
+  e.preventDefault()
+ 
+  $('.city-popup').toggleClass('city-popup--active');
+
+
+})
+
+
+
+$(document).on('click','.city-popup__owerlay',function(e){
+  e.preventDefault()
+ 
+  $('.city-popup').removeClass('city-popup--active');
+
+
+})

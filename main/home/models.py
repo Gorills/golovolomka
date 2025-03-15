@@ -17,6 +17,12 @@ class City(models.Model):
     telegram = models.CharField(max_length=250, verbose_name='Телеграм')
     whatsapp = models.CharField(max_length=250, verbose_name='Ватсап')
 
+    telegram_group = models.CharField(max_length=250, verbose_name='Телеграм группа', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Город'
+        verbose_name_plural = 'Города'
+
 
     def __str__(self):
         return self.name

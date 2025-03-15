@@ -212,3 +212,57 @@ a   {
         margin-bottom: 20px;
     }
 }
+
+
+
+.city-popup {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    align-items: center;
+    justify-content: center;
+    
+    z-index: 10000;
+    display: none;
+    &--active {
+        display: flex;
+    }
+    // .city-popup__owerlay
+
+    &__owerlay {
+        background-color: rgba(0, 0, 0, 0.8);
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    // .city-popup__inner
+
+    &__inner {
+        position: relative;
+        z-index: 1001;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+    }
+
+    // .city-popup__link
+
+    &__link {
+        display: block;
+        padding: 10px 0;
+        color: #000;
+        font-weight: 700;
+
+        &:hover {
+            color: #F4D11E;
+        }
+    }
+}

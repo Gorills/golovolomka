@@ -196,6 +196,7 @@ TEMPLATES = [
                 'home.context_processors.pages',
                 'home.context_processors.game_order_form',
                 'home.context_processors.contacts',
+                'home.context_processors.all_cities',
 
                 
             ],

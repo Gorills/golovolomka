@@ -30,6 +30,7 @@ except:
 
 
 
+from .context_processors import get_subdomain
 
 
 def schedule(request):
@@ -80,6 +81,15 @@ def game_callback(request):
     form = GameOrderForm(request.POST)
     form_data = request.POST.dict()
     
+    city = get_subdomain(request)
+    if city:
+        telegram_group = city.telegram_group
+        if not telegram_group:
+            telegram_group = '-1002487695898'
+    else:
+        telegram_group = '-1002487695898'
+
+
     try:
         
         if form.is_valid():
@@ -140,7 +150,7 @@ def game_callback(request):
                 f"Как вы узнали о нас: {how}"
             )
             try:
-                send_message(message)
+                send_message(message, telegram_group)
             except Exception as e:
                 # Логирование ошибки отправки сообщения, если необходимо
                 pass
@@ -161,7 +171,7 @@ def game_callback(request):
                 f"Ошибки: {errors}"
             )
             try:
-                send_message(message)
+                send_message(message, )
             except Exception as e:
                 # Логирование ошибки отправки сообщения, если необходимо
                 pass
