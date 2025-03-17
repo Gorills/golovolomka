@@ -106,8 +106,8 @@
 
 
 
-<div class="city-popup">
-    <div class="city-popup__owerlay"></div>    
+<div class="city-popup {% if not city %}city-popup--active{% endif %}">
+    <div class="city-popup__owerlay {% if city %}city-popup__owerlay--close{% endif %}"></div>    
 
     <div class="city-popup__inner">
         {% for citi in citys %}

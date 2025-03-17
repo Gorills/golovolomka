@@ -194,7 +194,10 @@
                         </a>
                         {% endif %}
 
-                        <img src="{{ game.bg.url  }}" alt="" class="schedule__item-bg">
+                        
+                        {% thumbnail game.bg "858x257" format="WEBP" crop="center" as im %}
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ game.name }}" class="schedule__item-bg">
+                        {% endthumbnail %}
 
                     </div>
                     {% endif %}

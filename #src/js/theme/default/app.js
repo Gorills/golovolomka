@@ -301,7 +301,7 @@ $(document).on('click','.header__city',function(e){
 
 
 
-$(document).on('click','.city-popup__owerlay',function(e){
+$(document).on('click','.city-popup__owerlay--close',function(e){
   e.preventDefault()
  
   $('.city-popup').removeClass('city-popup--active');
