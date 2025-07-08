@@ -175,7 +175,12 @@ class Games(models.Model):
 
 
     def __str__(self):
-        return self.name + ' - ' + self.date
+
+        try:
+            return self.name + ' - ' + self.city.name + ' - ' + self.date
+        except:
+            return self.name + ' - ' + self.date
+        
     
 
 
