@@ -175,7 +175,7 @@ class Games(models.Model):
 
 
     def __str__(self):
-        return self.name + ' - ' + self.city.name + ' - ' + self.date
+        return self.name + ' - ' + self.date
     
 
 
