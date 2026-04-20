@@ -21,6 +21,13 @@ _venv_site = glob.glob(
 if _venv_site:
     sys.path.insert(1, _venv_site[0])
 
+try:
+    import pymysql
+except ImportError:
+    pymysql = None
+if pymysql is not None:
+    pymysql.install_as_MySQLdb()
+
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'main.settings')
