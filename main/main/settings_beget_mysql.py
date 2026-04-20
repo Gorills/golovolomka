@@ -24,6 +24,14 @@ DATABASES = {
         "PASSWORD": os.environ["BEGET_MYSQL_PASSWORD"],
         "HOST": os.environ.get("BEGET_MYSQL_HOST", "127.0.0.1"),
         "PORT": os.environ.get("BEGET_MYSQL_PORT", "3306"),
-        "OPTIONS": {"charset": "utf8mb4"},
+        "OPTIONS": {
+            "charset": "utf8mb4",
+            "init_command": (
+                "SET SESSION wait_timeout=28800, "
+                "SESSION interactive_timeout=28800, "
+                "SESSION net_read_timeout=600, "
+                "SESSION net_write_timeout=600"
+            ),
+        },
     }
 }
