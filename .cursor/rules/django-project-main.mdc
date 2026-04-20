@@ -1,0 +1,12 @@
+---
+description: Пакет main/main — settings, корневые urls, WSGI/Passenger
+globs: ["main/main/**"]
+alwaysApply: false
+---
+
+# `main/main` (конфигурация проекта)
+
+- **settings.py**: `INSTALLED_APPS`, allauth, CKEditor, WhiteNoise; секреты и прод — через `local_settings.py` (не в индексе).
+- **urls.py**: порядок `include()` важен: `home.urls` последним из-за slug; медиа/статика через `static()`.
+- **WSGI**: `passenger_wsgi.py` для хостинга — менять только осознанно при деплое.
+- **Контракт**: правки здесь влияют на все приложения; не подключать циклические импорты из `home`/`admin` в settings.

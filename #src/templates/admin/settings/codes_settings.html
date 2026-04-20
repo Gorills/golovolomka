@@ -1,0 +1,54 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+
+<div class="page__title">Коды счетчиков</div>
+
+<div class="breadcrumb">
+
+    <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="#">Главная</a></li>
+        <li class="breadcrumb__item">Коды счетчиков</li>
+    </ol>
+
+</div>
+
+<div class="page">
+    <div class="page__inner">
+
+        {% for code in codes %}
+        <form action="{% url 'codes_settings_edit' code.id %}" class="form" method="post">
+            {% csrf_token %}
+            <label for="">Название скрипта</label>
+            <p class="form__static">{{ code.name }}</p>
+            <label for="">Код скрипта</label>
+            <p class="form__static">{{ code.code }}</p>
+            <p class="form__static">Размещение: {% if code.h_f == True %}<b>в шапке сайта</b>{% else %}<b>в подвале сайта</b>{% endif %}</p>
+            {% if code.subdomain %}
+            <label for="">Поддомен</label>
+            <p class="form__static">{{ code.subdomain }}</p>
+            
+            {% endif %}
+            
+            <div class="page__row">
+                <a href="{% url 'codes_settings_edit' code.id %}" class="btn btn--warning">Изменить</a>
+                <a href="{% url 'codes_settings_delete' code.id %}" class="btn btn--danger code-remove">Удалить</a>
+                
+            </div>
+        </form>
+        {% endfor %}
+        <form action="." class="form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            
+            <button class="btn btn--primary">Добавить</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

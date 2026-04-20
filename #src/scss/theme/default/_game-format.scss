@@ -1,0 +1,50 @@
+.game-format {
+    padding: 40px 0;
+    // .game-format__inner
+
+    &__inner {
+    }
+
+    // .game-format__title
+
+    &__title {
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+    }
+
+    // .game-format__row
+
+    &__row {
+
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+
+        .btn-block__text {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .btn-block__item {
+            margin-bottom: 0;
+            height: 100%;
+            min-height: 158px;
+            margin-left: 0!important;
+        }
+
+        .btn-block__desc {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    // .game-format__bg
+
+    &__bg {
+    }
+}

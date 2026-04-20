@@ -1,0 +1,89 @@
+.why {
+    padding: 40px 0;
+    // .why__inner
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+
+        
+    }
+
+    // .why__title
+
+    &__title {
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 40px;
+    }
+
+    // .why__row
+
+    &__row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+        @media screen and (min-width: 768px) {
+            grid-template-columns: repeat(3, 1fr);
+            
+        }
+    }
+
+    // .why__item
+
+    &__item {
+        text-align: center;
+        height: 144px;
+        padding: 10px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 85px rgba(0, 0, 0, 0.2);
+        position: relative;
+        margin-right: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        @media screen and (min-width: 768px) {
+            
+            width: 100%;
+            height: 100%;
+            min-height: 150px;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 1px solid #444444;
+            opacity: 1;
+            z-index: 0;
+            // background: rgba(217, 217, 217, 0.1); /* Полупрозрачный фон */
+            backdrop-filter: blur(18px); /* Размытие заднего плана */
+            -webkit-backdrop-filter: blur(18px); /* Размытие заднего плана для WebKit */
+        }
+    }
+
+    // .why__item-icon
+
+    &__item-icon {
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    // .why__item-text
+
+    &__item-text {
+        position: relative;
+        z-index: 1;
+        color: #fff;
+        font-size: 14px;
+    }
+}

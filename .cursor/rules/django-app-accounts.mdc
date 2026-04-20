@@ -1,0 +1,12 @@
+---
+description: Приложение accounts — маршруты и обвязка вокруг allauth
+globs: ["main/accounts/**"]
+alwaysApply: false
+---
+
+# `main/accounts`
+
+- **Ответственность**: URL и вьюхи под префиксом `accounts/` рядом с `allauth.urls` (см. `main/main/urls.py`).
+- **Настройки allauth**: глобальные параметры (`ACCOUNT_*`, `LOGIN_REDIRECT_URL`, бэкенды) в `main/main/settings.py` — при смене поведения проверять оба места.
+- **Контракт**: не дублировать логику платежей и контентных страниц из `home`; только пользователь, профиль, вход/регистрация.
+- **Шаблоны**: при добавлении страниц — согласовать с темой в `main/core/theme/default/`.

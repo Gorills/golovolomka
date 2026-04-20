@@ -1,0 +1,90 @@
+{% extends 'admin_base.html' %}
+
+{% block body %}
+
+<div class="breadcrumb">
+    <div class="breadcrumb__inner">
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'admin' %}">Главная</a></li>
+            <li class="breadcrumb__item">{{ verbose_name_plural }}</li>
+        </ol>
+    </div>
+</div>
+
+<div class="page search">
+    <div class="page__inner search__inner">
+        <h2>{{ verbose_name }}</h2>
+
+        <form method="post" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+            <button class="btn btn--success" type="submit">Сохранить</button>
+        </form>
+
+        <br>
+
+        {% if items1_model_name and items1_model_name != "None" %}
+        <a href="{% url 'admin_franch' items1_model_name %}" class="btn btn--primary">➕ Добавить запись в {{ items1_model_name }}</a>
+        {% endif %}
+        <br>
+        <br>
+
+
+        {% if items1 %}
+        <h3>Список элементов ({{ items1_model_name }})</h3>
+        <br>
+
+        <ul class="responsive-table">
+            {% for item in items1 %}
+            <li class="table-row">
+                <div class="col col-3" data-label="Название">
+                    {{ item }}
+                </div>
+                <div class="col col-5" data-label="Действия">
+                    <a href="{% url 'admin_franch_edit' model_name=items1_model_name item_id=item.id %}" class="edit">
+                        ✏️ 
+                    </a>
+                    <a href="{% url 'admin_franch_delete' model_name=items1_model_name item_id=item.id %}" class="remove">
+                        ❌ 
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <br>
+
+        {% if items2_model_name and items2_model_name != "None" %}
+        <a href="{% url 'admin_franch' items2_model_name %}" class="btn btn--primary">➕ Добавить запись в {{ items2_model_name }}</a>
+        {% endif %}
+        <br>
+        <br>
+
+        {% if items2 %}
+        <h3>Список элементов ({{ items2_model_name }})</h3>
+        <br>
+
+        <ul class="responsive-table">
+            {% for item in items2 %}
+            <li class="table-row">
+                <div class="col col-3" data-label="Название">
+                    {{ item }}
+                </div>
+                <div class="col col-5" data-label="Действия">
+                    <a href="{% url 'admin_franch_edit' model_name=items2_model_name item_id=item.id %}" class="edit">
+                        ✏️ 
+                    </a>
+                    <a href="{% url 'admin_franch_delete' model_name=items2_model_name item_id=item.id %}" class="remove">
+                        ❌ 
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

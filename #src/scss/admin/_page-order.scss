@@ -1,0 +1,519 @@
+// Панель массового удаления (заявки, список игр): остаётся у верхнего края при прокрутке
+.admin-bulk-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(36, 41, 52, 0.08);
+    border: 1px solid #ece8e2;
+
+    p {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+.orders-game-section {
+    margin-bottom: 20px;
+
+    .orders-game-stack {
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #ece8e2;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+    }
+
+    .orders-game-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px 20px;
+        margin: 0;
+        padding: 16px 18px;
+        background: #fff;
+        border-bottom: 1px solid #eee9e2;
+    }
+
+    .orders-game-head__lead {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 14px;
+        flex: 1 1 280px;
+        min-width: 0;
+    }
+
+    .orders-game-toggle {
+        flex: 0 0 auto;
+        margin: 2px 0 0;
+        padding: 8px 12px;
+        border: 1px solid #ddd4c9;
+        border-radius: 10px;
+        background: #faf7f2;
+        color: #333;
+        font: inherit;
+        line-height: 1.2;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+
+        &:hover {
+            background: #fff;
+            border-color: #c9bfb0;
+        }
+
+        &:focus {
+            outline: 2px solid #ffd889;
+            outline-offset: 2px;
+        }
+    }
+
+    .orders-game-toggle__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        min-width: 88px;
+    }
+
+    .orders-game-toggle__chevron {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.2s ease;
+    }
+
+    .orders-game-toggle__text {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: #444;
+    }
+
+    .orders-game-toggle__count {
+        font-size: 13px;
+        font-weight: 800;
+        color: #242934;
+    }
+
+    &.orders-game-section--open .orders-game-toggle__chevron {
+        transform: rotate(180deg);
+    }
+
+    .orders-game-head__info {
+        flex: 1 1 200px;
+        min-width: 0;
+        padding-top: 2px;
+    }
+
+    .orders-game-head__title-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 12px;
+        margin-bottom: 12px;
+    }
+
+    .orders-game-head__title {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1.35;
+        color: #242934;
+        white-space: normal;
+        flex: 1 1 auto;
+    }
+
+    .orders-game-head__status {
+        flex-shrink: 0;
+        padding: 3px 10px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .orders-game-head__status--ok {
+        background: #d4f5e4;
+        color: #0d5c2e;
+    }
+
+    .orders-game-head__status--warn {
+        background: #fde7a0;
+        color: #5c4a0a;
+    }
+
+    .orders-game-head__facts {
+        display: grid;
+        grid-template-columns: minmax(100px, 1.1fr) minmax(72px, 0.65fr) minmax(90px, 0.65fr) minmax(140px, 2fr) minmax(72px, 0.55fr);
+        gap: 10px 16px;
+        margin: 0 0 10px;
+        padding: 12px 14px;
+        background: #faf8f4;
+        border: 1px solid #ece6dc;
+        border-radius: 10px;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .orders-game-head__facts {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .orders-game-fact--place {
+            grid-column: 1 / -1;
+        }
+    }
+
+    .orders-game-fact {
+        margin: 0;
+        min-width: 0;
+    }
+
+    .orders-game-fact__label {
+        margin: 0 0 4px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #888;
+    }
+
+    .orders-game-fact__value {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+
+    .orders-game-fact__value--price {
+        font-weight: 800;
+        color: #1a1d24;
+        white-space: nowrap;
+    }
+
+    .orders-game-head__stats {
+        margin: 0;
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .orders-game-head__aside {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+    .orders-game-head__check {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        font-size: 13px;
+        cursor: pointer;
+        user-select: none;
+        text-align: right;
+    }
+
+    .orders-game-head__check span {
+        white-space: normal;
+        max-width: 220px;
+        line-height: 1.3;
+    }
+
+    .orders-game-head__btns {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .orders-game-panel {
+        background: linear-gradient(180deg, #faf8f5 0%, #f5f1ea 100%);
+        padding: 0 18px 18px;
+    }
+
+    .orders-game-panel[hidden] {
+        display: none !important;
+    }
+
+    .orders-list__empty {
+        margin: 0;
+        padding: 20px 16px;
+        text-align: center;
+        color: #777;
+        font-size: 14px;
+    }
+
+    .orders-list__bar {
+        padding: 8px 0 8px;
+        border-bottom: 1px solid #e5dfd6;
+        margin-bottom: 8px;
+    }
+
+    .orders-list__select-all {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: #444;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .orders-list__select-all input {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    .orders-list__cards {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .orders-list-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 10px 14px;
+        align-items: center;
+        padding: 10px 12px;
+        background: #fff;
+        border-radius: 10px;
+        border: 1px solid #e8e2d8;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        transition: box-shadow 0.15s, border-color 0.15s;
+
+        &:hover {
+            border-color: #d4cbbf;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
+    }
+
+    .orders-list-card--reserve {
+        border-left: 3px solid #e8c547;
+        background: linear-gradient(90deg, rgba(255, 242, 200, 0.28) 0%, #fff 40px);
+    }
+
+    .orders-list-card__pick {
+        padding-top: 0;
+        align-self: center;
+    }
+
+    .orders-list-card__pick input {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    .orders-list-card__body {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .orders-list-card__topline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 10px;
+        line-height: 1.25;
+    }
+
+    .orders-list-card__team {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
+        color: #1a1d24;
+        word-break: break-word;
+    }
+
+    .orders-list-card__id {
+        margin: 0;
+        font-size: 11px;
+        font-weight: 700;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    .orders-list-card__badge {
+        display: inline-block;
+        flex-shrink: 0;
+        padding: 2px 7px;
+        border-radius: 5px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        background: #fde7a0;
+        color: #5c4a0a;
+    }
+
+    .orders-list-card__inlinerow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 2px 8px;
+        font-size: 13px;
+        line-height: 1.35;
+        color: #333;
+    }
+
+    .orders-list-card__inlinerow--extra {
+        font-size: 12px;
+        color: #555;
+    }
+
+    .orders-list-card__item {
+        white-space: nowrap;
+        max-width: 100%;
+    }
+
+    .orders-list-card__item--comment {
+        white-space: normal;
+        flex: 1 1 140px;
+        min-width: 0;
+    }
+
+    .orders-list-card__comment-preview {
+        word-break: break-word;
+    }
+
+    .orders-list-card__lab {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #888;
+        margin-right: 3px;
+    }
+
+    .orders-list-card__dot {
+        color: #ccc;
+        user-select: none;
+        flex-shrink: 0;
+    }
+
+    .orders-list-card__actions {
+        display: flex;
+        align-items: center;
+        align-self: center;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 720px) {
+        .orders-list-card {
+            grid-template-columns: auto 1fr;
+            grid-template-rows: auto auto;
+        }
+
+        .orders-list-card__actions {
+            grid-column: 1 / -1;
+            justify-content: flex-end;
+        }
+
+        .orders-list-card__item {
+            white-space: normal;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .orders-game-head__aside {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .orders-game-head__check {
+            text-align: left;
+        }
+
+        .orders-game-head__check span {
+            max-width: none;
+        }
+
+        .orders-game-head__lead {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+.page-order {
+    background-color: #fff;
+    border-radius: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 30px;
+    position: relative;
+
+    // .page-order__delete
+    &__delete {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    // .page-order__inner
+
+    &__inner {
+    }
+
+    // .page-order__info
+
+    &__info {
+        margin-bottom: 15px;
+    }
+
+    // .page-order__status
+
+    &__status {
+        margin-top: 20px;
+    }
+
+    // .page-order__status-item
+
+    &__status-item {
+    }
+    select {
+        margin-top: 10px;
+    }
+    // .page-order--new
+    &--new {
+        select {
+            border: 1px solid $success;
+            outline: none;
+
+            &:focus {
+                outline: none;
+                border: 1px solid $success;
+            }
+        }
+    }
+}
+
+    
+
+

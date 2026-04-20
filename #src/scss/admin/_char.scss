@@ -1,0 +1,71 @@
+.char {
+
+    // .char__row
+
+    &__row {
+        display: flex;
+        gap: 20px;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        input, select {
+            margin-bottom: 0;
+        }
+    }
+
+    // .char__plus
+    &__plus {
+        width: fit-content;
+        border-radius: 0.25rem;
+        background-color: $success;
+        border-color: $success;
+        padding: 10px;
+        
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        svg {
+            
+            width: 20px;
+        }
+    }
+
+    // .char__minus
+
+    &__minus {
+        width: fit-content;
+        border-radius: 0.25rem;
+        background-color: $danger;
+        border-color: $danger;
+        padding: 10px;
+        
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        svg {
+            
+            width: 20px;
+        }
+    }
+    // .char__remove
+    &__remove {
+        width: fit-content;
+        border-radius: 0.25rem;
+        background-color: $danger;
+        border-color: $danger;
+        padding: 10px;
+        
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        svg {
+            
+            width: 20px;
+        }
+    }
+}

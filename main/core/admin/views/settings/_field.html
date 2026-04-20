@@ -1,0 +1,4 @@
+<label class="settings-field__label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+{% if field.help_text %}<p class="settings-field__hint">{{ field.help_text }}</p>{% endif %}
+{{ field }}
+{% if field.errors %}<div class="settings-field__errors">{{ field.errors }}</div>{% endif %}

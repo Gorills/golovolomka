@@ -1,0 +1,162 @@
+{% extends 'admin_base.html' %}
+
+
+{% block body %}
+
+<div class="page page--general-settings">
+    <div class="page__title page__title--mb">Общие настройки</div>
+
+    <div class="breadcrumb breadcrumb--settings">
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'admin' %}">Главная</a></li>
+            <li class="breadcrumb__item">Общие настройки</li>
+        </ol>
+    </div>
+
+    <div class="page__wrap page__wrap--general-settings">
+        <form action="." class="form form--general-settings" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="settings-alert settings-alert--error">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <section class="settings-section">
+                <div class="settings-section__head">
+                    <h3 class="settings-section__title">Сайт и контакты</h3>
+                    <p class="settings-section__lead">Название, контакты и юридический блок в подвале</p>
+                </div>
+                <div class="settings-grid settings-grid--2">
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.name only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.phone only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.email only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.address only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.copy_year only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.copy only %}</div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="settings-section__head">
+                    <h3 class="settings-section__title">Соцсети</h3>
+                    <p class="settings-section__lead">Ссылки для блоков на сайте</p>
+                </div>
+                <div class="settings-grid settings-grid--2">
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.vk only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.instagram only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.telegram only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.whatsapp only %}</div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="settings-section__head">
+                    <h3 class="settings-section__title">SEO</h3>
+                    <p class="settings-section__lead">Мета-теги и картинка для превью в соцсетях</p>
+                </div>
+                <div class="settings-grid settings-grid--1">
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.meta_title only %}</div>
+                    <div class="settings-field settings-field--textarea">{% include "settings/_field.html" with field=form.meta_description only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.meta_keywords only %}</div>
+                    <div class="settings-field settings-field--file">
+                        <label class="settings-field__label" for="{{ form.social_image.id_for_label }}">{{ form.social_image.label }}</label>
+                        {% if form.social_image.help_text %}<p class="settings-field__hint">{{ form.social_image.help_text }}</p>{% endif %}
+                        {% if setup.social_image %}
+                        <div class="settings-file-preview">
+                            <img src="{{ setup.social_image.url }}" alt="" class="settings-file-preview__img settings-file-preview__img--wide">
+                            <span class="settings-file-preview__name">{{ setup.social_image.name }}</span>
+                        </div>
+                        {% endif %}
+                        {{ form.social_image }}
+                        {{ form.social_image.errors }}
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="settings-section__head">
+                    <h3 class="settings-section__title">Фирменный стиль</h3>
+                    <p class="settings-section__lead">Логотип, фавиконки и акцентный цвет темы</p>
+                </div>
+                <div class="settings-grid settings-grid--2">
+                    <div class="settings-field settings-field--file">
+                        <label class="settings-field__label" for="{{ form.logo_dark.id_for_label }}">{{ form.logo_dark.label }}</label>
+                        {% if setup.logo_dark %}
+                        <div class="settings-file-preview">
+                            <img src="{{ setup.logo_dark.url }}" alt="" class="settings-file-preview__img">
+                        </div>
+                        {% endif %}
+                        {{ form.logo_dark }}
+                        {{ form.logo_dark.errors }}
+                    </div>
+                    <div class="settings-field settings-field--color">
+                        {% include "settings/_field.html" with field=form.theme_color only %}
+                    </div>
+                </div>
+                <div class="settings-icons-row">
+                    <div class="settings-field settings-field--file settings-field--icon">
+                        <label class="settings-field__label" for="{{ form.icon_ico.id_for_label }}">{{ form.icon_ico.label }}</label>
+                        {% if setup.icon_ico %}
+                        <div class="settings-file-preview settings-file-preview--tight"><img src="{{ setup.icon_ico.url }}" alt="" class="settings-file-preview__img settings-file-preview__img--icon"></div>
+                        {% endif %}
+                        {{ form.icon_ico }}
+                        {{ form.icon_ico.errors }}
+                    </div>
+                    <div class="settings-field settings-field--file settings-field--icon">
+                        <label class="settings-field__label" for="{{ form.icon_png.id_for_label }}">{{ form.icon_png.label }}</label>
+                        {% if setup.icon_png %}
+                        <div class="settings-file-preview settings-file-preview--tight"><img src="{{ setup.icon_png.url }}" alt="" class="settings-file-preview__img settings-file-preview__img--icon"></div>
+                        {% endif %}
+                        {{ form.icon_png }}
+                        {{ form.icon_png.errors }}
+                    </div>
+                    <div class="settings-field settings-field--file settings-field--icon">
+                        <label class="settings-field__label" for="{{ form.icon_svg.id_for_label }}">{{ form.icon_svg.label }}</label>
+                        {% if setup.icon_svg %}
+                        <div class="settings-file-preview settings-file-preview--tight"><span class="settings-file-preview__name">{{ setup.icon_svg.name }}</span></div>
+                        {% endif %}
+                        {{ form.icon_svg }}
+                        {{ form.icon_svg.errors }}
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section settings-section--accent">
+                <div class="settings-section__head">
+                    <h3 class="settings-section__title">Уведомления о заявках</h3>
+                    <p class="settings-section__lead">Один и тот же текст уходит в Telegram и в MAX. Для MAX укажите числовой ID чата в настройках и при необходимости — у конкретного города.</p>
+                </div>
+                <div class="settings-grid settings-grid--2">
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.telegram_bot_token only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.telegram_default_group only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.max_access_token only %}</div>
+                    <div class="settings-field">{% include "settings/_field.html" with field=form.max_chat_id only %}</div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="settings-section__head">
+                    <h3 class="settings-section__title">Режим работы сайта</h3>
+                </div>
+                <div class="settings-checkboxes">
+                    <label class="settings-checkbox">
+                        {{ form.active }}
+                        <span class="settings-checkbox__text">{{ form.active.label }}</span>
+                    </label>
+                    {{ form.active.errors }}
+                    <label class="settings-checkbox">
+                        {{ form.debugging_mode }}
+                        <span class="settings-checkbox__text">{{ form.debugging_mode.label }}</span>
+                    </label>
+                    {{ form.debugging_mode.errors }}
+                </div>
+            </section>
+
+            <div class="settings-footer">
+                <button type="submit" class="btn btn--primary settings-footer__btn">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

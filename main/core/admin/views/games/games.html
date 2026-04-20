@@ -1,0 +1,256 @@
+{% extends 'admin_base.html' %}
+
+
+
+{% block body %}
+<div class="page__title">Игры</div>
+
+<div class="breadcrumb">
+    <div class="breadcrumb__inner">
+
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'admin' %}">Главная</a></li>
+
+            <li class="breadcrumb__item">Игры</li>
+          
+        </ol>
+
+
+        
+    </div>
+</div>
+
+
+
+
+<div class="page search">
+    
+    <div class="page__inner search__inner">
+        
+       
+       
+
+        <form method="post" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            {{ setup_form.as_p }}
+            <button class="btn btn--success" type="submit" name="setup_form_submit">Сохранить настройки игр</button>
+        </form>
+        
+        <form method="post" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            {{ category_setup_form.as_p }}
+            <button class="btn btn--success" type="submit" name="category_setup_form_submit">Сохранить настройки категорий</button>
+        </form>
+
+        <br>
+        <br>
+        <br>
+
+        <h2>Категории игр</h2>
+        <br>
+
+        <a href="{% url 'geme_cat_add' %}" id="add" class="add">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/></svg>
+        </a>
+        <br>
+
+        <ul class="responsive-table">
+            <li class="table-header">
+               
+                <div class="col col-2">
+                  Название 
+                </div>
+                <a href="" class="col col-3">
+                  Короткое описание 
+                </a>
+               
+              <div class="col col-5">Действие</div>
+            </li>
+
+          
+            {% for slider in categorys %}
+            <li class="table-row">
+               
+                <div class="col col-2" data-label="">
+                    {{ slider.name }}
+                </div>
+                <div class="col col-3" data-label="">
+                    {% if slider.description_short %}
+                        {{ slider.description_short }}
+                    {% endif %}
+                </div>
+               
+
+                <div class="col col-5" data-label="">
+                    <a href="{% url 'geme_cat_edit' slider.id %}" class="edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"/></svg>
+                    </a>
+                    <a href="{% url 'game_cat_delete' slider.id %}" class="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"/></svg>
+                    </a>
+                </div>
+            </li>
+                           
+            {% endfor %}           
+                            
+              
+          </ul>
+
+          <br>
+          <br>
+
+        <div class="games-admin-heading">
+            <h2 class="games-admin-heading__title">Игры</h2>
+            <a href="{% url 'game_add' %}" id="add" class="add" title="Добавить игру">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/></svg>
+            </a>
+        </div>
+        <p class="games-admin-hint">Порядок в списке (в один день) задаётся кнопками «Выше» / «Ниже» и совпадает с расписанием на сайте.</p>
+
+        <div class="games-admin-bulk games-admin-page js-admin-past-filter-root" data-games-bulk-url="{% url 'games_bulk_delete' %}" data-game-reorder-url="{% url 'game_reorder' %}">
+        <div class="admin-bulk-toolbar admin-bulk-toolbar--games">
+            <label class="admin-hide-past-wrap">
+                <input type="checkbox" class="js-admin-hide-past">
+                <span>Скрыть прошедшие</span>
+            </label>
+            <label class="games-admin-select-all-wrap"><input type="checkbox" class="games-select-all" title="Выбрать все игры"> <span>Выбрать все</span></label>
+            <button type="button" class="btn btn--danger games-bulk-delete-btn">Удалить выбранные игры</button>
+        </div>
+
+        {% for game in games %}
+            <div class="orders-game-section games-game-card" data-game-id="{{ game.id }}" data-game-past="{% if game.active %}0{% else %}1{% endif %}" {% if game.date_date %}data-game-date="{{ game.date_date|date:'Y-m-d' }}"{% endif %} data-flags-url="{% url 'game_admin_flags' game.id %}">
+            <div class="orders-game-stack">
+            <div class="orders-game-head">
+                <div class="orders-game-head__lead">
+                    <div class="games-admin-sort" role="group" aria-label="Порядок в этот день">
+                        {% if game.date_date %}
+                        <button type="button" class="game-sort-btn" data-direction="up" title="Показать выше в списке">Выше</button>
+                        <button type="button" class="game-sort-btn" data-direction="down" title="Показать ниже в списке">Ниже</button>
+                        {% else %}
+                        <span class="games-admin-sort__muted" title="Укажите дату для сортировки">Нет даты</span>
+                        {% endif %}
+                    </div>
+                    <div class="orders-game-head__info">
+                        <div class="orders-game-head__title-row">
+                            <h3 class="orders-game-head__title">{{ game.name }}</h3>
+                            {% if game.manual_sold_out %}
+                            <span class="orders-game-head__status orders-game-head__status--sold js-game-status-badge">Мест нет</span>
+                            {% elif game.reverve %}
+                            <span class="orders-game-head__status orders-game-head__status--ok js-game-status-badge">Места есть</span>
+                            {% elif not game.reserve_enabled %}
+                            <span class="orders-game-head__status orders-game-head__status--sold js-game-status-badge">Мест нет</span>
+                            {% elif game.closed %}
+                            <span class="orders-game-head__status orders-game-head__status--sold js-game-status-badge">Мест нет</span>
+                            {% else %}
+                            <span class="orders-game-head__status orders-game-head__status--warn js-game-status-badge">Резерв</span>
+                            {% endif %}
+                        </div>
+                        <dl class="orders-game-head__facts">
+                            <div class="orders-game-fact">
+                                <dt class="orders-game-fact__label">Дата</dt>
+                                <dd class="orders-game-fact__value">{{ game.date }}{% if game.time %}, {{ game.time }}{% endif %}</dd>
+                            </div>
+                            <div class="orders-game-fact">
+                                <dt class="orders-game-fact__label">Людей</dt>
+                                <dd class="orders-game-fact__value"><span class="orders-game-registered">{{ game.game_count|default:0 }}</span> чел.</dd>
+                            </div>
+                            <div class="orders-game-fact">
+                                <dt class="orders-game-fact__label">Город</dt>
+                                <dd class="orders-game-fact__value">{% if game.city %}{{ game.city.name }}{% else %}—{% endif %}</dd>
+                            </div>
+                            <div class="orders-game-fact orders-game-fact--place">
+                                <dt class="orders-game-fact__label">Место</dt>
+                                <dd class="orders-game-fact__value">{% if game.location %}{{ game.location }}{% elif game.city %}{{ game.city.address|default:"—"|linebreaksbr }}{% else %}—{% endif %}</dd>
+                            </div>
+                            <div class="orders-game-fact">
+                                <dt class="orders-game-fact__label">Цена</dt>
+                                <dd class="orders-game-fact__value orders-game-fact__value--price">{{ game.price }}&nbsp;₽</dd>
+                            </div>
+                        </dl>
+                        <p class="orders-game-head__stats">В резерве: <span class="orders-game-reserve">{{ game.reserve_count|default:0 }}</span> чел. · Заявок: <span class="orders-game-requests-count">{{ game.orders.count }}</span></p>
+                        <div class="orders-game-quick-flags" aria-label="Быстрые переключатели">
+                            <button type="button" class="game-flag-btn{% if game.mark_few_seats %} game-flag-btn--on{% endif %}" data-toggle="mark_few_seats">Мало мест</button>
+                            <button type="button" class="game-flag-btn{% if game.reserve_enabled %} game-flag-btn--on{% endif %}" data-toggle="reserve_enabled">Резерв</button>
+                            <button type="button" class="game-flag-btn{% if game.manual_sold_out %} game-flag-btn--on{% endif %}" data-toggle="manual_sold_out">Мест нет</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="orders-game-head__aside">
+                    <label class="orders-game-head__check">
+                        <input type="checkbox" class="games-select-game" value="{{ game.id }}">
+                        <span>Отметить игру для удаления</span>
+                    </label>
+                    <div class="orders-game-head__btns">
+                        <a href="{% url 'game_edit' game.id %}" class="edit" title="Редактировать игру">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"/></svg>
+                        </a>
+                        <a href="#" class="remove games-delete-ajax" data-game-id="{{ game.id }}" title="Удалить игру">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        {% empty %}
+            <p class="games-admin-empty">Пока нет ни одной игры — добавьте через «+».</p>
+        {% endfor %}
+        </div>
+
+
+          <br>
+          <br>
+
+        <h2>Фото</h2>
+        <br>
+
+        <a href="{% url 'photo_add' %}" id="add" class="add">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/></svg>
+        </a>
+        <br>
+
+        <ul class="responsive-table">
+            <li class="table-header">
+               
+                <a href="" class="col col-3">
+                  URL
+                </a>
+
+              
+               
+              <div class="col col-5">Действие</div>
+            </li>
+
+          
+            {% for slider in photos %}
+            <li class="table-row">
+                
+              
+                <div class="col col-3" data-label="">
+                    {% if slider.image %}
+                        <img src="{{ slider.image.url }}" alt="" width="200px">
+                        
+                    {% endif %}
+                </div>
+
+               
+
+                <div class="col col-5" data-label="">
+                    <a href="{% url 'photo_edit' slider.id %}" class="edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"/></svg>
+                    </a>
+                    <a href="{% url 'photo_delete' slider.id %}" class="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"/></svg>
+                    </a>
+                </div>
+            </li>
+                           
+            {% endfor %}           
+                            
+              
+          </ul>
+    
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+
+#inputResult {
+
+    h4 {
+        font-size: 26px;
+        
+    }
+    .mb-4 {
+        margin-bottom: 40px;
+    }
+    h5 {
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .purpose-table, .purpose-table th, .purpose-table td {
+        border: 1px solid #d8d8d8;
+        font-size: inherit;
+        line-height: inherit;
+    }
+    .purpose-table th, .purpose-table td {
+        vertical-align: top;
+        padding: 0.5em 0.75em;
+    }
+
+
+    .purpose-table th, .purpose-table td {
+        vertical-align: top;
+        padding: 0.5em 0.75em;
+    }
+    .purpose-table th {
+        width: 200px;
+        text-align: left;
+        font-weight: 500;
+    }
+    .purpose-table, .purpose-table th, .purpose-table td {
+        border: 1px solid #d8d8d8;
+        font-size: inherit;
+        line-height: inherit;
+    }
+    .link.mark {
+        border-bottom: 1.5px dotted #fa8669;
+    }
+    .link {
+        cursor: pointer;
+    }
+    .mark, mark {
+        display: inline;
+        padding: 0.05em;
+        background-color: #fcf8e3;
+        word-wrap: break-word;
+    }
+    
+}
