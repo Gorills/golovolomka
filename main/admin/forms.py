@@ -5,6 +5,7 @@ from setup.models import BaseSettings, Colors, ThemeSettings, CustomCode
 
 from home.models import DoverCorpSetup, DoverCorpSlider, GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, StartCorpSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup, WhyWeCorpItem, WhyWeCorpSetup
 
+from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -218,9 +219,9 @@ class CustomCodeForm(forms.ModelForm):
 
 
 
-# Страницы 
+# Страницы (CKEditorWidget: без upload-виджета — стабильнее на проде, см. issue 500 на /page_edit)
 class PageForm(forms.ModelForm):
-    text = forms.CharField(label='Текст страницы', required=False, widget=CKEditorUploadingWidget())
+    text = forms.CharField(label='Текст страницы', required=False, widget=CKEditorWidget())
     class Meta:
         model = Page
         fields = "__all__"

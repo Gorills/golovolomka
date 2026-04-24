@@ -3,7 +3,7 @@ from decimal import Decimal
 from itertools import product
 from multiprocessing import context
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 
 from admin.forms import BtnBlockItemForm, BtnBlockSetupForm, CityForm, CustomCodeForm, ColorsForm, DoverCorpSetupForm, DoverCorpSliderForm, FAQForm, FAQSetupForm, GameCategoryForm, GameOrderForm, GamesCategorySetupForm, GamesForm, GamesPhotoForm, GamesSetupForm, HomeGamesSetupForm, SetupForm, StartCorpSetupForm, ThemeSettingsForm, SliderSetupForm, SliderForm, PageForm, WaitItemForm, WaitSetupForm, WhatCorpItemForm, WhatCorpItemSetupForm, WhatCorpSetupForm, WhatItemForm, WhatSetupForm, WhyWeCorpItemForm, WhyWeCorpSetupForm
@@ -606,7 +606,7 @@ def page_add(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def page_edit(request, pk):
-    page = Page.objects.get(id=pk)
+    page = get_object_or_404(Page, pk=pk)
     if request.method == 'POST':
         form = PageForm(request.POST, request.FILES, instance=page)
         if form.is_valid():
