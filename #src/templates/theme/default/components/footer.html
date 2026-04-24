@@ -64,8 +64,9 @@
 
             </div>
 
-            <a href="/privacy" class="footer__link">Пользовательское соглашение</a>
-            <a href="/soglashenie" class="footer__link">Политика конфиденциальности</a>
+            {% for page in pages %}
+            <a href="{{ page.get_absolute_url }}" class="footer__link">{{ page.name|default:page.get_type_display }}</a>
+            {% endfor %}
             
 
 

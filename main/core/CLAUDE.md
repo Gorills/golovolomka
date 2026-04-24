@@ -5,6 +5,7 @@
 ## Структура
 
 - [theme/default/](theme/default/) — публичная тема: `views/*.html` как шаблоны Django, `js/`, `css/`, `images/`.
+- Форма регистрации на игру — один экземпляр: [theme/default/views/components/register_game_popup.html](theme/default/views/components/register_game_popup.html) (подключается в `home.html` и `schedule.html`); `id` полей не дублируются.
 - [admin/](admin/) — шаблоны и стили кастомной админки (`main/admin/`, не `django.contrib.admin`).
 - [libs/](libs/) — сторонние ассеты.
 

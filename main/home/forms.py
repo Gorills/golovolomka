@@ -1,7 +1,7 @@
 from django import forms
 # from snowpenguin.django.recaptcha3.fields import ReCaptchaField
 
-from home.models import GameOrder
+from home.models import GameOrder, Games
 
 
 class FranchForm(forms.Form):
@@ -189,14 +189,14 @@ class GameOrderForm(forms.ModelForm):
 
     game_id = forms.CharField(
         label='',
-        required=False,
+        required=True,
+        error_messages={'required': 'Не выбрана игра'},
         widget=forms.HiddenInput(attrs={
             'class': 'popup__input',
             'placeholder': 'Игра',
             'hidden': 'hidden',
             'id': ''
         })
-        
     )  
     name = forms.CharField(
         label='',
@@ -268,53 +268,52 @@ class GameOrderForm(forms.ModelForm):
         min_value=1,
         max_value=12,
         initial=2,
-        widget=forms.NumberInput(attrs={
-            'class': 'popup__input popup__input--number',
-            'min': 1,
-            'max': 12,
-            'step': 1,
-            'required': 'required',
+        widget=forms.HiddenInput(attrs={
             'id': 'id_command_number',
-        })
+        }),
     )
-    first_time = forms.BooleanField(
-        label='Играем впервые',
-        required=False,
-        widget=forms.CheckboxInput(attrs={
-            'class': 'popup__checkbox',
-            'id': 'id_first_time',
-        })
-    )
-    agree_personal_data = forms.BooleanField(
-        label='Даю согласие на обработку моих персональных данных для целей и на условиях, изложенных в политике конфиденциальности',
+    # Не model-поля: в game_callback дублируем в agree_privacy_policy + agree_personal_data
+    consent_privacy_and_rules = forms.BooleanField(
+        label='',
         required=True,
-        error_messages={'required': 'Необходимо согласие на обработку персональных данных'},
+        error_messages={
+            'required': 'Необходимо согласие с правилами и политикой персональных данных',
+        },
         widget=forms.CheckboxInput(attrs={
             'class': 'popup__checkbox',
-            'id': 'id_agree_personal_data',
+            'id': 'id_consent_privacy_and_rules',
             'required': 'required',
-        })
+        }),
     )
-    agree_ads = forms.BooleanField(
-        label='Даю согласие на получение информационных и рекламных сообщений',
-        required=False,
+    consent_info_messages = forms.BooleanField(
+        label='',
+        required=True,
+        error_messages={
+            'required': 'Необходимо согласие на получение информационных сообщений',
+        },
         widget=forms.CheckboxInput(attrs={
             'class': 'popup__checkbox',
-            'id': 'id_agree_ads',
-        })
+            'id': 'id_consent_info_messages',
+            'required': 'required',
+        }),
     )
 
     class Meta:
         model = GameOrder
         fields = [
             'game_id', 'command', 'name', 'phone', 'comment', 'promo', 'how',
-            'command_number', 'first_time', 'agree_personal_data', 'agree_ads',
+            'command_number',
         ]
 
 
     def clean_game_id(self):
-        # Добавьте свою логику очистки, если необходимо
-        game_id = self.cleaned_data.get('game_id')
+        game_id = (self.cleaned_data.get('game_id') or '').strip()
+        if not game_id:
+            return game_id
+        if not str(game_id).isdigit():
+            raise forms.ValidationError('Некорректный идентификатор игры')
+        if not Games.objects.filter(pk=game_id).exists():
+            raise forms.ValidationError('Игра не найдена')
         return game_id
 
     def clean_date(self):

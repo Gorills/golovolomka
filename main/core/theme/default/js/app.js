@@ -239,26 +239,116 @@ $(document).on('click','#messenger-btn',function(e){
 })
 
 
+/**
+ * Сетка кнопок 1–12 для поля command_number (скрытый input).
+ */
+function initCommandNumberPicker() {
+  $('[data-command-picker]').each(function () {
+    var $root = $(this);
+    if ($root.data('commandPickerInit')) {
+      return;
+    }
+    $root.data('commandPickerInit', true);
+
+    var $input = $root.find('input[name="command_number"]');
+    var $grid = $root.find('.command-number-picker__grid');
+    if (!$input.length || !$grid.length) {
+      return;
+    }
+
+    function clamp(n) {
+      var v = parseInt(n, 10);
+      if (isNaN(v)) {
+        v = 2;
+      }
+      return Math.min(12, Math.max(1, v));
+    }
+
+    function setValue(n, focusBtn) {
+      var v = clamp(n);
+      $input.val(String(v));
+      var $btns = $grid.find('.command-number-picker__btn');
+      $btns.removeClass('command-number-picker__btn--selected').attr({ 'aria-checked': 'false', tabindex: -1 });
+      var $cur = $btns.filter('[data-value="' + v + '"]');
+      $cur.addClass('command-number-picker__btn--selected').attr({ 'aria-checked': 'true', tabindex: 0 });
+      if (focusBtn && $cur.length) {
+        $cur.trigger('focus');
+      }
+    }
+
+    var n;
+    for (n = 1; n <= 12; n += 1) {
+      $('<button>', {
+        type: 'button',
+        class: 'command-number-picker__btn',
+        text: String(n),
+        'data-value': n,
+        role: 'radio',
+        'aria-checked': 'false',
+        tabindex: -1,
+      }).appendTo($grid);
+    }
+
+    $grid.on('click', '.command-number-picker__btn', function () {
+      var val = $(this).data('value');
+      setValue(val, false);
+    });
+
+    $grid.on('keydown', '.command-number-picker__btn', function (e) {
+      var cur = clamp($(this).data('value'));
+      var next = cur;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        next = cur < 12 ? cur + 1 : 1;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        next = cur > 1 ? cur - 1 : 12;
+      } else if (e.key === 'Home') {
+        next = 1;
+      } else if (e.key === 'End') {
+        next = 12;
+      } else {
+        return;
+      }
+      e.preventDefault();
+      setValue(next, true);
+    });
+
+    setValue($input.val(), false);
+  });
+}
+
+
 $(document).on('click','.schedule__btn',function(e){
 
   e.preventDefault();
   
   
-  let gameId = $(this).attr('data-id')
-  
-
-
-  $('#game-'+gameId).addClass('popup--active');
+  var gameId = $(this).attr('data-id');
+  if (!gameId) {
+    return;
+  }
+  var $popup = $('#game-register');
+  $popup.find('input[name="game_id"]').val(gameId);
+  $popup.addClass('popup--active');
 
   
   $('.header').hide();
-
-  $('#id_game_id').val(gameId);
 
   $('body').addClass('body');
 
  
 })
+
+
+// Одна форма #game-register — защита от повторной отправки (двойной тап / двойной клик).
+$(document).on('submit', 'form.game-form', function () {
+  var $f = $(this);
+  if ($f.data('submitting')) {
+    return false;
+  }
+  $f.data('submitting', true);
+  $f.find('button[type="submit"]').prop('disabled', true);
+})
+
 
 $(document).on('click','.popup__close, .popup__overflow',function(e){
 
@@ -266,6 +356,9 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
   $('.popup').removeClass('popup--active');
   $('body').removeClass('body');
   $('.header').show();
+  var $orderForm = $('form.game-form');
+  $orderForm.data('submitting', false);
+  $orderForm.find('button[type="submit"]').prop('disabled', false);
 
   var urlParams = new URLSearchParams(window.location.search);
   // Проверяем наличие параметра reserve
@@ -285,6 +378,8 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
 
 
 $(document).ready(function() {
+  initCommandNumberPicker();
+
   // Получаем параметры URL
   var urlParams = new URLSearchParams(window.location.search);
 

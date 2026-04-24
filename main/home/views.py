@@ -181,9 +181,10 @@ def game_callback(request):
             promo = form.cleaned_data.get('promo')
             how = form.cleaned_data.get('how')
             command_number = form.cleaned_data.get('command_number')
-            first_time = form.cleaned_data.get('first_time')
-            agree_personal_data = form.cleaned_data.get('agree_personal_data')
-            agree_ads = form.cleaned_data.get('agree_ads')
+            agree_bundle = form.cleaned_data.get('consent_privacy_and_rules')
+            agree_privacy_policy = bool(agree_bundle)
+            agree_personal_data = bool(agree_bundle)
+            agree_ads = form.cleaned_data.get('consent_info_messages')
 
 
             try:
@@ -216,7 +217,8 @@ def game_callback(request):
                         promo=promo,
                         how=how,
                         command_number=command_number,
-                        first_time=bool(first_time),
+                        first_time=False,
+                        agree_privacy_policy=bool(agree_privacy_policy),
                         agree_personal_data=bool(agree_personal_data),
                         agree_ads=bool(agree_ads),
                         reserve=order_reserve,
@@ -246,12 +248,12 @@ def game_callback(request):
                 f"Имя: {name}\n"
                 f"Телефон: {phone}\n"
                 f"Количество человек: {command_number}\n"
-                f"Играем впервые: {'Да' if first_time else 'Нет'}\n"
                 f"Комментарий: {comment}\n"
                 f"Промокод: {promo}\n"
                 f"Как вы узнали о нас: {how}\n"
-                f"Согласие на обработку ПД: {'Да' if agree_personal_data else 'Нет'}\n"
-                f"Согласие на рекламу: {'Да' if agree_ads else 'Нет'}"
+                f"Политика ПДн ИП Максудова А.К.: {'Да' if agree_privacy_policy else 'Нет'}\n"
+                f"Согласие на обработку ПД (правила): {'Да' if agree_personal_data else 'Нет'}\n"
+                f"Согласие на рассылку (правила): {'Да' if agree_ads else 'Нет'}"
             )
             _notify_telegram_and_max(message, telegram_group, city=city)
 

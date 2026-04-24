@@ -414,11 +414,16 @@
         }
     }
 
+    /* В колонке (моб.) flex-basis:200px задаёт лишнюю min-height; в ряду — мин. ширину */
     &__label {
-        flex: 1 1 200px;
         display: flex;
         flex-direction: column;
         gap: 8px;
+        flex: none;
+
+        @media screen and (min-width: 768px) {
+            flex: 1 1 200px;
+        }
     }
 
     &__label-text {

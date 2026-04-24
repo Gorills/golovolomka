@@ -268,8 +268,18 @@ class GameOrder(models.Model):
     command_number = models.PositiveIntegerField(verbose_name='Количество человек', default=2)
     reserve = models.BooleanField(default=False, verbose_name='Резерв')
     first_time = models.BooleanField(default=False, verbose_name='Играем впервые')
-    agree_personal_data = models.BooleanField(default=False, verbose_name='Согласие на обработку ПД')
-    agree_ads = models.BooleanField(default=False, verbose_name='Согласие на рекламные сообщения')
+    agree_privacy_policy = models.BooleanField(
+        default=False,
+        verbose_name='Согласие с политикой в отношении ПДн ИП Максудова А.К.',
+    )
+    agree_personal_data = models.BooleanField(
+        default=False,
+        verbose_name='Согласие на обработку ПДн (правила на сайте)',
+    )
+    agree_ads = models.BooleanField(
+        default=False,
+        verbose_name='Согласие на получение рассылки (правила на сайте)',
+    )
 
 
     def __str__(self):

@@ -167,13 +167,13 @@
     &__field {
         margin-bottom: 10px;
 
-        &--number {
+        &--command-number {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             gap: 10px;
 
             .popup__label {
-                flex: 1;
                 font-size: 14px;
                 font-weight: 600;
                 color: #222;
@@ -183,18 +183,79 @@
         }
     }
 
-    // .popup__input--number — стилизованный инпут количества участников
+    // Выбор числа участников 1–12: сетка кнопок (см. JS initCommandNumberPicker)
 
-    &__input--number {
-        width: 90px !important;
-        margin-bottom: 0 !important;
-        text-align: center;
-        -moz-appearance: textfield;
+    .command-number-picker {
+        position: relative;
 
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: auto;
+        &__grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px 10px;
+            justify-items: center;
+            width: 100%;
+
+            @media (min-width: 400px) {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+            }
+        }
+
+        &__btn {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 56px;
+            aspect-ratio: 1;
+            min-height: 44px;
+            min-width: 44px;
             margin: 0;
+            padding: 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            background: #f5f5f5;
+            color: #333;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+            // :hover с псевдоклассом сильнее .--selected без него — на таче «липкий» hover затирал золото.
+            @media (hover: hover) {
+                &:hover:not(.command-number-picker__btn--selected) {
+                    border-color: #ccc;
+                    background: #eee;
+                }
+            }
+
+            &:focus-visible:not(.command-number-picker__btn--selected) {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(230, 196, 25, 0.45);
+            }
+
+            &--selected {
+                border-color: #a88f0f;
+                background: linear-gradient(145deg, #ffed92 0%, #e5c416 100%);
+                color: #1a1a1a;
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+
+                @media (hover: hover) {
+                    &:hover {
+                        border-color: #a88f0f;
+                        background: linear-gradient(145deg, #fff0a0 0%, #ecc91d 100%);
+                        color: #0d0d0d;
+                    }
+                }
+
+                &:focus-visible {
+                    outline: none;
+                    border-color: #a88f0f;
+                    background: linear-gradient(145deg, #ffed92 0%, #e5c416 100%);
+                    box-shadow:
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+                        0 0 0 3px rgba(201, 168, 20, 0.55);
+                }
+            }
         }
     }
 
