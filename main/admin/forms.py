@@ -5,9 +5,8 @@ from setup.models import BaseSettings, Colors, ThemeSettings, CustomCode
 
 from home.models import DoverCorpSetup, DoverCorpSlider, GameOrder, SliderSetup, Slider, Page, City, GamesSetup, GamesCategorySetup, GamesPhoto, GameCategory, Games, StartCorpSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatSetup, WhatItem, WaitSetup, WaitItem, FAQSetup, FAQ, BtnBlockSetup, BtnBlockItem, HomeGamesSetup, WhyWeCorpItem, WhyWeCorpSetup
 
+from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-
-from admin.widgets_ckeditor import CKEditorWidgetCDN
 
 
 class DoverCorpSliderForm(forms.ModelForm):
@@ -220,9 +219,9 @@ class CustomCodeForm(forms.ModelForm):
 
 
 
-# Страницы: CKEditorWidgetCDN — init из core/ckeditor, ckeditor.js с CDN (без collectstatic)
+# Страницы: CKEditorWidget, статика в main/core/ckeditor/ (как в django-ckeditor, без CDN)
 class PageForm(forms.ModelForm):
-    text = forms.CharField(label='Текст страницы', required=False, widget=CKEditorWidgetCDN())
+    text = forms.CharField(label='Текст страницы', required=False, widget=CKEditorWidget())
     class Meta:
         model = Page
         fields = "__all__"

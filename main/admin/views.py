@@ -1475,12 +1475,12 @@ from django.http import HttpResponseNotAllowed
 from django.apps import apps
 from django import forms
 from django.db import models
-from admin.widgets_ckeditor import CKEditorWidgetCDN  # CKEditor с CDN, без collectstatic
+from ckeditor.widgets import CKEditorWidget  # Статика в main/core/ckeditor/ (см. репо)
 
 def custom_formfield_callback(field):
     """ Используем CKEditor только для полей `text` """
     if field.name == "text":  # ✅ Только для полей с именем `text`
-        return field.formfield(widget=CKEditorWidgetCDN())
+        return field.formfield(widget=CKEditorWidget())
     return field.formfield()
 
 @user_passes_test(lambda u: u.is_superuser)

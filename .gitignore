@@ -39,7 +39,7 @@ video
 
 **/ckeditor
 !main/core/ckeditor/
-!main/core/ckeditor/ckeditor-init.js
+!main/core/ckeditor/**
 
 **/__pycache__
 **/migrations
