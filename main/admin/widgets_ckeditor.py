@@ -11,8 +11,12 @@ CKEDITOR_CDN_BASE = "https://cdn.ckeditor.com/4.18.0/full-all/"
 
 
 class CKEditorWidgetCDN(CKEditorWidget):
+    # Порядок: basePath → ckeditor.js (CDN) → init. Раньше init шёл раньше ядра → runInitialisers()
+    # в ckeditor-init.js с setTimeout(100) ждал window.CKEDITOR бесконечно при сбоях CDN.
     class Media:
         js = (
+            "ckeditor/ckeditor-preset.js",
+            CKEDITOR_CDN_BASE + "ckeditor.js",
             JS(
                 "ckeditor/ckeditor-init.js",
                 {
@@ -20,5 +24,4 @@ class CKEditorWidgetCDN(CKEditorWidget):
                     "data-ckeditor-basepath": CKEDITOR_CDN_BASE,
                 },
             ),
-            CKEDITOR_CDN_BASE + "ckeditor.js",
         )
