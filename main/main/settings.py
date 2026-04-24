@@ -237,7 +237,9 @@ from .local_settings import ALLOWED_HOSTS
 from .local_settings import RESET_FILE
 
 
-
+# Итоговое хранилище статики: иначе WhiteNoise с манифестом падает на form.media
+# (CKEditor и др.), если collectstatic не добавил путь в staticfiles.json.
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 
 
