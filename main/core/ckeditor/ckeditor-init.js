@@ -1,5 +1,4 @@
 /* global CKEDITOR, django */
-/* Копия из django-ckeditor 6.3.2: отдаётся из main/core (без collectstatic). */
 ;(function() {
   var el = document.getElementById('ckeditor-init-script');
   if (el && !window.CKEDITOR_BASEPATH) {
