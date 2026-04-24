@@ -38,6 +38,8 @@ venv
 video
 
 **/ckeditor
+!main/core/ckeditor/
+!main/core/ckeditor/ckeditor-init.js
 
 **/__pycache__
 **/migrations
