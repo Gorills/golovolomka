@@ -129,6 +129,7 @@
         border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         position: relative;
+        isolation: isolate; /* порядок z-index при transform у Owl (Safari/iOS) */
         min-height: 483px;
         margin: 0 auto;
         background: #000;
@@ -172,7 +173,7 @@
 
     &__date {
         position: absolute;
-        z-index: 3;
+        z-index: 6; /* выше .schedule__wrapper (3), иначе на iOS дата уходит под блок */
         top: -10px;
         left: 50%;
         transform: translate(-50%, 0);
@@ -184,6 +185,8 @@
         text-transform: uppercase;
 
         p {
+            position: relative;
+            z-index: 1;
             display: block;
             padding: 0 20px;
             white-space: nowrap;
@@ -191,7 +194,9 @@
 
         svg {
             position: absolute;
-            z-index: -1;
+            z-index: 0;
+            left: 0;
+            top: 0;
             width: 100%;
         }
     }
@@ -354,6 +359,8 @@
     
     .owl-carousel .owl-item {
         overflow: visible; /* Убедитесь, что отдельные слайды не обрезают контент */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 
     .owl-nav {

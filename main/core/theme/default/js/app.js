@@ -11,28 +11,57 @@ $(document).ready(function () {
 });
 
 
-// При loop:true Owl Carousel клонирует слайды. Клоны получают те же id у
-// <linearGradient> внутри SVG — браузеры (Chrome/Safari) ссылаются на первый
-// попавшийся и на части плашек градиент перестаёт рендериться. Поэтому после
-// инициализации/перетаскивания проходимся по всем SVG и делаем id уникальными.
+// При loop:true Owl Carousel клонирует слайды. Клоны получают те же id внутри SVG
+// (градиенты, маски и т.д.) — Safari/iOS тогда «мигают» стили и ломают заливки.
+// Важно: не вызывать это на каждом translated/changed — массовая правка DOM при свайпе
+// перегружает WebKit и на iPhone даёт падение вкладки («повторно возникла проблема»).
 function uniquifyScheduleSvgIds() {
   var counter = 0;
-  $('.schedule__slider .schedule__date svg').each(function () {
-    var $svg = $(this);
-    $svg.find('defs > linearGradient, defs > radialGradient').each(function () {
-      var $grad = $(this);
-      var oldId = $grad.attr('id');
+  $('.schedule__slider .schedule__item svg').each(function () {
+    var svg = this;
+    var $svg = $(svg);
+    var pairs = [];
+    $svg.find('[id]').each(function () {
+      var el = this;
+      var oldId = el.id;
       if (!oldId) return;
-      var newId = 'sd_grad_' + (++counter) + '_' + Math.random().toString(36).slice(2, 8);
-      $grad.attr('id', newId);
-      $svg.find('[fill="url(#' + oldId + ')"]').attr('fill', 'url(#' + newId + ')');
-      $svg.find('[stroke="url(#' + oldId + ')"]').attr('stroke', 'url(#' + newId + ')');
+      var newId = 'sd_' + (++counter) + '_' + Math.random().toString(36).slice(2, 8);
+      pairs.push({ el: el, oldId: oldId, newId: newId });
+    });
+    var map = {};
+    pairs.forEach(function (p) {
+      map[p.oldId] = p.newId;
+      p.el.id = p.newId;
+    });
+    var urlAttrs = ['fill', 'stroke', 'mask', 'clip-path', 'filter'];
+    $svg.find('*').each(function () {
+      var el = this;
+      var a;
+      for (a = 0; a < urlAttrs.length; a++) {
+        var attr = urlAttrs[a];
+        var val = el.getAttribute(attr);
+        if (!val || val.indexOf('url(#') === -1) continue;
+        var replaced = val.replace(/url\(#([^)]+)\)/g, function (_, id) {
+          return map[id] ? 'url(#' + map[id] + ')' : 'url(#' + id + ')';
+        });
+        if (replaced !== val) el.setAttribute(attr, replaced);
+      }
+      var href = el.getAttribute('href');
+      if (href && href.charAt(0) === '#' && map[href.slice(1)]) {
+        el.setAttribute('href', '#' + map[href.slice(1)]);
+      }
+      var xlink = el.getAttribute('xlink:href');
+      if (xlink && xlink.charAt(0) === '#' && map[xlink.slice(1)]) {
+        el.setAttribute('xlink:href', '#' + map[xlink.slice(1)]);
+      }
     });
   });
 }
 
 $('.schedule__slider').on('initialized.owl.carousel refreshed.owl.carousel', function () {
-  uniquifyScheduleSvgIds();
+  window.requestAnimationFrame(function () {
+    uniquifyScheduleSvgIds();
+  });
 });
 
 $('.schedule__slider').owlCarousel({
@@ -84,7 +113,9 @@ $('.schedule__slider').owlCarousel({
   }
 });
 
-uniquifyScheduleSvgIds();
+window.requestAnimationFrame(function () {
+  uniquifyScheduleSvgIds();
+});
 
 
 
@@ -339,6 +370,27 @@ $(document).on('click','.schedule__btn',function(e){
 })
 
 
+var _gameFormSubmitFallbackTimer = null;
+
+function resetGameOrderFormSubmitLock($f) {
+  if (_gameFormSubmitFallbackTimer) {
+    clearTimeout(_gameFormSubmitFallbackTimer);
+    _gameFormSubmitFallbackTimer = null;
+  }
+  if ($f && $f.length) {
+    $f.data('submitting', false);
+    $f.find('button[type="submit"]').prop('disabled', false);
+  }
+}
+
+// Восстановление после bfcache в Safari (назад к странице с формой — иначе кнопка «мертвая»).
+$(window).on('pageshow', function (ev) {
+  var oe = ev.originalEvent;
+  if (oe && oe.persisted) {
+    resetGameOrderFormSubmitLock($('form.game-form'));
+  }
+});
+
 // Одна форма #game-register — защита от повторной отправки (двойной тап / двойной клик).
 $(document).on('submit', 'form.game-form', function () {
   var $f = $(this);
@@ -346,7 +398,15 @@ $(document).on('submit', 'form.game-form', function () {
     return false;
   }
   $f.data('submitting', true);
-  $f.find('button[type="submit"]').prop('disabled', true);
+  var $btn = $f.find('button[type="submit"]');
+  $btn.prop('disabled', true);
+  if (_gameFormSubmitFallbackTimer) {
+    clearTimeout(_gameFormSubmitFallbackTimer);
+  }
+  _gameFormSubmitFallbackTimer = setTimeout(function () {
+    _gameFormSubmitFallbackTimer = null;
+    resetGameOrderFormSubmitLock($f);
+  }, 25000);
 })
 
 
@@ -356,9 +416,7 @@ $(document).on('click','.popup__close, .popup__overflow',function(e){
   $('.popup').removeClass('popup--active');
   $('body').removeClass('body');
   $('.header').show();
-  var $orderForm = $('form.game-form');
-  $orderForm.data('submitting', false);
-  $orderForm.find('button[type="submit"]').prop('disabled', false);
+  resetGameOrderFormSubmitLock($('form.game-form'));
 
   var urlParams = new URLSearchParams(window.location.search);
   // Проверяем наличие параметра reserve

@@ -24,6 +24,11 @@
             {{ game_order_form.promo }}
             {{ game_order_form.how }}
 
+            <div class="popup__check">
+                {{ game_order_form.first_time }}
+                <label for="id_first_time" class="popup__check-label">Играем впервые</label>
+            </div>
+
             <div class="popup__field popup__field--command-number">
                 <p class="popup__label" id="command_number_heading">Количество человек в команде</p>
                 <div class="command-number-picker" data-command-picker>

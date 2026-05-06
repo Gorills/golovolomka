@@ -1,4 +1,5 @@
 import json
+import unicodedata
 from decimal import Decimal
 from itertools import product
 from multiprocessing import context
@@ -659,6 +660,13 @@ def users_delete(request, pk):
 
 
 
+def _text_needle_game_search(s):
+    """Подстрочный поиск по названию игры и категории (как на расписании до переноса в админку)."""
+    if not s or not str(s).strip():
+        return ''
+    return unicodedata.normalize('NFC', str(s).strip()).casefold()
+
+
 @user_passes_test(lambda u: u.is_superuser)
 def games(request):
     # Получаем или создаем настройки игр
@@ -685,11 +693,25 @@ def games(request):
 
 
     categorys = GameCategory.objects.all()
-    games = Games.objects.select_related('city').all().order_by(
+    games = Games.objects.select_related('city', 'category').all().order_by(
         F('date_date').asc(nulls_last=True),
         F('display_priority').desc(),
         'id',
     )
+
+    search_game = request.GET.get('game', '').strip()
+    if search_game:
+        needle = _text_needle_game_search(search_game)
+        if needle:
+            matching_ids = []
+            for gid, name, cat_name in games.values_list('id', 'name', 'category__name'):
+                hay_name = _text_needle_game_search(name or '')
+                hay_cat = _text_needle_game_search(cat_name or '')
+                if needle in hay_name or needle in hay_cat:
+                    matching_ids.append(gid)
+            games = games.filter(id__in=matching_ids) if matching_ids else games.none()
+
+    games_search_active = bool(search_game)
 
     # Контекст для рендера страницы
     context = {
@@ -697,7 +719,9 @@ def games(request):
         'category_setup_form': category_setup_form,
         'categorys': categorys,
         'photos': GamesPhoto.objects.all(),
-        'games': games
+        'games': games,
+        'search_game': search_game,
+        'games_search_active': games_search_active,
     }
 
     return render(request, 'games/games.html', context)

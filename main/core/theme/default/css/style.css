@@ -751,6 +751,7 @@ a {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
+  isolation: isolate;
   min-height: 483px;
   margin: 0 auto;
   background: #000;
@@ -785,7 +786,7 @@ a {
 
 .schedule__date {
   position: absolute;
-  z-index: 3;
+  z-index: 6;
   top: -10px;
   left: 50%;
   transform: translate(-50%, 0);
@@ -798,6 +799,8 @@ a {
 }
 
 .schedule__date p {
+  position: relative;
+  z-index: 1;
   display: block;
   padding: 0 20px;
   white-space: nowrap;
@@ -805,7 +808,9 @@ a {
 
 .schedule__date svg {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
+  left: 0;
+  top: 0;
   width: 100%;
 }
 
@@ -943,6 +948,8 @@ a {
 .schedule .owl-carousel .owl-item {
   overflow: visible;
   /* Убедитесь, что отдельные слайды не обрезают контент */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .schedule .owl-nav {

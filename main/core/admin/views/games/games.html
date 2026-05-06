@@ -107,6 +107,17 @@
         </div>
         <p class="games-admin-hint">Порядок в списке (в один день) задаётся кнопками «Выше» / «Ниже» и совпадает с расписанием на сайте.</p>
 
+        <form method="get" class="games-admin-game-search admin-bulk-toolbar admin-bulk-toolbar--games" action="{% url 'games' %}">
+            <label class="games-admin-game-search__label">
+                <span class="games-admin-game-search__label-text">Игра</span>
+                <input class="games-admin-game-search__input" type="search" name="game" value="{{ search_game }}" placeholder="Название или формат" autocomplete="off">
+            </label>
+            <button type="submit" class="btn btn--success">Найти</button>
+            {% if games_search_active %}
+            <a class="games-admin-game-search__reset" href="{% url 'games' %}">Сбросить</a>
+            {% endif %}
+        </form>
+
         <div class="games-admin-bulk games-admin-page js-admin-past-filter-root" data-games-bulk-url="{% url 'games_bulk_delete' %}" data-game-reorder-url="{% url 'game_reorder' %}">
         <div class="admin-bulk-toolbar admin-bulk-toolbar--games">
             <label class="admin-hide-past-wrap">
@@ -193,7 +204,11 @@
             </div>
             </div>
         {% empty %}
+            {% if games_search_active %}
+            <p class="games-admin-empty">По заданному запросу игр не найдено.</p>
+            {% else %}
             <p class="games-admin-empty">Пока нет ни одной игры — добавьте через «+».</p>
+            {% endif %}
         {% endfor %}
         </div>
 

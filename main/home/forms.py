@@ -263,6 +263,14 @@ class GameOrderForm(forms.ModelForm):
             
         })
     )
+    first_time = forms.BooleanField(
+        label='',
+        required=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'popup__checkbox',
+            'id': 'id_first_time',
+        }),
+    )
     command_number = forms.IntegerField(
         label='Количество человек',
         min_value=1,
@@ -302,6 +310,7 @@ class GameOrderForm(forms.ModelForm):
         model = GameOrder
         fields = [
             'game_id', 'command', 'name', 'phone', 'comment', 'promo', 'how',
+            'first_time',
             'command_number',
         ]
 

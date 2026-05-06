@@ -59,7 +59,6 @@ def schedule(request):
         games = games.filter(city=city)
 
     search_date = request.GET.get('date', '').strip()
-    search_game = request.GET.get('game', '').strip()
     search_place = request.GET.get('place', '').strip()
 
     if search_date:
@@ -68,17 +67,6 @@ def schedule(request):
             games = games.filter(date_date=parsed)
         except (ValueError, TypeError):
             pass
-
-    if search_game:
-        needle = _text_needle(search_game)
-        if needle:
-            matching_ids = []
-            for gid, name, cat_name in games.values_list('id', 'name', 'category__name'):
-                hay_name = _text_needle(name or '')
-                hay_cat = _text_needle(cat_name or '')
-                if needle in hay_name or needle in hay_cat:
-                    matching_ids.append(gid)
-            games = games.filter(id__in=matching_ids) if matching_ids else games.none()
 
     if search_place:
         needle = _text_needle(search_place)
@@ -96,14 +84,13 @@ def schedule(request):
                     matching_ids.append(gid)
             games = games.filter(id__in=matching_ids) if matching_ids else games.none()
 
-    schedule_search_active = bool(search_date or search_game or search_place)
+    schedule_search_active = bool(search_date or search_place)
     games_empty = not games.exists()
 
     context = {
         'games_setup': games_setup,
         'games': games,
         'search_date': search_date,
-        'search_game': search_game,
         'search_place': search_place,
         'schedule_search_active': schedule_search_active,
         'games_empty': games_empty,
@@ -180,6 +167,7 @@ def game_callback(request):
             comment = form.cleaned_data.get('comment')
             promo = form.cleaned_data.get('promo')
             how = form.cleaned_data.get('how')
+            first_time = bool(form.cleaned_data.get('first_time'))
             command_number = form.cleaned_data.get('command_number')
             agree_bundle = form.cleaned_data.get('consent_privacy_and_rules')
             agree_privacy_policy = bool(agree_bundle)
@@ -217,7 +205,7 @@ def game_callback(request):
                         promo=promo,
                         how=how,
                         command_number=command_number,
-                        first_time=False,
+                        first_time=first_time,
                         agree_privacy_policy=bool(agree_privacy_policy),
                         agree_personal_data=bool(agree_personal_data),
                         agree_ads=bool(agree_ads),
@@ -251,6 +239,7 @@ def game_callback(request):
                 f"Комментарий: {comment}\n"
                 f"Промокод: {promo}\n"
                 f"Как вы узнали о нас: {how}\n"
+                f"Играем впервые: {'Да' if first_time else 'Нет'}\n"
                 f"Политика ПДн ИП Максудова А.К.: {'Да' if agree_privacy_policy else 'Нет'}\n"
                 f"Согласие на обработку ПД (правила): {'Да' if agree_personal_data else 'Нет'}\n"
                 f"Согласие на рассылку (правила): {'Да' if agree_ads else 'Нет'}"

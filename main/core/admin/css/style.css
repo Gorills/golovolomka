@@ -2214,6 +2214,26 @@ label span {
   align-items: center;
 }
 
+.games-admin-game-search__label {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.games-admin-game-search__input {
+  min-width: 220px;
+  padding: 8px 10px;
+  border: 1px solid #c9c9c9;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.games-admin-game-search__reset {
+  font-size: 14px;
+  align-self: center;
+}
+
 .games-admin-sort {
   display: flex;
   flex-direction: column;
