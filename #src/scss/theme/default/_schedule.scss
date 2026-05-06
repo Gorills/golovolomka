@@ -117,7 +117,19 @@
 
     &__slider {
         height: fit-content;
-        
+    }
+
+    /* Owl: .owl-carousel { display:none } до .owl-loaded — если app.js не выполнился, блок пустой */
+    &__slider.owl-carousel:not(.owl-loaded) {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        padding-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    &__slider.owl-carousel:not(.owl-loaded) .schedule__item {
+        flex: 0 0 auto;
     }
 
     // .schedule__item

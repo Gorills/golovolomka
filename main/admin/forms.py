@@ -212,6 +212,12 @@ class CustomCodeForm(forms.ModelForm):
             }),
         }
 
+    def clean_code(self):
+        code = self.cleaned_data.get('code') or ''
+        code = code.replace('m[i]=m[i]function()', 'm[i]=m[i]||function()')
+        code = code.replace('m[i].a=m[i].a[]', 'm[i].a=m[i].a||[]')
+        return code
+
 
 
 

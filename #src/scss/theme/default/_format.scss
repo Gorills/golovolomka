@@ -126,6 +126,18 @@
         position: relative;
     }
 
+    &__slider.owl-carousel:not(.owl-loaded) {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        padding-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    &__slider.owl-carousel:not(.owl-loaded) .format__slider-item {
+        flex: 0 0 auto;
+    }
+
     // .format__slider-item
 
     &__slider-item {

@@ -13,6 +13,14 @@
         filter: drop-shadow(0 0 40px rgba(244, 209, 30, 0.9));
     }
 
+    &__inner.owl-carousel:not(.owl-loaded) {
+        display: block;
+    }
+
+    &__inner.owl-carousel:not(.owl-loaded) .slider__item ~ .slider__item {
+        display: none;
+    }
+
     // slider__item
 
     &__item {

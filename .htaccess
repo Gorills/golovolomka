@@ -1,3 +1,5 @@
+# Beget Passenger: пути ниже — для основного сайта (golovolomka.maksudaq…).
+# На тесте (golovolomka-test…) замените в обеих строках имя каталога, иначе Permission denied на чужом venv (0700).
 PassengerEnabled On
 PassengerAppRoot /home/m/maksudaq/golovolomka.maksudaq.beget.tech/public_html/main/main
 PassengerPython /home/m/maksudaq/golovolomka.maksudaq.beget.tech/public_html/venv/bin/python
