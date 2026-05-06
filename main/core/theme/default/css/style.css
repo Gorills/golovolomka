@@ -806,6 +806,7 @@ a {
 
 .schedule__date {
   position: absolute;
+  height: 32px;
   z-index: 6;
   top: -10px;
   left: 50%;
