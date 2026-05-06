@@ -1,6 +1,3 @@
-import unicodedata
-from datetime import datetime
-
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db import transaction
 from django.db.models import F, Sum
@@ -38,15 +35,7 @@ except:
 from .context_processors import get_subdomain
 
 
-def _text_needle(s):
-    """Нормализация + регистронезависимое сравнение (в т.ч. кириллица) для подстрочного поиска."""
-    if not s or not str(s).strip():
-        return ''
-    return unicodedata.normalize('NFC', str(s).strip()).casefold()
-
-
 def schedule(request):
-    
     games_setup = GamesSetup.objects.all().first()
     games = Games.objects.select_related('city', 'category').all().order_by(
         F('date_date').asc(nulls_last=True),
@@ -58,45 +47,10 @@ def schedule(request):
     if city:
         games = games.filter(city=city)
 
-    search_date = request.GET.get('date', '').strip()
-    search_place = request.GET.get('place', '').strip()
-
-    if search_date:
-        try:
-            parsed = datetime.strptime(search_date, '%Y-%m-%d').date()
-            games = games.filter(date_date=parsed)
-        except (ValueError, TypeError):
-            pass
-
-    if search_place:
-        needle = _text_needle(search_place)
-        if needle:
-            matching_ids = []
-            for gid, loc, caddr, cname in games.values_list(
-                'id', 'location', 'city__address', 'city__name'
-            ):
-                parts = (
-                    _text_needle(loc or ''),
-                    _text_needle(caddr or ''),
-                    _text_needle(cname or ''),
-                )
-                if any(needle in p for p in parts):
-                    matching_ids.append(gid)
-            games = games.filter(id__in=matching_ids) if matching_ids else games.none()
-
-    schedule_search_active = bool(search_date or search_place)
-    games_empty = not games.exists()
-
     context = {
         'games_setup': games_setup,
         'games': games,
-        'search_date': search_date,
-        'search_place': search_place,
-        'schedule_search_active': schedule_search_active,
-        'games_empty': games_empty,
     }
-
-
 
     return render(request, 'home/schedule.html', context)
 

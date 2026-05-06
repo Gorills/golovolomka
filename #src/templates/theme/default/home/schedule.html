@@ -59,40 +59,6 @@
         <div class="schedule__inner">
             <h2 class="schedule__title gradient-text">{{ games_setup.title }}</h2>
 
-            <form class="schedule-search" method="get" action="{% url 'schedule' %}#schedule">
-                <div class="schedule-search__fields">
-                    <label class="schedule-search__label">
-                        <span class="schedule-search__label-text">День</span>
-                        <input class="schedule-search__input" type="date" name="date" value="{{ search_date }}">
-                    </label>
-                    <label class="schedule-search__label">
-                        <span class="schedule-search__label-text">Место</span>
-                        <input class="schedule-search__input" type="search" name="place" value="{{ search_place }}" placeholder="Адрес или город" autocomplete="off">
-                    </label>
-                </div>
-                <div class="schedule-search__actions">
-                    <button class="schedule-search__btn btn" type="submit">
-                        <p>Найти</p>
-                        <svg width="244" height="53" viewBox="0 0 244 53" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M229.96 3.14251L18.7967 0.111899C14.2133 0.0461169 10.172 3.10509 8.99087 7.53425L0.421291 39.6702C-1.29219 46.0957 3.62687 52.3727 10.2757 52.2449L233.65 47.9534C239.672 47.8377 244.226 42.463 243.352 36.5032L239.71 11.6895C238.997 6.83387 234.867 3.21294 229.96 3.14251Z" fill="url(#paint0_linear_schedule_search)"/>
-                            <defs>
-                                <linearGradient id="paint0_linear_schedule_search" x1="121" y1="0.5" x2="121" y2="48" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#FFED92"/>
-                                    <stop offset="1" stop-color="#E5C416"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                    </button>
-                    {% if schedule_search_active %}
-                    <a class="schedule-search__reset" href="{% url 'schedule' %}#schedule">Сбросить</a>
-                    {% endif %}
-                </div>
-            </form>
-
-            {% if schedule_search_active and games_empty %}
-            <p class="schedule-search__empty">По заданным условиям игр не найдено.</p>
-            {% endif %}
-
             <div class="schedule__row-wrap">
                 
 
