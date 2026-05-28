@@ -2062,9 +2062,17 @@ a {
   margin-top: 20px;
 }
 
+
+
 .popup__btn {
   border: none;
   background: none;
+}
+
+.popup__btn-text {
+  font-size: 16px;
+  z-index: 50;
+  position: relative;
 }
 
 .popup__btn svg {
