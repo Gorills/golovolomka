@@ -71,10 +71,11 @@
         border-radius: 20px;
         height: 214px;
         display: flex;
-        align-items: center;
+        align-items: stretch;
         justify-content: center;
         margin-bottom: 40px;
         padding: 20px;
+        overflow: hidden;
         @media screen and (min-width: 576px) {
             height: 300px;
         }
@@ -93,16 +94,25 @@
             border-radius: 20px;
             overflow: hidden;
         }
+
+        &--file {
+            padding: 0;
+            background: #000;
+            flex-direction: column;
+        }
     }
 
     // .about__video
 
     &__video {
         width: 100%;
-        height: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
+        object-fit: contain;
+        display: block;
+        background: #000;
         
         border-radius: 20px;
-        overflow: hidden;
         
     }
 

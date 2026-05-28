@@ -252,12 +252,11 @@
 
             
             <div class="about__row">
-                <div class="about__video-wrap">
-                    {% if what_setup.embedded_video %}
+                <div class="about__video-wrap{% if what_setup.video %} about__video-wrap--file{% endif %}">
+                    {% if what_setup.video %}
+                        <video src="{{ what_setup.video.url }}" class="about__video" controls playsinline preload="auto"></video>
+                    {% elif what_setup.embedded_video %}
                         {{ what_setup.embedded_video | safe }}
-                    {% elif what_setup.video %}
-                        <video src="{{ what_setup.video.url }}" class="about__video"></video>
-                    {% else %}
                     {% endif %}
 
 

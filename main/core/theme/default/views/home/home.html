@@ -122,10 +122,7 @@
                                 
                             
                             </div>
-                            <div class="schedule__status">{% if game.manual_sold_out %}МЕСТ НЕТ{% elif game.reverve %}МЕСТА ЕСТЬ{% elif not game.reserve_enabled %}МЕСТ НЕТ{% elif game.closed %}МЕСТ НЕТ{% else %}РЕЗЕРВ{% endif %}</div>
-                            {% if game.mark_few_seats %}
-                            <div class="schedule__badge-few">МАЛО МЕСТ</div>
-                            {% endif %}
+                            <div class="schedule__status{% if game.reverve and game.mark_few_seats %} schedule__status--few{% endif %}">{% if game.manual_sold_out %}МЕСТ НЕТ{% elif game.reverve %}{% if game.mark_few_seats %}МАЛО МЕСТ{% else %}МЕСТА ЕСТЬ{% endif %}{% elif not game.reserve_enabled %}МЕСТ НЕТ{% elif game.closed %}МЕСТ НЕТ{% else %}РЕЗЕРВ{% endif %}</div>
                            
 
                         </div>
@@ -255,12 +252,11 @@
 
             
             <div class="about__row">
-                <div class="about__video-wrap">
-                    {% if what_setup.embedded_video %}
+                <div class="about__video-wrap{% if what_setup.video %} about__video-wrap--file{% endif %}">
+                    {% if what_setup.video %}
+                        <video src="{{ what_setup.video.url }}" class="about__video" controls playsinline preload="auto"></video>
+                    {% elif what_setup.embedded_video %}
                         {{ what_setup.embedded_video | safe }}
-                    {% elif what_setup.video %}
-                        <video src="{{ what_setup.video.url }}" class="about__video"></video>
-                    {% else %}
                     {% endif %}
 
 

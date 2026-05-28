@@ -213,6 +213,9 @@ class GameOrderForm(forms.ModelForm):
             'class': 'popup__input',
             'placeholder': '+7 (999) 999 99-99',
             'required': 'required',
+            'type': 'tel',
+            'inputmode': 'tel',
+            'autocomplete': 'tel',
             'id': ''
         })
     )

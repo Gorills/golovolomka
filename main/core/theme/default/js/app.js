@@ -348,28 +348,6 @@ function initCommandNumberPicker() {
 }
 
 
-$(document).on('click','.schedule__btn',function(e){
-
-  e.preventDefault();
-  
-  
-  var gameId = $(this).attr('data-id');
-  if (!gameId) {
-    return;
-  }
-  var $popup = $('#game-register');
-  $popup.find('input[name="game_id"]').val(gameId);
-  $popup.addClass('popup--active');
-
-  
-  $('.header').hide();
-
-  $('body').addClass('body');
-
- 
-})
-
-
 var _gameFormSubmitFallbackTimer = null;
 
 function resetGameOrderFormSubmitLock($f) {
@@ -383,23 +361,97 @@ function resetGameOrderFormSubmitLock($f) {
   }
 }
 
-// Восстановление после bfcache в Safari (назад к странице с формой — иначе кнопка «мертвая»).
-$(window).on('pageshow', function (ev) {
-  var oe = ev.originalEvent;
-  if (oe && oe.persisted) {
-    resetGameOrderFormSubmitLock($('form.game-form'));
+function lockBodyScrollForPopup() {
+  if ($('html').hasClass('body-scroll-lock')) {
+    return;
   }
-});
+  var scrollY = window.scrollY || window.pageYOffset || 0;
+  $('html').addClass('body-scroll-lock');
+  $('body').addClass('body').data('popup-scroll-y', scrollY);
+  document.body.style.top = '-' + scrollY + 'px';
+}
 
-// Одна форма #game-register — защита от повторной отправки (двойной тап / двойной клик).
-$(document).on('submit', 'form.game-form', function () {
-  var $f = $(this);
-  if ($f.data('submitting')) {
-    return false;
+function unlockBodyScrollForPopup() {
+  var scrollY = $('body').data('popup-scroll-y');
+  if (scrollY === undefined) {
+    scrollY = 0;
   }
+  $('html').removeClass('body-scroll-lock');
+  $('body').removeClass('body').removeData('popup-scroll-y');
+  document.body.style.top = '';
+  window.scrollTo(0, scrollY);
+}
+
+function hideHeaderForPopup() {
+  $('.header').addClass('header--popup-hidden');
+}
+
+function showHeaderAfterPopup() {
+  $('.header').removeClass('header--popup-hidden');
+}
+
+function closeAllPopups() {
+  $('.popup').removeClass('popup--active');
+  unlockBodyScrollForPopup();
+  showHeaderAfterPopup();
+  resetGameOrderFormSubmitLock($('form.game-form'));
+}
+
+function openGameRegisterPopup(gameId) {
+  var $popup = $('#game-register');
+  if (!$popup.length) {
+    return;
+  }
+  $popup.find('input[name="game_id"]').val(gameId);
+  $('.popup').removeClass('popup--active');
+  $popup.addClass('popup--active');
+  lockBodyScrollForPopup();
+  hideHeaderForPopup();
+}
+
+function showGameOrderResultPopup(reserve) {
+  closeAllPopups();
+  if (reserve) {
+    $('.popup.reserve').addClass('popup--active');
+  } else {
+    $('.popup.thank').addClass('popup--active');
+  }
+  lockBodyScrollForPopup();
+  hideHeaderForPopup();
+}
+
+function showGameOrderErrorPopup(message) {
+  closeAllPopups();
+  if (message) {
+    $('.js-popup-game-error-text').text(message);
+  }
+  $('.popup-game-error').addClass('popup--active');
+  lockBodyScrollForPopup();
+  hideHeaderForPopup();
+}
+
+function gameOrderFormErrorsToText(errors) {
+  if (!errors || typeof errors !== 'object') {
+    return '';
+  }
+  var parts = [];
+  Object.keys(errors).forEach(function (field) {
+    var msgs = errors[field];
+    if (!msgs || !msgs.length) {
+      return;
+    }
+    parts.push(msgs[0]);
+  });
+  return parts.join(' ');
+}
+
+function canSubmitGameFormViaFetch() {
+  return typeof window.fetch === 'function' && typeof window.FormData === 'function';
+}
+
+function armGameOrderSubmitLock($f) {
   $f.data('submitting', true);
-  var $btn = $f.find('button[type="submit"]');
-  $btn.prop('disabled', true);
+  $f.find('button[type="submit"]').prop('disabled', true);
   if (_gameFormSubmitFallbackTimer) {
     clearTimeout(_gameFormSubmitFallbackTimer);
   }
@@ -407,27 +459,126 @@ $(document).on('submit', 'form.game-form', function () {
     _gameFormSubmitFallbackTimer = null;
     resetGameOrderFormSubmitLock($f);
   }, 25000);
-})
+}
 
+function resetCommandNumberPickerToDefault($form) {
+  var $picker = $form.find('[data-command-picker]');
+  if (!$picker.length) {
+    return;
+  }
+  var $input = $picker.find('input[name="command_number"]');
+  if ($input.length) {
+    $input.val('2');
+  }
+  $picker.find('.command-number-picker__btn').removeClass('command-number-picker__btn--selected').attr({ 'aria-checked': 'false', tabindex: -1 });
+  var $btn = $picker.find('.command-number-picker__btn[data-value="2"]');
+  $btn.addClass('command-number-picker__btn--selected').attr({ 'aria-checked': 'true', tabindex: 0 });
+}
 
-$(document).on('click','.popup__close, .popup__overflow',function(e){
-
+$(document).on('click', '.schedule__btn', function (e) {
   e.preventDefault();
-  $('.popup').removeClass('popup--active');
-  $('body').removeClass('body');
-  $('.header').show();
-  resetGameOrderFormSubmitLock($('form.game-form'));
+  var gameId = $(this).attr('data-id');
+  if (!gameId) {
+    return;
+  }
+  openGameRegisterPopup(gameId);
+});
 
-  var urlParams = new URLSearchParams(window.location.search);
-  // Проверяем наличие параметра reserve
-  if (urlParams.has('reserve')) {
-    window.location.href = "/";
+// Восстановление после bfcache в Safari (назад к странице с формой — иначе кнопка «мертвая»).
+$(window).on('pageshow', function (ev) {
+  var oe = ev.originalEvent;
+  if (oe && oe.persisted) {
+    resetGameOrderFormSubmitLock($('form.game-form'));
+    closeAllPopups();
+  }
+});
+
+$(document).on('visibilitychange', function () {
+  if (document.visibilityState === 'visible') {
+    resetGameOrderFormSubmitLock($('form.game-form'));
+  }
+});
+
+// AJAX-отправка: без полной перезагрузки страницы (стабильнее на iPhone Safari).
+$(document).on('submit', 'form.game-form', function (e) {
+  var $f = $(this);
+  if ($f.data('submitting')) {
+    e.preventDefault();
+    return false;
   }
 
-  
-  
- 
-})
+  var gameId = ($f.find('input[name="game_id"]').val() || '').trim();
+  if (!gameId) {
+    e.preventDefault();
+    showGameOrderErrorPopup(
+      'Не выбрана игра. Закройте окно и нажмите «Записаться» у нужной игры снова.'
+    );
+    return false;
+  }
+
+  if (!canSubmitGameFormViaFetch()) {
+    armGameOrderSubmitLock($f);
+    return true;
+  }
+
+  e.preventDefault();
+  armGameOrderSubmitLock($f);
+
+  var action = $f.attr('action') || window.location.pathname;
+  var formEl = this;
+
+  fetch(action, {
+    method: 'POST',
+    body: new FormData(formEl),
+    credentials: 'same-origin',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      Accept: 'application/json',
+    },
+  })
+    .then(function (res) {
+      return res
+        .json()
+        .then(function (data) {
+          return { ok: res.ok, data: data };
+        })
+        .catch(function () {
+          return { ok: false, data: {} };
+        });
+    })
+    .then(function (result) {
+      resetGameOrderFormSubmitLock($f);
+      if (result.ok && result.data && result.data.ok) {
+        formEl.reset();
+        resetCommandNumberPickerToDefault($f);
+        showGameOrderResultPopup(!!result.data.reserve);
+        return;
+      }
+      var errText = gameOrderFormErrorsToText(result.data && result.data.errors);
+      showGameOrderErrorPopup(
+        errText ||
+          'Не удалось отправить заявку. Проверьте поля и попробуйте ещё раз.'
+      );
+    })
+    .catch(function () {
+      resetGameOrderFormSubmitLock($f);
+      showGameOrderErrorPopup(
+        'Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.'
+      );
+    });
+
+  return false;
+});
+
+$(document).on('click', '.popup__close, .popup__overflow', function (e) {
+  e.preventDefault();
+  closeAllPopups();
+
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('reserve') || urlParams.has('error')) {
+    window.location.replace('/');
+  }
+});
 
 
 
@@ -446,13 +597,9 @@ $(document).ready(function() {
       var reserveValue = urlParams.get('reserve');
 
       if (reserveValue === 'true') {
-          // Показываем попап для reserve=true
-          $('.reserve').addClass('popup--active');
-
-
+          showGameOrderResultPopup(true);
       } else if (reserveValue === 'false') {
-          // Показываем попап для reserve=false
-          $('.thank').addClass('popup--active');
+          showGameOrderResultPopup(false);
       }
   }
 
@@ -460,8 +607,7 @@ $(document).ready(function() {
     var errorValue = urlParams.get('error');
 
     if (errorValue === 'true') {
-        // Показываем попап для reserve=true
-        $('.error').addClass('popup--active');
+        showGameOrderErrorPopup();
     }
 }
 

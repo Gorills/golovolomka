@@ -99,10 +99,7 @@
                                 
                             
                             </div>
-                            <div class="schedule__status">{% if game.manual_sold_out %}МЕСТ НЕТ{% elif game.reverve %}МЕСТА ЕСТЬ{% elif not game.reserve_enabled %}МЕСТ НЕТ{% elif game.closed %}МЕСТ НЕТ{% else %}РЕЗЕРВ{% endif %}</div>
-                            {% if game.mark_few_seats %}
-                            <div class="schedule__badge-few">МАЛО МЕСТ</div>
-                            {% endif %}
+                            <div class="schedule__status{% if game.reverve and game.mark_few_seats %} schedule__status--few{% endif %}">{% if game.manual_sold_out %}МЕСТ НЕТ{% elif game.reverve %}{% if game.mark_few_seats %}МАЛО МЕСТ{% else %}МЕСТА ЕСТЬ{% endif %}{% elif not game.reserve_enabled %}МЕСТ НЕТ{% elif game.closed %}МЕСТ НЕТ{% else %}РЕЗЕРВ{% endif %}</div>
                            
                            
 

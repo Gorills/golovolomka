@@ -56,6 +56,7 @@ def schedule(request):
 
 
 from django.http import JsonResponse
+import threading
 import requests
 from django.conf import settings
 from .telegram import send_message
@@ -79,6 +80,37 @@ def _notify_telegram_and_max(message, telegram_group=None, city=None):
         send_max_if_configured(resolve_max_chat_id(city), message)
     except Exception:
         pass
+
+
+def _notify_telegram_and_max_async(message, telegram_group=None, city=None):
+    """Не блокировать ответ браузеру (важно для мобильного Safari при POST заявки)."""
+    threading.Thread(
+        target=_notify_telegram_and_max,
+        args=(message,),
+        kwargs={'telegram_group': telegram_group, 'city': city},
+        daemon=True,
+    ).start()
+
+
+def _game_callback_wants_json(request):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return True
+    return 'application/json' in (request.headers.get('Accept') or '')
+
+
+def _game_callback_finish(request, *, ok, reserve=None, form_errors=None):
+    if _game_callback_wants_json(request):
+        payload = {'ok': bool(ok)}
+        if ok:
+            payload['reserve'] = bool(reserve)
+        elif form_errors is not None:
+            payload['errors'] = form_errors
+        status = 200 if ok else (400 if form_errors is not None else 500)
+        return JsonResponse(payload, status=status)
+    if ok:
+        reserve_bool = 'true' if reserve else 'false'
+        return redirect(f'/?reserve={reserve_bool}')
+    return redirect('/?error=true')
 
 
 def get_client_ip(request):
@@ -134,7 +166,7 @@ def game_callback(request):
                     game = Games.objects.select_for_update().get(id=game_id)
 
                     if not game.site_can_register():
-                        return redirect('/?error=true')
+                        return _game_callback_finish(request, ok=False)
 
                     main_o = (
                         game.orders.filter(reserve=False).aggregate(s=Sum('command_number'))['s'] or 0
@@ -148,7 +180,7 @@ def game_callback(request):
                     elif game.reserve_enabled and res_o + command_number <= game.numbers_of_reserves:
                         order_reserve = True
                     else:
-                        return redirect('/?error=true')
+                        return _game_callback_finish(request, ok=False)
 
                     GameOrder.objects.create(
                         game=game,
@@ -171,16 +203,16 @@ def game_callback(request):
                     f"Игра с id {game_id} не найдена.\n"
                     f"Полученные данные: {form_data}"
                 )
-                _notify_telegram_and_max(error_message, city=city)
-                return redirect('/?error=true')
+                _notify_telegram_and_max_async(error_message, city=city)
+                return _game_callback_finish(request, ok=False)
             except Exception as create_err:
                 error_message = (
                     f"Ошибка при сохранении заявки.\n"
                     f"Полученные данные: {form_data}\n"
                     f"Ошибка: {str(create_err)}"
                 )
-                _notify_telegram_and_max(error_message, city=city)
-                return redirect('/?error=true')
+                _notify_telegram_and_max_async(error_message, city=city)
+                return _game_callback_finish(request, ok=False)
 
             # Формируем сообщение для Telegram
             message = (
@@ -198,10 +230,9 @@ def game_callback(request):
                 f"Согласие на обработку ПД (правила): {'Да' if agree_personal_data else 'Нет'}\n"
                 f"Согласие на рассылку (правила): {'Да' if agree_ads else 'Нет'}"
             )
-            _notify_telegram_and_max(message, telegram_group, city=city)
+            _notify_telegram_and_max_async(message, telegram_group, city=city)
 
-            reserve_bool = "true" if reserve else "false"
-            return redirect(f"/?reserve={reserve_bool}")
+            return _game_callback_finish(request, ok=True, reserve=reserve)
 
 
 
@@ -214,9 +245,13 @@ def game_callback(request):
                 f"Полученные данные: {form_data}\n"
                 f"Ошибки: {errors}"
             )
-            _notify_telegram_and_max(message, city=city)
+            _notify_telegram_and_max_async(message, city=city)
 
-            return redirect('/?error=true')
+            return _game_callback_finish(
+                request,
+                ok=False,
+                form_errors={field: list(errs) for field, errs in form.errors.items()},
+            )
 
 
 
@@ -227,9 +262,9 @@ def game_callback(request):
             f"Полученные данные: {form_data}\n"
             f"Ошибка: {str(e)}"
         )
-        _notify_telegram_and_max(error_message, city=city)
+        _notify_telegram_and_max_async(error_message, city=city)
 
-        return redirect('/?error=true')
+        return _game_callback_finish(request, ok=False)
 
 
 
