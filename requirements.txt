@@ -5,7 +5,7 @@ django-allauth==0.51.0
 django-ckeditor==6.3.2
 django-cleanup==6.0.0
 django-recaptcha3==0.4.0
-djangorestframework==3.14.0
+djangorestframework==3.17.2
 idna==3.4
 idna-ssl==1.1.0
 lxml==4.9.3
