@@ -32,7 +32,7 @@ except:
 
 
 
-from .context_processors import get_subdomain
+from .city import get_subdomain
 
 
 def schedule(request):

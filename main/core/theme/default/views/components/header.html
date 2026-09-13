@@ -106,12 +106,16 @@
 
 
 
-<div class="city-popup {% if not city %}city-popup--active{% endif %}">
-    <div class="city-popup__owerlay {% if city %}city-popup__owerlay--close{% endif %}"></div>    
+<div class="city-popup {% if not city and not city_dev_local %}city-popup--active{% endif %}">
+    <div class="city-popup__owerlay {% if city or city_dev_local %}city-popup__owerlay--close{% endif %}"></div>    
 
     <div class="city-popup__inner">
         {% for citi in citys %}
+            {% if city_dev_local %}
+            <a href="{{ request.path }}?city={{ citi.slug }}" class="city-popup__link">{{ citi.name }}</a>
+            {% else %}
             <a href="https://{{ citi.slug }}.golovolomka.fun" class="city-popup__link">{{ citi.name }}</a>
+            {% endif %}
         {% endfor %}
 
     </div>

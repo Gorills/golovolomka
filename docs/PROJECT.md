@@ -27,6 +27,7 @@
 - Запуск: `python main/manage.py` (из корня или из `main/` — по принятой у команде привычке).
 - URL: `main/main/urls.py` — подключает `admin.urls`, `accounts`, `ckeditor_uploader`, затем `home.urls` (последним из-за catch-all slug).
 - Локальные секреты и прод-настройки: `local_settings.py`, ключи — вне репозитория (см. `.gitignore`).
+- Города на localhost: query `?city=<slug>` и сессия, см. [development/local-cities.md](development/local-cities.md). На проде по-прежнему только субдомен.
 
 ## Соглашения
 
