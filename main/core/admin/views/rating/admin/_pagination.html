@@ -1,0 +1,7 @@
+{% if page_obj.paginator.num_pages > 1 %}
+  <nav class="ra-pagination" aria-label="Страницы">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}{% if search %}&amp;q={{ search|urlencode }}{% endif %}{% if current_format %}&amp;format={{ current_format.code|urlencode }}{% endif %}{% if status_filter %}&amp;status={{ status_filter|urlencode }}{% endif %}{% if sort %}&amp;sort={{ sort|urlencode }}{% endif %}{% if direction %}&amp;direction={{ direction|urlencode }}{% endif %}{% if direction_filter %}&amp;direction={{ direction_filter|urlencode }}{% endif %}{% if source_filter %}&amp;source={{ source_filter|urlencode }}{% endif %}">Назад</a>{% endif %}
+    <span aria-current="page">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}{% if search %}&amp;q={{ search|urlencode }}{% endif %}{% if current_format %}&amp;format={{ current_format.code|urlencode }}{% endif %}{% if status_filter %}&amp;status={{ status_filter|urlencode }}{% endif %}{% if sort %}&amp;sort={{ sort|urlencode }}{% endif %}{% if direction %}&amp;direction={{ direction|urlencode }}{% endif %}{% if direction_filter %}&amp;direction={{ direction_filter|urlencode }}{% endif %}{% if source_filter %}&amp;source={{ source_filter|urlencode }}{% endif %}">Дальше</a>{% endif %}
+  </nav>
+{% endif %}

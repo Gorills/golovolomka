@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 
-from admin.forms import BtnBlockItemForm, BtnBlockSetupForm, CityForm, CustomCodeForm, ColorsForm, DoverCorpSetupForm, DoverCorpSliderForm, FAQForm, FAQSetupForm, GameCategoryForm, GameOrderForm, GamesCategorySetupForm, GamesForm, GamesPhotoForm, GamesSetupForm, HomeGamesSetupForm, SetupForm, StartCorpSetupForm, ThemeSettingsForm, SliderSetupForm, SliderForm, PageForm, WaitItemForm, WaitSetupForm, WhatCorpItemForm, WhatCorpItemSetupForm, WhatCorpSetupForm, WhatItemForm, WhatSetupForm, WhyWeCorpItemForm, WhyWeCorpSetupForm
+from admin.forms import BtnBlockItemForm, BtnBlockSetupForm, CityAccessGrantForm, CityForm, CityOperatorCreateForm, CustomCodeForm, ColorsForm, DoverCorpSetupForm, DoverCorpSliderForm, FAQForm, FAQSetupForm, GameCategoryForm, GameOrderForm, GamesCategorySetupForm, GamesForm, GamesPhotoForm, GamesSetupForm, HomeGamesSetupForm, SetupForm, StartCorpSetupForm, ThemeSettingsForm, SliderSetupForm, SliderForm, PageForm, WaitItemForm, WaitSetupForm, WhatCorpItemForm, WhatCorpItemSetupForm, WhatCorpSetupForm, WhatItemForm, WhatSetupForm, WhyWeCorpItemForm, WhyWeCorpSetupForm
 
 from home.models import DoverCorpSetup, DoverCorpSlider, GameOrder, FAQ, BtnBlockItem, BtnBlockSetup, City, FAQSetup, GameCategory, Games, GamesCategorySetup, GamesPhoto, GamesSetup, HomeGamesSetup, Page, Slider, SliderSetup, StartCorpSetup, WaitItem, WaitSetup, WhatCorpItem, WhatCorpItemSetup, WhatCorpSetup, WhatItem, WhatSetup, WhyWeCorpItem, WhyWeCorpSetup
 
@@ -27,8 +27,17 @@ from django.db.models import F, Q
 from django.db import transaction
 
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
 
 from django.db.models import Sum
+
+from rating.models import CityRatingAccess
+from rating.services import (
+    ValidationError as RatingValidationError,
+    create_city_operator,
+    grant_city_access,
+    revoke_city_access,
+)
 
 
 
@@ -325,8 +334,19 @@ def sidebar_hide(request):
     return redirect('admin')
 
 
-@user_passes_test(lambda u: u.is_superuser)
+def _can_enter_admin(user):
+    return user.is_superuser or (
+        user.is_authenticated
+        and user.is_active
+        and CityRatingAccess.objects.filter(user=user, is_active=True).exists()
+    )
+
+
+@user_passes_test(_can_enter_admin)
 def admin(request):
+    if not request.user.is_superuser:
+        return redirect('rating_admin:team_list')
+
     try:
         setup = BaseSettings.objects.get()
      
@@ -635,19 +655,94 @@ def page_edit(request, pk):
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
+    return render(request, 'users/admin_users.html', _admin_users_context())
 
-    users = User.objects.all()
 
-    context = {
-        'users': users
+def _admin_users_context(*, create_operator_form=None, grant_access_form=None):
+    return {
+        'users': User.objects.all().order_by('username', 'id').prefetch_related(
+            'rating_accesses__city'
+        ),
+        'cities': City.objects.all().order_by('name', 'id'),
+        'create_operator_form': create_operator_form or CityOperatorCreateForm(prefix='create'),
+        'grant_access_form': grant_access_form or CityAccessGrantForm(),
     }
 
-    return render(request, 'users/admin_users.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
-def users_delete(request, pk):
+@require_POST
+def rating_operator_create(request):
+    form = CityOperatorCreateForm(request.POST, prefix='create')
+    if not form.is_valid():
+        return render(
+            request,
+            'users/admin_users.html',
+            _admin_users_context(create_operator_form=form),
+            status=400,
+        )
+    account, _ = create_city_operator(
+        actor=request.user,
+        username=form.cleaned_data['username'],
+        email=form.cleaned_data['email'],
+        password=form.cleaned_data['password1'],
+        city=form.cleaned_data['city'],
+    )
+    messages.success(request, 'Городской оператор {} создан.'.format(account.username))
+    return redirect('admin_users')
 
-    user = User.objects.get(id=pk)
+
+@user_passes_test(lambda u: u.is_superuser)
+@require_POST
+def rating_access_grant(request):
+    form = CityAccessGrantForm(request.POST)
+    if not form.is_valid():
+        return render(
+            request,
+            'users/admin_users.html',
+            _admin_users_context(grant_access_form=form),
+            status=400,
+        )
+    try:
+        _, created, reactivated = grant_city_access(
+            actor=request.user,
+            account=form.cleaned_data['user'],
+            city=form.cleaned_data['city'],
+        )
+    except RatingValidationError as exc:
+        form.add_error('user', str(exc))
+        return render(
+            request,
+            'users/admin_users.html',
+            _admin_users_context(grant_access_form=form),
+            status=400,
+        )
+    if created:
+        text = 'Доступ к городу назначен.'
+    elif reactivated:
+        text = 'Доступ к городу восстановлен.'
+    else:
+        text = 'Доступ к городу уже назначен.'
+    messages.success(request, text)
+    return redirect('admin_users')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+@require_POST
+def rating_access_revoke(request, access_id):
+    access = get_object_or_404(CityRatingAccess, pk=access_id)
+    _, changed = revoke_city_access(actor=request.user, access=access)
+    messages.success(
+        request,
+        'Доступ к городу отозван.' if changed else 'Доступ к городу уже был отозван.',
+    )
+    return redirect('admin_users')
+
+@user_passes_test(lambda u: u.is_superuser)
+@require_POST
+def users_delete(request, pk):
+    user = get_object_or_404(User, id=pk)
+    if user.pk == request.user.pk or user.is_superuser or user.rating_accesses.exists():
+        return JsonResponse({'ok': False, 'error': 'protected_user'}, status=400)
     user.delete()
 
     return redirect('admin_users')

@@ -9,6 +9,7 @@
 
             <div class="nav__wrap">
                 <a href="{% url "schedule" %}#schedule" class="nav__link">Расписание</a>
+                <a href="{% url 'rating:public' %}{% if city_dev_local and city %}?city={{ city.slug|urlencode }}{% endif %}" class="nav__link">Рейтинг</a>
                 <a href="{% url "corp" %}" class="nav__link">Корпоратив</a>
                 <a href="{% url "franchise" %}#photo" class="nav__link">Франшиза</a>
               

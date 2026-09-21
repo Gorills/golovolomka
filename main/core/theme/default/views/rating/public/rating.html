@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load theme_static %}
+
+{% block title %}{{ settings.seo_title|default:'Рейтинг команд' }}{% if current_city %} — {{ current_city.name }}{% endif %}{% endblock %}
+{% block description %}{{ settings.seo_description|default:'Рейтинг команд «Головоломки»' }}{% endblock %}
+{% block keywords %}{% endblock %}
+{% block canonical %}{{ canonical_url }}{% endblock %}
+{% block og:title %}{{ settings.seo_title|default:'Рейтинг команд' }}{% endblock %}
+{% block og:description %}{{ settings.seo_description|default:'Рейтинг команд «Головоломки»' }}{% endblock %}
+{% block og:url %}{{ canonical_url }}{% endblock %}
+{% block twitter:title %}{{ settings.seo_title|default:'Рейтинг команд' }}{% endblock %}
+{% block twitter:description %}{{ settings.seo_description|default:'Рейтинг команд «Головоломки»' }}{% endblock %}
+{% block other %}<link rel="stylesheet" href="{% get_static 'css/rating.css' %}?v=2">{% endblock %}
+
+{% block body %}
+<main class="rating-page" id="main-content">
+  <header class="rating-hero">
+    <div class="rating-shell">
+      <p class="rating-eyebrow">Головоломка{% if current_city %} · {{ current_city.name }}{% endif %}</p>
+      <h1 class="rating-title">{{ settings.intro_title|default:'Рейтинг команд' }}</h1>
+      {% if settings.intro_text %}
+        <div class="rating-intro" id="rating-intro">{{ settings.intro_text|linebreaksbr }}</div>
+      {% else %}
+        <p class="rating-intro">Находите свою команду, следите за прогрессом и открывайте новые ранги в каждом формате игр.</p>
+      {% endif %}
+      <a class="rating-skip" href="#rating-results">К списку команд</a>
+    </div>
+  </header>
+
+  <div class="rating-shell rating-layout">
+    <nav class="rating-format-nav" aria-label="Формат рейтинга">
+      {% for format in formats %}
+        <a class="rating-format-nav__link{% if current_format.code == format.code %} is-active{% endif %}"
+           href="?format={{ format.code|urlencode }}"
+           {% if current_format.code == format.code %}aria-current="page"{% endif %}>
+          {{ format.name }}
+        </a>
+      {% empty %}
+        <span class="rating-format-nav__empty">Форматы пока не настроены</span>
+      {% endfor %}
+    </nav>
+
+    <section class="rating-results" id="rating-results" aria-labelledby="rating-results-title">
+      <div class="rating-section-head">
+        <div>
+          <p class="rating-section-head__kicker">{{ current_format.name|default:'Команды' }}</p>
+          <h2 id="rating-results-title">Рейтинг команд</h2>
+        </div>
+        {% if page_obj.paginator.count %}<p class="rating-count">Найдено: {{ page_obj.paginator.count }}</p>{% endif %}
+      </div>
+
+      <form class="rating-filters" method="get" action="{% url 'rating:public' %}" role="search">
+        {% if current_format %}<input type="hidden" name="format" value="{{ current_format.code }}">{% endif %}
+        <div class="rating-field rating-field--search">
+          <label for="rating-search">Название команды</label>
+          <input id="rating-search" name="q" type="search" value="{{ search }}" maxlength="120" placeholder="Начните вводить название">
+        </div>
+        <div class="rating-field">
+          <label for="rating-sort">Сортировка</label>
+          <select id="rating-sort" name="sort">
+            <option value="points"{% if sort == 'points' %} selected{% endif %}>По баллам</option>
+            <option value="rank"{% if sort == 'rank' %} selected{% endif %}>По рангу</option>
+            <option value="name"{% if sort == 'name' %} selected{% endif %}>По названию</option>
+            <option value="games"{% if sort == 'games' %} selected{% endif %}>По играм</option>
+          </select>
+        </div>
+        <div class="rating-field">
+          <label for="rating-direction">Направление</label>
+          <select id="rating-direction" name="direction">
+            <option value="desc"{% if direction == 'desc' %} selected{% endif %}>По убыванию</option>
+            <option value="asc"{% if direction == 'asc' %} selected{% endif %}>По возрастанию</option>
+          </select>
+        </div>
+        <button class="rating-button" type="submit">Показать</button>
+        {% if search %}<a class="rating-reset" href="?format={{ current_format.code|urlencode }}">Сбросить поиск</a>{% endif %}
+      </form>
+
+      {% if ui_error %}
+        <div class="rating-notice rating-notice--error" role="alert">
+          <strong>Не удалось загрузить рейтинг.</strong>
+          <span>{{ ui_error }}</span>
+        </div>
+      {% elif page_obj.object_list %}
+        <div class="rating-table-wrap">
+          <table class="rating-table">
+            <caption class="rating-sr-only">Команды формата {{ current_format.name }}</caption>
+            <thead>
+              <tr><th scope="col">№</th><th scope="col">Команда</th><th scope="col">Игры</th><th scope="col">Ранг</th><th scope="col">Баллы</th><th scope="col">До следующего</th></tr>
+            </thead>
+            <tbody>
+              {% for team in page_obj.object_list %}
+                <tr>
+                  <td class="rating-table__number">{{ team.number }}</td>
+                  <th scope="row">{{ team.team_name }}</th>
+                  <td>{{ team.games }}</td>
+                  <td>
+                    <span class="rating-rank-inline">
+                      {% if team.current_rank.logo_url %}<img src="{{ team.current_rank.logo_url }}" alt="{{ team.current_rank.logo_alt }}" width="44" height="44" loading="lazy">{% else %}<span class="rating-rank-placeholder" aria-hidden="true">✦</span>{% endif %}
+                      <span>{% if team.current_rank %}{{ team.current_rank.name }}{% else %}Без ранга{% endif %}</span>
+                    </span>
+                  </td>
+                  <td class="rating-table__points">{{ team.points }}</td>
+                  <td>{% if team.points_to_next is not None %}{{ team.points_to_next }} баллов{% else %}Высший ранг{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rating-cards" aria-label="Команды">
+          {% for team in page_obj.object_list %}
+            <article class="rating-team-card">
+              <div class="rating-team-card__top"><span>№{{ team.number }}</span><strong>{{ team.team_name }}</strong></div>
+              <div class="rating-team-card__rank">
+                {% if team.current_rank.logo_url %}<img src="{{ team.current_rank.logo_url }}" alt="{{ team.current_rank.logo_alt }}" width="56" height="56" loading="lazy">{% else %}<span class="rating-rank-placeholder" aria-hidden="true">✦</span>{% endif %}
+                <div><span class="rating-team-card__label">Текущий ранг</span><b>{% if team.current_rank %}{{ team.current_rank.name }}{% else %}Без ранга{% endif %}</b></div>
+              </div>
+              <p class="rating-team-card__stats"><b>{{ team.points }}</b> баллов · {{ team.games }} игр</p>
+              <p class="rating-team-card__next">{% if team.points_to_next is not None %}До следующего ранга: <b>{{ team.points_to_next }}</b>{% else %}Достигнут высший ранг{% endif %}</p>
+            </article>
+          {% endfor %}
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+          <nav class="rating-pagination" aria-label="Страницы рейтинга">
+            {% if page_obj.has_previous %}<a href="?format={{ current_format.code|urlencode }}&amp;q={{ search|urlencode }}&amp;sort={{ sort }}&amp;direction={{ direction }}&amp;page={{ page_obj.previous_page_number }}">Назад</a>{% endif %}
+            <span aria-current="page">{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}<a href="?format={{ current_format.code|urlencode }}&amp;q={{ search|urlencode }}&amp;sort={{ sort }}&amp;direction={{ direction }}&amp;page={{ page_obj.next_page_number }}">Дальше</a>{% endif %}
+          </nav>
+        {% endif %}
+      {% elif search %}
+        <div class="rating-empty"><span aria-hidden="true">⌕</span><h3>Команда не найдена</h3><p>Проверьте написание или сбросьте поиск.</p><a href="?format={{ current_format.code|urlencode }}">Показать все команды</a></div>
+      {% else %}
+        <div class="rating-empty"><span aria-hidden="true">✦</span><h3>Рейтинг скоро начнётся</h3><p>Список заполнится после первых внесённых результатов.</p></div>
+      {% endif %}
+    </section>
+
+    <section class="rating-ranks" aria-labelledby="rating-ranks-title">
+      <div class="rating-section-head"><div><p class="rating-section-head__kicker">Путь команды</p><h2 id="rating-ranks-title">Все ранги</h2></div></div>
+      <ol class="rating-rank-track">
+        {% for rank in ranks %}
+          <li class="rating-rank-track__item">
+            <div class="rating-rank-track__mark">{% if rank.logo_url %}<img src="{{ rank.logo_url }}" alt="{{ rank.logo_alt }}" width="72" height="72" loading="lazy">{% else %}<span class="rating-rank-placeholder" aria-hidden="true">{{ rank.level }}</span>{% endif %}</div>
+            <div><span class="rating-rank-track__level">Ранг {{ rank.level }} · от {{ rank.min_points }} баллов</span><h3>{{ rank.name }}</h3>{% if rank.description %}<p>{{ rank.description|linebreaksbr }}</p>{% endif %}</div>
+          </li>
+        {% empty %}
+          <li class="rating-empty rating-empty--compact">Каталог рангов пока не настроен.</li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="rating-gifts" aria-labelledby="rating-gifts-title">
+      <div class="rating-section-head"><div><p class="rating-section-head__kicker">Награды</p><h2 id="rating-gifts-title">{{ settings.gifts_title|default:'Поговорим о подарках?' }}</h2></div></div>
+      <nav class="rating-format-nav rating-format-nav--compact" aria-label="Подарки по формату">
+        {% for format in formats %}<a class="rating-format-nav__link{% if current_format.code == format.code %} is-active{% endif %}" href="?format={{ format.code|urlencode }}#rating-gifts-title" data-gift-format="{{ format.code }}" aria-controls="rating-gifts-{{ format.code }}" {% if current_format.code == format.code %}aria-current="true"{% endif %}>{{ format.name }}</a>{% endfor %}
+      </nav>
+      {% if settings.gifts_text %}<p class="rating-gifts__intro">{{ settings.gifts_text|linebreaksbr }}</p>{% endif %}
+      {% for group in gift_groups %}
+        <div class="rating-gift-list" id="rating-gifts-{{ group.format.code }}" data-gift-panel="{{ group.format.code }}"{% if current_format.code != group.format.code %} hidden{% endif %}>
+          {% for gift in group.gifts %}
+            <article class="rating-gift"><span class="rating-gift__level">Ранг {{ gift.level }}</span><h3>{{ gift.name }}</h3><p>{{ gift.gift }}</p></article>
+          {% empty %}
+            <div class="rating-empty rating-empty--compact">Подарки для этого формата пока не опубликованы.</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </section>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_body %}<script src="{% get_static 'js/rating.js' %}?v=2" defer></script>{% endblock %}

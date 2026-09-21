@@ -85,6 +85,13 @@ urlpatterns = [
 
     # USERS
     path('users/', views.admin_users, name='admin_users'),
+    path('users/rating-operator/create/', views.rating_operator_create, name='rating_operator_create'),
+    path('users/rating-access/grant/', views.rating_access_grant, name='rating_access_grant'),
+    path(
+        'users/rating-access/<int:access_id>/revoke/',
+        views.rating_access_revoke,
+        name='rating_access_revoke',
+    ),
     path('users/delete/<int:pk>/', views.users_delete, name='users_delete'),
 
 
@@ -123,5 +130,4 @@ urlpatterns = [
      
 
 ]
-
 

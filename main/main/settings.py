@@ -53,11 +53,16 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'setup',
     'home',
+    'rating',
     
     
     
     
 ]
+
+RATING_PUBLIC_URL_TEMPLATE = os.environ.get(
+    'RATING_PUBLIC_URL_TEMPLATE', 'https://{city}.golovolomka.fun/rating/'
+)
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -245,6 +250,5 @@ except ImportError:
 # Итоговое хранилище статики: иначе WhiteNoise с манифестом падает на form.media
 # (CKEditor и др.), если collectstatic не добавил путь в staticfiles.json.
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
 
 

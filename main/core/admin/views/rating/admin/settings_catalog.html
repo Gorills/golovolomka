@@ -1,0 +1,14 @@
+{% extends 'rating/admin/base.html' %}
+{% block title %}Каталог и тексты{% endblock %}
+{% block nav_catalog %}is-active{% endblock %}
+{% block body %}
+<header class="ra-page-head"><div><h1>Каталог и публичные тексты</h1><p>Глобальные настройки для всех городов.</p></div><div class="ra-actions"><a class="ra-button" href="{% url 'rating_admin:rank_create' %}">Добавить ранг</a></div></header>
+<nav class="ra-tabs" aria-label="Формат каталога">{% for format in formats %}<a href="?format={{ format.code|urlencode }}" class="{% if current_format.code == format.code %}is-active{% endif %}"{% if current_format.code == format.code %} aria-current="page"{% endif %}>{{ format.name }}</a>{% endfor %}</nav>
+<div class="ra-grid">
+  <section class="ra-panel ra-grid__main"><div class="ra-panel__head"><h2>Ранги · {{ current_format.name }}</h2></div><div class="ra-panel__body">
+    {% if ranks %}<div class="ra-card-list">{% for rank in ranks %}<article class="ra-team-card"><div><div class="ra-actions"><h3 class="ra-team-card__title">{{ rank.level }}. {{ rank.name }}</h3>{% if not rank.active %}<span class="ra-badge ra-badge--archived">Выключен</span>{% endif %}</div><div class="ra-meta"><span>От {{ rank.min_points }} баллов</span><span>{% if rank.gift %}Подарок настроен{% else %}Без подарка{% endif %}</span><span>{% if rank.logo_url %}Логотип загружен{% else %}Нет логотипа{% endif %}</span></div></div><div class="ra-card-actions"><a class="ra-button ra-button--secondary" href="{% url 'rating_admin:rank_edit' rank.id %}">Редактировать</a></div></article>{% endfor %}</div>{% else %}<div class="ra-empty"><h3>Ранги не настроены</h3><p>Добавьте первый ранг для выбранного формата.</p></div>{% endif %}
+  </div></section>
+  <aside class="ra-panel ra-grid__aside"><div class="ra-panel__head"><h2>Форматы</h2></div><div class="ra-panel__body"><div class="ra-card-list">{% for format in formats %}<article class="ra-team-card"><div><h3 class="ra-team-card__title">{{ format.name }}</h3><div class="ra-meta"><span class="ra-code">{{ format.code }}</span></div></div><a class="ra-button ra-button--secondary" href="{% url 'rating_admin:format_edit' format.id %}">Изменить</a></article>{% endfor %}</div></div></aside>
+</div>
+{% if settings_form %}<section class="ra-panel"><div class="ra-panel__head"><h2>Публичная страница</h2></div><form class="ra-panel__body" method="post" data-prevent-double-submit>{% csrf_token %}<input type="hidden" name="action" value="save_page_settings">{% include 'rating/admin/_form_fields.html' with form=settings_form %}<div class="ra-form-actions"><button class="ra-button" type="submit">Сохранить тексты</button><a class="ra-button ra-button--secondary" href="{% url 'rating:public' %}" target="_blank" rel="noopener">Предпросмотр страницы</a></div></form></section>{% endif %}
+{% endblock %}

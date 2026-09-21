@@ -6,6 +6,8 @@ from django.shortcuts import reverse
 from .models import Page
 
 from django.utils import timezone
+from django.conf import settings
+from .models import City
 
 
 class StaticViewSitemap(Sitemap):
@@ -45,7 +47,29 @@ class PageSitemap(Sitemap):
     
     def priority(self, item):
         return 0.8
-    
 
 
+class CityRatingSitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.8
+
+    def items(self):
+        return City.objects.all().order_by('slug')
+
+    def get_urls(self, page=1, site=None, protocol=None):
+        template = getattr(
+            settings,
+            'RATING_PUBLIC_URL_TEMPLATE',
+            'https://{city}.golovolomka.fun/rating/',
+        )
+        return [
+            {
+                'item': city,
+                'location': template.format(city=city.slug),
+                'lastmod': None,
+                'changefreq': self.changefreq,
+                'priority': self.priority,
+            }
+            for city in self.items()
+        ]
 

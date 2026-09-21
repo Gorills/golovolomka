@@ -1,0 +1,13 @@
+{% extends 'rating/admin/base.html' %}
+{% block title %}История рангов{% endblock %}
+{% block nav_history %}is-active{% endblock %}
+{% block body %}
+<header class="ra-page-head"><div><h1>История событий</h1><p>Повышения, исправления и служебные пересчёты не удаляются.</p></div></header>
+<form class="ra-filters" method="get">
+  {% if formats %}<div class="ra-field"><label for="history-format">Формат</label><select id="history-format" name="format"><option value="">Все форматы</option>{% for format in formats %}<option value="{{ format.code }}"{% if current_format.code == format.code %} selected{% endif %}>{{ format.name }}</option>{% endfor %}</select></div>{% endif %}
+  <div class="ra-field"><label for="history-direction">Переход</label><select id="history-direction" name="direction"><option value="all">Все</option><option value="increase"{% if direction_filter == 'increase' %} selected{% endif %}>Повышения</option><option value="decrease"{% if direction_filter == 'decrease' %} selected{% endif %}>Понижения</option></select></div>
+  <div class="ra-field"><label for="history-source">Источник</label><select id="history-source" name="source"><option value="">Все</option><option value="adjustment"{% if source_filter == 'adjustment' %} selected{% endif %}>Корректировка</option><option value="recalculation"{% if source_filter == 'recalculation' %} selected{% endif %}>Пересчёт</option></select></div>
+  <button class="ra-button" type="submit">Показать</button>
+</form>
+{% if page_obj.object_list %}<section class="ra-panel"><div class="ra-table-wrap"><table class="ra-table"><thead><tr><th>Дата</th><th>Команда</th><th>Формат</th><th>Переход</th><th>Источник</th><th>Просмотрено</th></tr></thead><tbody>{% for event in page_obj.object_list %}<tr><td>{{ event.detected_at }}</td><td><a href="{% url 'rating_admin:team_detail' event.team_id %}">{{ event.team_name }}</a></td><td>{{ event.format_name }}</td><td><span class="ra-badge ra-badge--{{ event.direction }}">{{ event.old_rank_name|default:'Без ранга' }} → {{ event.new_rank_name|default:'Без ранга' }}</span></td><td>{{ event.source_label }}</td><td>{% if event.acknowledged_at %}{{ event.acknowledged_at }} · {{ event.acknowledged_by_name }}{% else %}—{% endif %}</td></tr>{% endfor %}</tbody></table></div></section>{% include 'rating/admin/_pagination.html' %}{% else %}<div class="ra-empty"><h2>История пуста</h2><p>События появятся после первой смены ранга.</p></div>{% endif %}
+{% endblock %}

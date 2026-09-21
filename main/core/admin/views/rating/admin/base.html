@@ -1,0 +1,70 @@
+{% load admin_static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{% block title %}Кабинет рейтинга{% endblock %} · Головоломка</title>
+  <link rel="stylesheet" href="{% get_static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% get_static 'css/rating.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="rating-admin-body">
+  <a class="ra-skip" href="#ra-main">К основному содержимому</a>
+  <div class="ra-app">
+    <aside class="ra-sidebar" id="ra-sidebar-drawer" aria-label="Навигация кабинета">
+      <a class="ra-brand" href="{% url 'rating_admin:team_list' %}">
+        <span class="ra-brand__mark" aria-hidden="true">Г</span>
+        <span>Рейтинг команд</span>
+      </a>
+      {% if current_city %}<p class="ra-city"><span>Текущий город</span><strong>{{ current_city.name }}</strong></p>{% endif %}
+      <nav class="ra-nav">
+        <a href="{% url 'rating_admin:team_list' %}" class="{% block nav_teams %}{% endblock %}"><span>Команды</span></a>
+        <a href="{% url 'rating_admin:event_list' %}" class="{% block nav_events %}{% endblock %}"><span>Новые ранги</span>{% if unacknowledged_count %}<b>{{ unacknowledged_count }}</b>{% endif %}</a>
+        <a href="{% url 'rating_admin:event_history' %}" class="{% block nav_history %}{% endblock %}"><span>История</span></a>
+        <a href="{% url 'rating_admin:message_incidents' %}" class="{% block nav_messages %}{% endblock %}"><span>SMS и ошибки</span>{% if message_incident_count %}<b>{{ message_incident_count }}</b>{% endif %}</a>
+        {% if capabilities.manage_catalog or capabilities.manage_city_gifts %}<a href="{% url 'rating_admin:catalog' %}" class="{% block nav_catalog %}{% endblock %}"><span>{% if capabilities.manage_catalog %}Каталог и тексты{% else %}Подарки{% endif %}</span></a>{% endif %}
+        {% if capabilities.manage_integration %}<a href="{% url 'rating_admin:integration_settings' %}" class="{% block nav_integration %}{% endblock %}"><span>Настройки SMS</span></a>{% endif %}
+      </nav>
+      <a class="ra-public-link" href="{% if public_rating_url %}{{ public_rating_url }}{% else %}{% url 'rating:public' %}{% endif %}" target="_blank" rel="noopener">Открыть публичный рейтинг <span aria-hidden="true">↗</span></a>
+    </aside>
+
+    <div class="ra-workspace">
+      <header class="ra-topbar">
+        <button class="ra-menu-button" type="button" aria-expanded="false" aria-controls="ra-sidebar-drawer"><span class="ra-sr-only">Открыть меню</span><span aria-hidden="true">☰</span></button>
+        <div>
+          <p class="ra-topbar__context">Кабинет оператора</p>
+          <strong>{% if current_city %}{{ current_city.name }}{% else %}Город не выбран{% endif %}</strong>
+        </div>
+        {% if city_select_form %}
+          <form class="ra-city-select" method="post" action="{% url 'rating_admin:city_select' %}">
+            {% csrf_token %}
+            <label class="ra-sr-only" for="{{ city_select_form.city.id_for_label }}">Текущий город</label>
+            {{ city_select_form.city }}
+            {% if city_select_form.next %}{{ city_select_form.next }}{% endif %}
+            <button class="ra-button ra-button--secondary" type="submit">Выбрать</button>
+          </form>
+        {% elif available_cities|length > 1 %}
+          <div class="ra-city-list" aria-label="Доступные города">
+            {% for city in available_cities %}<span{% if current_city.slug == city.slug %} aria-current="true"{% endif %}>{{ city.name }}</span>{% endfor %}
+          </div>
+        {% endif %}
+      </header>
+
+      <main class="ra-main" id="ra-main" tabindex="-1">
+        {% if messages %}
+          <div class="ra-flashes" aria-live="polite">
+            {% for message in messages %}<div class="ra-alert ra-alert--{{ message.tags|default:'info' }}">{{ message }}</div>{% endfor %}
+          </div>
+        {% endif %}
+        {% if domain_error %}<div class="ra-alert ra-alert--error" role="alert"><strong>Не удалось выполнить действие.</strong> {{ domain_error }}</div>{% endif %}
+        {% block body %}{% endblock %}
+      </main>
+    </div>
+  </div>
+  <div class="ra-drawer-backdrop" hidden></div>
+  <script src="{% get_static 'js/rating.js' %}" defer></script>
+  {% block extra_body %}{% endblock %}
+</body>
+</html>

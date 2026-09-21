@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 from setup.models import BaseSettings, Colors, ThemeSettings, CustomCode
 
@@ -7,6 +9,44 @@ from home.models import DoverCorpSetup, DoverCorpSlider, GameOrder, SliderSetup,
 
 from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+User = get_user_model()
+
+
+class CityOperatorCreateForm(UserCreationForm):
+    email = forms.EmailField(label='Email', required=False)
+    city = forms.ModelChoiceField(
+        label='Город', queryset=City.objects.none(), empty_label='Выберите город'
+    )
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ('username', 'email', 'password1', 'password2', 'city')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.all().order_by('name', 'id')
+        for field in self.fields.values():
+            field.widget.attrs.setdefault('class', 'input')
+
+
+class CityAccessGrantForm(forms.Form):
+    user = forms.ModelChoiceField(
+        label='Пользователь', queryset=User.objects.none(), empty_label='Выберите пользователя'
+    )
+    city = forms.ModelChoiceField(
+        label='Город', queryset=City.objects.none(), empty_label='Выберите город'
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(
+            is_active=True, is_staff=False, is_superuser=False
+        ).order_by('username', 'id')
+        self.fields['city'].queryset = City.objects.all().order_by('name', 'id')
+        for field in self.fields.values():
+            field.widget.attrs.setdefault('class', 'input')
 
 
 class DoverCorpSliderForm(forms.ModelForm):

@@ -1,0 +1,13 @@
+{% extends 'rating/admin/base.html' %}
+{% block title %}Новые ранги{% endblock %}
+{% block nav_events %}is-active{% endblock %}
+{% block body %}
+<header class="ra-page-head"><div><h1>Новые ранги</h1><p>Непросмотренные повышения команд текущего города.</p></div><a class="ra-button ra-button--secondary" href="{% url 'rating_admin:event_history' %}">Вся история</a></header>
+<form class="ra-filters" method="get">
+  {% if formats %}<div class="ra-field"><label for="event-format">Формат</label><select id="event-format" name="format"><option value="">Все форматы</option>{% for format in formats %}<option value="{{ format.code }}"{% if current_format.code == format.code %} selected{% endif %}>{{ format.name }}</option>{% endfor %}</select></div>{% endif %}
+  <div class="ra-field"><span>Переход</span><strong>Только повышения</strong></div>
+  <div class="ra-field"><label for="event-source">Источник</label><select id="event-source" name="source"><option value="">Все</option><option value="adjustment"{% if source_filter == 'adjustment' %} selected{% endif %}>Корректировка</option><option value="recalculation"{% if source_filter == 'recalculation' %} selected{% endif %}>Пересчёт</option></select></div>
+  <button class="ra-button" type="submit">Показать</button>
+</form>
+{% if page_obj.object_list %}<div class="ra-card-list">{% for event in page_obj.object_list %}<article class="ra-event-card"><div><div class="ra-actions"><h2 class="ra-team-card__title">{{ event.team_name }}</h2><span class="ra-badge ra-badge--{{ event.direction }}">{{ event.direction_label }}</span></div><p>{{ event.format_name }}: <strong>{{ event.old_rank_name|default:'Без ранга' }}</strong> → <strong>{{ event.new_rank_name|default:'Без ранга' }}</strong></p><div class="ra-meta"><span>{{ event.detected_at }}</span><span>{{ event.source_label }}</span></div></div><div class="ra-card-actions"><a class="ra-button ra-button--secondary" href="{% url 'rating_admin:team_detail' event.team_id %}">Команда</a>{% if capabilities.ack_events and event.ack_form %}<form method="post" action="{% url 'rating_admin:event_acknowledge' event.id %}" data-prevent-double-submit>{% csrf_token %}{{ event.ack_form.operation_id }}<button class="ra-button" type="submit">Просмотрено</button></form>{% endif %}</div></article>{% endfor %}</div>{% include 'rating/admin/_pagination.html' %}{% else %}<div class="ra-empty"><h2>Новых рангов нет</h2><p>Все события просмотрены или команды ещё не повысили ранг.</p></div>{% endif %}
+{% endblock %}

@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import include, path
 
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import *
@@ -9,6 +9,7 @@ from django.views.generic.base import RedirectView
 sitemaps = {
     'static': StaticViewSitemap,
     'page': PageSitemap,
+    'rating': CityRatingSitemap,
     
 
 }
@@ -21,6 +22,7 @@ urlpatterns = [
 
     path('game_callback/', views.game_callback, name='game_callback'),
     path('schedule/', views.schedule, name='schedule'),
+    path('rating/', include(('rating.urls_public', 'rating'), namespace='rating')),
     path("robots.txt", views.robots_txt),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.index'),
 
@@ -36,4 +38,3 @@ urlpatterns = [
     
  
 ]
-

@@ -1,0 +1,14 @@
+{% if form.non_field_errors %}<div class="ra-alert ra-alert--error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form.hidden_fields %}{{ field }}{% endfor %}
+{% for field in form.visible_fields %}
+  <div class="ra-field{% if field.errors %} ra-field--error{% endif %}{% if field.field.widget.input_type == 'checkbox' %} ra-field--checkbox{% endif %}">
+    {% if field.field.widget.input_type == 'checkbox' %}
+      {{ field }} <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% else %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+    {% endif %}
+    {% if field.help_text %}<small id="{{ field.id_for_label }}-help">{{ field.help_text }}</small>{% endif %}
+    {% if field.errors %}<div class="ra-field__errors" id="{{ field.id_for_label }}-errors">{{ field.errors }}</div>{% endif %}
+  </div>
+{% endfor %}

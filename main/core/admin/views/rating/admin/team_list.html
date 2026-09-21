@@ -1,0 +1,35 @@
+{% extends 'rating/admin/base.html' %}
+{% block title %}Команды{% endblock %}
+{% block nav_teams %}is-active{% endblock %}
+{% block body %}
+<header class="ra-page-head">
+  <div><h1>Команды</h1><p>Баллы, игры и текущие ранги выбранного города.</p></div>
+  {% if capabilities.manage_teams and current_city %}<div class="ra-actions"><a class="ra-button" href="{% url 'rating_admin:team_create' %}">Добавить команду</a></div>{% endif %}
+</header>
+<form class="ra-filters" method="get">
+  <div class="ra-field"><label for="team-search">Поиск</label><input id="team-search" type="search" name="q" value="{{ search }}" maxlength="120" placeholder="Название, капитан или телефон"></div>
+  {% if formats %}<div class="ra-field"><label for="team-format">Формат</label><select id="team-format" name="format">{% for format in formats %}<option value="{{ format.code }}"{% if current_format.code == format.code %} selected{% endif %}>{{ format.name }}</option>{% endfor %}</select></div>{% endif %}
+  <div class="ra-field"><label for="team-status">Статус</label><select id="team-status" name="status"><option value="active"{% if status_filter == 'active' %} selected{% endif %}>Активные</option><option value="archived"{% if status_filter == 'archived' %} selected{% endif %}>Архивные</option><option value="all"{% if status_filter == 'all' %} selected{% endif %}>Все</option></select></div>
+  <div class="ra-field"><label for="team-sort">Сортировка</label><select id="team-sort" name="sort"><option value="points"{% if sort == 'points' %} selected{% endif %}>Баллы</option><option value="rank"{% if sort == 'rank' %} selected{% endif %}>Ранг</option><option value="name"{% if sort == 'name' %} selected{% endif %}>Название</option><option value="games"{% if sort == 'games' %} selected{% endif %}>Игры</option></select></div>
+  <div class="ra-field"><label for="team-direction">Направление</label><select id="team-direction" name="direction"><option value="desc"{% if direction == 'desc' %} selected{% endif %}>По убыванию</option><option value="asc"{% if direction == 'asc' %} selected{% endif %}>По возрастанию</option></select></div>
+  <button class="ra-button" type="submit">Показать</button>
+</form>
+{% if page_obj.object_list %}
+  <div class="ra-card-list">
+    {% for team in page_obj.object_list %}
+      <article class="ra-team-card">
+        <div>
+          <div class="ra-actions"><h2 class="ra-team-card__title">{{ team.name }}</h2><span class="ra-badge{% if team.is_active %} ra-badge--success{% else %} ra-badge--archived{% endif %}">{% if team.is_active %}Активна{% else %}В архиве{% endif %}</span></div>
+          <div class="ra-meta"><span>{{ team.masked_phone|default:'Телефон не указан' }}</span><span>{{ team.captain_name|default:'Капитан не указан' }}</span><span>{{ team.points|default:'0' }} баллов</span><span>{{ team.games|default:'0' }} игр</span><span>{{ team.current_rank.name|default:'Без ранга' }}</span></div>
+        </div>
+        <div class="ra-card-actions"><a class="ra-button ra-button--secondary" href="{% url 'rating_admin:team_detail' team.id %}">Открыть</a>{% if capabilities.adjust_scores and current_format %}<a class="ra-button" href="{% url 'rating_admin:score_adjust' team.id current_format.code %}">Добавить результат</a>{% endif %}</div>
+      </article>
+    {% endfor %}
+  </div>
+  {% include 'rating/admin/_pagination.html' %}
+{% elif search %}
+  <div class="ra-empty"><h2>Команды не найдены</h2><p>Измените запрос или сбросьте фильтры.</p><a class="ra-button ra-button--secondary" href="{% url 'rating_admin:team_list' %}">Сбросить</a></div>
+{% else %}
+  <div class="ra-empty"><h2>{% if current_city %}Список команд пуст{% else %}Выберите город{% endif %}</h2><p>{% if current_city %}Это штатное состояние до внесения результатов первой игры.{% else %}Город определяет список команд и область всех операций кабинета.{% endif %}</p>{% if capabilities.manage_teams and current_city %}<a class="ra-button" href="{% url 'rating_admin:team_create' %}">Добавить первую команду</a>{% endif %}</div>
+{% endif %}
+{% endblock %}

@@ -15,6 +15,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('rating-admin/', include(('rating.urls_admin', 'rating_admin'), namespace='rating_admin')),
    
 
 

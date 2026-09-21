@@ -1,0 +1,10 @@
+{% extends 'rating/admin/base.html' %}
+{% block title %}{% if is_create %}Новая команда{% else %}Редактирование команды{% endif %}{% endblock %}
+{% block nav_teams %}is-active{% endblock %}
+{% block body %}
+<header class="ra-page-head"><div><h1>{% if is_create %}Новая команда{% else %}Редактирование команды{% endif %}</h1><p>Контактные данные видны только уполномоченным сотрудникам.</p></div></header>
+<div class="ra-grid">
+  <section class="ra-panel ra-grid__main" aria-labelledby="team-form-title"><div class="ra-panel__head"><h2 id="team-form-title">Карточка команды</h2></div><form class="ra-panel__body" method="post" data-prevent-double-submit>{% csrf_token %}{% include 'rating/admin/_form_fields.html' %}<div class="ra-form-actions"><button class="ra-button" type="submit">{% if is_create %}Создать команду{% else %}Сохранить{% endif %}</button><a class="ra-button ra-button--secondary" href="{% if team %}{% url 'rating_admin:team_detail' team.id %}{% else %}{% url 'rating_admin:team_list' %}{% endif %}">Отмена</a></div></form></section>
+  <aside class="ra-panel ra-grid__aside"><div class="ra-panel__head"><h2>Важно</h2></div><div class="ra-panel__body"><p>Совпадающие названия разрешены. Сверяйте команду по маскированному телефону и имени капитана.</p><p>Город и текущие баллы не задаются этой формой.</p></div></aside>
+</div>
+{% endblock %}
